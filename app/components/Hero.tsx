@@ -14,7 +14,7 @@ const Hero = () => {
     const updateTime = () => {
       const now = new Date();
       const timeString = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Dhaka', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      setTime(`DHK ${timeString}`);
+      setTime(`CTG ${timeString}`);
     };
     updateTime();
     const timerId = setInterval(updateTime, 1000);
@@ -93,9 +93,9 @@ const Hero = () => {
               </motion.div>
 
               <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-                  <Link href="#projects" aria-label="Explore my work" className="px-6 py-3 bg-black text-white font-mono text-sm tracking-wider hover:bg-gray-800 transition-all border border-black">
-                      [ EXPLORE_WORK ]
-                  </Link>
+                    <Link href="/resume.pdf" aria-label="Explore my work" className="px-6 py-3 bg-black text-white font-mono text-sm tracking-wider hover:bg-gray-800 transition-all border border-black" target="_blank" rel="noopener noreferrer">
+                      [ CHECK RESUME ]
+                    </Link>
                   <a href="mailto:obidur.shawal@gmail.com" aria-label="Contact me" className="px-6 py-3 border border-gray-400 text-black font-mono text-sm tracking-wider hover:bg-black hover:text-white transition-all">
                       [ INITIATE_CONTACT ]
                   </a>

@@ -6,24 +6,30 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
-    // State to track if the page has been scrolled
     const [isScrolled, setIsScrolled] = useState(false); 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [activeSection, setActiveSection] = useState('grid-section');
 
+    // THE FIX: This new useEffect hook manages body scroll based on menu state.
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        // Cleanup function to ensure scroll is re-enabled if component unmounts
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isMenuOpen]);
+
     useEffect(() => {
         const handleScroll = () => {
             if (typeof window !== 'undefined') {
-                // Set scrolled state for background/style change
                 setIsScrolled(window.scrollY > 10);
-
-                // Calculate scroll progress
                 const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
                 setScrollProgress((window.scrollY / totalHeight) * 100);
-
-                // Close mobile menu on scroll
-                if (isMenuOpen) setIsMenuOpen(false);
             }
         };
 
@@ -32,15 +38,15 @@ const Header = () => {
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
         
-        // Initial check in case the page loads scrolled
         handleScroll();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleResize);
         };
-    }, [isMenuOpen]);
+    }, []); // Removed isMenuOpen from dependency array here
 
+    // ... The rest of the useEffects and constants remain the same ...
     useEffect(() => {
         const sections = ['grid-section', 'about', 'skills', 'projects', 'contact'];
         const observers = sections.map(id => {
@@ -65,11 +71,9 @@ const Header = () => {
         { id: 'contact', label: 'CONTACT' }
     ];
 
-    // Common classes for smooth transitions
     const headerBaseClasses = "fixed top-0.5 left-0 right-0 z-40 h-20 transition-all duration-300 ease-in-out";
     const scrolledClasses = "bg-black/80 backdrop-blur-md border-b border-neutral-800";
     const topClasses = "bg-white border-b border-gray-200";
-
     const logoColor = isScrolled ? "text-white" : "text-black";
     const mobileIconColor = isScrolled ? "bg-white" : "bg-black";
 

@@ -1,116 +1,80 @@
-# Portfolio - Obidur Rahman
+# Obidur Rahman - Personal Portfolio v3.0
 
-Welcome to the source code for my personal portfolio website. This project is a fully responsive, futuristic, and interactive web experience built with Next.js, TypeScript, and Tailwind CSS. The design is inspired by modern Heads-Up Displays (HUDs) and system interfaces, featuring a monochromatic color scheme, sharp typography, and subtle animations.
+This repository contains the source code for my personal portfolio, a futuristic and interactive web experience designed with a Heads-Up Display (HUD) aesthetic. Built from the ground up with a focus on performance, responsiveness, and clean, maintainable code.
 
-**Live Site:** [**obidur.vercel.app**](https://obidur.vercel.app) *(Replace with your actual URL)*
+[![Vercel Deployment](https://img.shields.io/github/deployments/your-username/your-repo/production?label=vercel&style=for-the-badge)](https://obidur.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-cyan.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
----
-
-## ✨ Features
-
--   **Futuristic HUD-inspired Design:** Clean, sharp, and monochromatic aesthetic that feels like a modern system interface.
--   **Fully Responsive:** A seamless experience across all devices, from mobile phones to high-resolution desktops.
--   **Interactive Animations:** Engaging, non-intrusive animations powered by Framer Motion, including:
-    -   A 3D parallax grid background in the hero section.
-    -   Scroll-triggered entrance animations for all content sections.
-    -   Interactive hover states and micro-interactions.
--   **Animated Loading Screen:** A thematic system boot-up sequence that sets the tone for the entire site.
--   **Component-Based Architecture:** Built with reusable and modular React components for clean code and easy maintenance.
--   **Dynamic Content Filtering:** The project archive features client-side filtering to showcase different categories of work.
--   **SEO Optimized:** Built with Next.js for server-side rendering, with metadata configured for search engines and social sharing.
+### [**Visit the Live Site →**](https://obidur.vercel.app)
 
 ---
 
-## 🛠️ Tech Stack
+## ✨ Core Features
 
-This project is built with a modern, performant, and type-safe technology stack.
-
--   **Framework:** [Next.js](https://nextjs.org/) (v14+) - The React Framework for Production.
--   **Language:** [TypeScript](https://www.typescriptlang.org/) - For static type-checking and improved developer experience.
--   **Styling:** [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapid UI development.
--   **Animation:** [Framer Motion](https://www.framer.com/motion/) - A production-ready motion library for React.
--   **Font:** [Geist](https://vercel.com/font) - A modern, clean, and technical typeface from Vercel.
--   **Deployment:** [Vercel](https://vercel.com/) - For seamless, high-performance deployment and hosting.
+-   🎨 **Futuristic HUD Design:** A sharp, monochromatic aesthetic inspired by modern system interfaces, built for clarity and impact.
+-   📱 **Fully Responsive:** Meticulously crafted for a seamless experience on all devices, from mobile phones to high-resolution desktops.
+-   🔮 **Fluid Animations & Micro-interactions:** Powered by Framer Motion, featuring a 3D parallax hero grid, scroll-triggered animations, and satisfying hover states.
+-   🚀 **Animated Loading Sequence:** A thematic system boot-up sequence that sets the tone for the site and ensures a smooth initial render.
+-   🧩 **Modular & Maintainable Code:** Built with a component-based architecture in React for clean separation of concerns and easy updates.
+-   🔍 **Dynamic Project Filtering:** The project archive features instant, client-side filtering to showcase different categories of work.
+-   📈 **SEO & Performance Optimized:** Built with Next.js for server-side rendering, with metadata configured for search engines and social sharing.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack & Philosophy
 
-Follow these instructions to get a local copy of the project up and running for development or exploration.
+This project is built with a modern, performant, and type-safe technology stack, chosen to deliver the best possible user and developer experience.
+
+| Technology     | Category          | Purpose                                                                                |
+| :------------- | :---------------- | :------------------------------------------------------------------------------------- |
+| **Next.js**    | Framework         | For its hybrid rendering capabilities (SSR/SSG), performance optimizations, and DX.    |
+| **TypeScript** | Language          | For static type-checking, preventing errors, and improving code maintainability.       |
+| **Tailwind CSS**| Styling           | For rapid, utility-first UI development and maintaining a consistent design system.   |
+| **Framer Motion**| Animation         | For creating complex, performant, and declarative animations in React.               |
+| **Geist**      | Font              | A clean, modern, and technical typeface from Vercel that complements the HUD theme.     |
+| **Vercel**     | Deployment        | For seamless, zero-config deployment, CI/CD, and global CDN performance.             |
+
+---
+
+## 🚀 Local Development
+
+Follow these instructions to get a local copy of the project up and running.
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (v18.x or later recommended)
--   [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), or [pnpm](https://pnpm.io/) package manager
+-   [Node.js](https://nodejs.org/) (v18.x or later)
+-   [pnpm](https://pnpm.io/) (recommended), [npm](https://www.npmjs.com/), or [yarn](https://yarnpkg.com/)
 
 ### Installation & Setup
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/your-repository-name.git
-    cd your-repository-name
+    git clone https://github.com/Ashfinn/portfolio-v3.git
+    cd portfolio-v3
     ```
 
 2.  **Install dependencies:**
-    Choose your preferred package manager.
     ```bash
-    # Using npm
-    npm install
-
-    # Using yarn
-    yarn install
-
-    # Using pnpm
     pnpm install
     ```
 
-3.  **Run the development server:**
+3.  **(Optional) Environment Variables:**
+    If you re-implement the contact form, you'll need to set up environment variables. Create a `.env.local` file in the root of the project by copying the example:
+    ```bash
+    cp .env.example .env.local
+    ```
+    Then, fill in the required values in `.env.local`.
+
+4.  **Run the development server:**
     This will start the application on `http://localhost:3000`.
     ```bash
-    npm run dev
+    pnpm dev
     ```
 
-4.  **Open your browser:**
-    Navigate to [http://localhost:3000](http://localhost:3000) to see the application in action.
+5.  **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000).
 
 ---
 
 ## 📂 Project Structure
 
-The project follows the standard Next.js `app` directory structure, organized for clarity and scalability.
-
-```
-.
-├── app/
-│   ├── components/       # Reusable components (Header, Footer, etc.)
-│   │   └── sections/     # Main page section components (About, Skills, etc.)
-│   ├── lib/              # Data files and type definitions (projects, skills, etc.)
-│   ├── layout.tsx        # Root layout for the application
-│   ├── page.tsx          # The main entry page
-│   └── globals.css       # Global styles and Tailwind directives
-├── public/               # Static assets (images, CV, etc.)
-├── tailwind.config.ts    # Tailwind CSS configuration
-├── next.config.mjs       # Next.js configuration
-└── README.md             # You are here!
-```
-
----
-
-## 🎨 Customization
-
-This portfolio is designed to be easily customizable.
-
--   **Content:** All personal information (about text, skills, projects) is located in the respective section components in `app/components/sections/` or in the `app/lib/data.ts` file.
--   **Styling:** Global styles and design tokens (colors, fonts, animations) are defined in `app/globals.css` and `tailwind.config.ts`.
--   **Metadata:** Site title, description, and social sharing info can be updated in `app/layout.tsx`.
-
----
-
-## 📜 License
-
-This project is open-source and available under the [MIT License](LICENSE). You are free to fork, modify, and use this code as a template for your own portfolio. Attribution is appreciated but not required.
-
----
-```
-This README was generated with assistance from an AI model.
-```
+The project uses the Next.js `app` directory structure, organized for clarity and scalability.
