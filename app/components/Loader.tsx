@@ -16,7 +16,7 @@ const Loader = () => {
     'ESTABLISHING_GRID_CONNECTION...',
     'SYSTEM_READY'
   ];
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // This hook manages the loading progress and text cycling.
     // The timing logic is good, so we'll keep it.
