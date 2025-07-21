@@ -11,10 +11,12 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      quotes: ["error", "single", { avoidEscape: true }],
+      'react/no-unescaped-entities': 'off', // this disables apostrophe warnings
+    },
+  },
 ];
 
 export default eslintConfig;
-export const rules = {
-  "quotes": ["error", "single", { "avoidEscape": true }],
-  "apostrophe": "off"
-};

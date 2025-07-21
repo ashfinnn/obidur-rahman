@@ -76,10 +76,10 @@ const Hero = () => {
                   </motion.h1>
                   <motion.div variants={itemVariants} className="h-12 overflow-hidden">
                       <div className="animate-text-slide">
-                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">// MATHEMATICIAN</p>
-                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">// DATA SCIENTIST</p>
-                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">// DEVELOPER</p>
-                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">// INNOVATOR</p>
+                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{"// MATHEMATICIAN"}</p>
+                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{"// DATA SCIENTIST"}</p>
+                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{"// DEVELOPER"}</p>
+                          <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{"// INNOVATOR"}</p>
                       </div>
                   </motion.div>
               </div>
