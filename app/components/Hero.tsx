@@ -114,13 +114,6 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* 2. Bottom UI elements positioned absolutely to the viewport */}
-      <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 flex items-center gap-4">
-        <motion.div variants={bottomElementVariants} className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-black text-white rounded-full font-mono text-sm">
-            PDF
-        </motion.div>
-      </div>
-
       <motion.div 
         className="absolute bottom-6 right-1/2 translate-x-1/2 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 flex flex-col items-center gap-2"
         variants={bottomElementVariants}

@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-// 1. Data updated for the new design. No more gradient classes.
+// Data remains the same.
 interface GridItemProps {
   id: string;
   number: string;
@@ -70,7 +70,7 @@ const GridSection = () => {
   return (
     <motion.section 
       id="grid-section"
-      className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-white"
+      className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-black"
       aria-labelledby="grid-title"
       variants={containerVariants}
       initial="hidden"
@@ -78,31 +78,30 @@ const GridSection = () => {
       viewport={{ once: true, amount: 0.2 }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* 2. Header updated for the new theme */}
         <header className="mb-16 md:mb-20">
           <motion.h2
             id="grid-title"
-            className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-black"
+            className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white"
             variants={itemVariants}
           >
             SYSTEM_NAVIGATION
           </motion.h2>
           <motion.div
-            className="mt-4 w-32 h-px bg-black"
+            // UPDATED: Using a vibrant accent color for the underline
+            className="mt-4 w-32 h-px bg-cyan-300"
             variants={itemVariants}
             role="presentation"
           />
           <motion.p
-            className="mt-6 text-gray-600 max-w-2xl text-base lg:text-lg"
+            className="mt-6 text-gray-400 max-w-2xl text-base lg:text-lg"
             variants={itemVariants}
           >
             Interface with the core sections of this portfolio. Each module provides access to a distinct dataset of my professional journey.
           </motion.p>
         </header>
 
-        {/* 3. Grid uses motion variants for staggered animation */}
         <motion.nav 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" // Increased gap for better spacing with lift effect
           aria-label="Page Sections"
           variants={containerVariants}
         >
@@ -115,41 +114,52 @@ const GridSection = () => {
   );
 };
 
-// 4. GridCard component completely redesigned for the HUD aesthetic
+// IMPROVED: GridCard completely enhanced with more interactive elements and polish.
 const GridCard = ({ number, title, href, lines, ctaText }: GridItemProps) => {
   return (
-    <motion.div variants={itemVariants}>
+    // NEW: Added whileHover and whileTap for interactive feedback
+    <motion.div
+      variants={itemVariants}
+      whileHover={{ scale: 1.03, y: -8 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
       <Link
         href={href}
-        className="group relative block h-full border border-gray-200 p-6 transition-colors duration-300 hover:border-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+        className="group relative block h-full bg-gray-900/50 p-6 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-cyan-300 backdrop-blur-sm"
         aria-label={`Navigate to ${title.toLowerCase().replace('_', ' ')} section`}
       >
+        {/* NEW: Decorative corner brackets for HUD aesthetic */}
+        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gray-700 transition-colors duration-300 group-hover:border-cyan-300"></div>
+        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-gray-700 transition-colors duration-300 group-hover:border-cyan-300"></div>
+        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-gray-700 transition-colors duration-300 group-hover:border-cyan-300"></div>
+        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gray-700 transition-colors duration-300 group-hover:border-cyan-300"></div>
+        
         <div className="flex flex-col justify-between h-full">
-          {/* Top section of the card */}
           <div>
             <div className="flex items-center justify-between font-mono text-xs text-gray-400">
               <span>[SECT_{number}]</span>
-              <span className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">→</span>
+              {/* UPDATED: Arrow now slides in from the left on hover */}
+              <span className="opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 text-cyan-300">→</span>
             </div>
-            <div className="mt-4 w-full h-px bg-gray-200 transition-colors duration-300 group-hover:bg-black" role="presentation" />
+            <div className="mt-4 w-full h-px bg-gray-800" role="presentation" />
           </div>
 
-          {/* Middle section with title and lines */}
           <div className="space-y-4 my-8">
-            <h3 className="font-mono text-xl font-bold text-black">{title}</h3>
-            <div className="font-mono text-xs text-gray-500 leading-relaxed">
+            <h3 className="font-mono text-xl font-bold text-gray-100">{title}</h3>
+            <div className="font-mono text-xs text-gray-400 leading-relaxed">
               {lines.map((line, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <span className="text-gray-300">■</span>
+                  <span className="text-gray-600">■</span>
                   <span>{line}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Bottom section with CTA */}
-          <div className="font-mono text-xs text-black tracking-wider">
-            <span>{`> ${ctaText}`}</span>
+          {/* UPDATED: CTA is more interactive on hover */}
+          <div className="font-mono text-xs text-gray-300 tracking-wider transition-colors duration-300 group-hover:text-cyan-300">
+            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">{`> ${ctaText}`}</span>
           </div>
         </div>
       </Link>

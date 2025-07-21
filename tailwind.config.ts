@@ -3,6 +3,8 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  // --- ADDED THIS LINE ---
+  darkMode: "class",
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,6 +16,7 @@ const config: Config = {
         sans: ['var(--font-geist-sans)', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
+      // Your animations and keyframes are perfect, no changes needed.
       animation: {
         'pan-grid': 'pan-grid 60s linear infinite',
         'pulse-arrow': 'pulse-arrow 2s infinite',
@@ -36,7 +39,7 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(60px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'glitch': {
+        glitch: {
           '0%, 100%': { transform: 'translate(0)' },
           '10%': { transform: 'translate(-2px, 2px)' },
           '20%': { transform: 'translate(-2px, -2px)' },

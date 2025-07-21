@@ -3,170 +3,157 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
+    // State to track if the page has been scrolled
+    const [isScrolled, setIsScrolled] = useState(false); 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
     const [scrollProgress, setScrollProgress] = useState(0);
-    const [activeSection, setActiveSection] = useState('');
+    const [activeSection, setActiveSection] = useState('grid-section');
 
     useEffect(() => {
-        const controlHeader = () => {
+        const handleScroll = () => {
             if (typeof window !== 'undefined') {
-                const currentScrollY = window.scrollY;
-                if (currentScrollY > 100 && currentScrollY > lastScrollY) {
-                    setIsVisible(false);
-                } else {
-                    setIsVisible(true);
-                }
-                setLastScrollY(currentScrollY);
+                // Set scrolled state for background/style change
+                setIsScrolled(window.scrollY > 10);
 
-                const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = (currentScrollY / windowHeight) * 100;
-                setScrollProgress(Math.min(progress, 100));
+                // Calculate scroll progress
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                setScrollProgress((window.scrollY / totalHeight) * 100);
+
+                // Close mobile menu on scroll
+                if (isMenuOpen) setIsMenuOpen(false);
             }
         };
 
         const handleResize = () => setIsMenuOpen(false);
-        const handleScroll = () => {
-            controlHeader();
-            if (isMenuOpen) setIsMenuOpen(false);
-        };
-        
+
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
+        
+        // Initial check in case the page loads scrolled
+        handleScroll();
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleResize);
         };
-    }, [lastScrollY, isMenuOpen]);
+    }, [isMenuOpen]);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveSection(entry.target.id);
-                    }
-                });
-            },
-            { threshold: 0.3, rootMargin: '-50% 0px -50% 0px' } // Detect when section is in middle of screen
-        );
-
-        const sections = ['about', 'skills', 'projects', 'contact'];
-        sections.forEach((id) => {
+        const sections = ['grid-section', 'about', 'skills', 'projects', 'contact'];
+        const observers = sections.map(id => {
             const element = document.getElementById(id);
-            if (element) observer.observe(element);
+            if (!element) return null;
+
+            const observer = new IntersectionObserver(
+                ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+                { threshold: 0.3, rootMargin: '-40% 0px -60% 0px' }
+            );
+            observer.observe(element);
+            return observer;
         });
 
-        return () => observer.disconnect();
+        return () => observers.forEach(obs => obs?.disconnect());
     }, []);
 
     const navItems = [
-        { href: '#about', label: 'ABOUT' },
-        { href: '#skills', label: 'SKILLS' },
-        { href: '#projects', label: 'WORK' },
-        { href: '#contact', label: 'CONTACT' }
+        { id: 'about', label: 'ABOUT' },
+        { id: 'skills', label: 'SKILLS' },
+        { id: 'projects', label: 'WORK' },
+        { id: 'contact', label: 'CONTACT' }
     ];
 
-    // 1. Refactored NavLink for futuristic style
-    const NavLink = ({ href, label, mobile = false }: { href: string; label: string; mobile?: boolean }) => {
-        const isActive = activeSection === href.slice(1);
-        const baseClasses = 'font-mono tracking-wider transition-colors duration-300 relative';
-        const mobileClasses = mobile ? 'block text-base py-3' : 'text-xs';
-        const activeClasses = isActive ? 'text-black' : 'text-gray-500 hover:text-black';
+    // Common classes for smooth transitions
+    const headerBaseClasses = "fixed top-0.5 left-0 right-0 z-40 h-20 transition-all duration-300 ease-in-out";
+    const scrolledClasses = "bg-black/80 backdrop-blur-md border-b border-neutral-800";
+    const topClasses = "bg-white border-b border-gray-200";
 
-        return (
-            <Link 
-                href={href} 
-                className={`${baseClasses} ${mobileClasses} ${activeClasses}`}
-                onClick={mobile ? () => setIsMenuOpen(false) : undefined}
-            >
-                {isActive ? `[ ${label} ]` : label}
-            </Link>
-        );
-    };
+    const logoColor = isScrolled ? "text-white" : "text-black";
+    const mobileIconColor = isScrolled ? "bg-white" : "bg-black";
 
     return (
         <>
-            {/* 2. Simplified Scroll Progress Bar */}
-            <div className="fixed top-0 left-0 w-full h-px bg-gray-200 z-50">
+            {/* Scroll Progress Bar */}
+            <div className="fixed top-0 left-0 w-full h-0.5 bg-transparent z-50">
                 <div 
-                    className="h-full bg-black"
-                    style={{ width: `${scrollProgress}%` }}
+                    className={`h-full ${isScrolled ? 'bg-cyan-300' : 'bg-black'}`}
+                    style={{ width: `${scrollProgress}%` }} 
                 />
             </div>
 
-            {/* 3. Refactored Header for sharp HUD look */}
-            <header
-                className={`fixed top-px left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 h-20 transition-transform duration-300 ease-in-out ${
-                    isVisible ? 'translate-y-0' : '-translate-y-full'
-                }`}
-            >
+            {/* Header with dynamic styling */}
+            <header className={`${headerBaseClasses} ${isScrolled ? scrolledClasses : topClasses}`}>
                 <div className="h-full px-4 sm:px-8 lg:px-16 flex items-center justify-between">
-                    {/* 4. Logo matches the futuristic theme */}
-                    <Link href="/" className="font-mono font-bold text-sm tracking-widest text-black">
+                    <Link href="/" className={`font-mono font-bold text-sm tracking-widest transition-colors ${logoColor} hover:text-cyan-300`}>
                         OBIDUR.RAHMAN
                     </Link>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-8 lg:gap-10">
-                        {navItems.map((item) => (
-                            <NavLink key={item.href} href={item.href} label={item.label} />
-                        ))}
+                        {navItems.map((item) => {
+                            const isActive = activeSection === item.id;
+                            const linkColor = isScrolled 
+                                ? (isActive ? 'text-white' : 'text-neutral-300 hover:text-white') 
+                                : (isActive ? 'text-black' : 'text-neutral-500 hover:text-black');
+                            const indicatorColor = isScrolled ? 'bg-cyan-300' : 'bg-black';
+
+                            return (
+                                <Link
+                                    key={item.id}
+                                    href={`#${item.id}`}
+                                    className={`relative font-mono text-xs tracking-wider transition-colors duration-300 ${linkColor}`}
+                                >
+                                    {item.label}
+                                    {isActive && (
+                                        <motion.div
+                                            className={`absolute -bottom-1 left-0 right-0 h-px ${indicatorColor}`}
+                                            layoutId="active-nav-link"
+                                            transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })}
                     </nav>
 
                     {/* Mobile Menu Button */}
-                    <button 
-                        onClick={() => setIsMenuOpen(!isMenuOpen)} 
-                        aria-label="Toggle menu"
-                        className="relative w-10 h-10 border border-gray-300 flex items-center justify-center transition-colors duration-300 group md:hidden hover:border-black"
-                    >
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu" className="relative w-8 h-8 flex items-center justify-center md:hidden z-50">
                         <div className="space-y-1.5">
-                            <span className={`block w-5 h-px bg-black transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-1 rotate-45' : ''}`} />
-                            <span className={`block w-5 h-px bg-black transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
-                            <span className={`block w-5 h-px bg-black transition-transform duration-300 ease-in-out ${isMenuOpen ? '-translate-y-1 -rotate-45' : ''}`} />
+                            <span className={`block w-5 h-px ${mobileIconColor} transition-all duration-300 ease-in-out ${isMenuOpen ? 'translate-y-1 rotate-45' : ''}`} />
+                            <span className={`block w-5 h-px ${mobileIconColor} transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
+                            <span className={`block w-5 h-px ${mobileIconColor} transition-all duration-300 ease-in-out ${isMenuOpen ? '-translate-y-1 -rotate-45' : ''}`} />
                         </div>
                     </button>
                 </div>
             </header>
-
-            {/* 5. Refactored Mobile Menu */}
-            <div className={`fixed top-20 left-0 right-0 z-30 bg-white/95 backdrop-blur-lg border-b border-gray-200 transform transition-all duration-300 ease-in-out md:hidden ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
-            }`}>
-                <nav className="p-6 sm:p-8 space-y-2">
-                    {navItems.map((item, index) => (
-                        <motion.div
-                            key={item.href}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.05, ease: 'easeOut' }}
-                        >
-                            <NavLink href={item.href} label={item.label} mobile />
-                        </motion.div>
-                    ))}
-                    <motion.div 
-                        className="pt-6 mt-4 border-t border-gray-200"
+            
+            {/* Mobile Menu (always dark for consistency) */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3, delay: navItems.length * 0.05 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-30 bg-black/95 backdrop-blur-lg md:hidden"
                     >
-                        <div className="flex items-center justify-between text-xs font-mono text-gray-400 tracking-wider">
-                            <span>[NAVIGATION_MENU]</span>
-                            <span className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                                ONLINE
-                            </span>
-                        </div>
+                        <nav className="h-full flex flex-col justify-center items-center gap-8">
+                            {navItems.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    href={`#${item.id}`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className={`font-mono text-xl tracking-widest transition-colors ${activeSection === item.id ? 'text-cyan-300' : 'text-neutral-400'}`}
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </nav>
                     </motion.div>
-                </nav>
-            </div>
-            
-            {/* Overlay */}
-            {isMenuOpen && <div className="fixed inset-0 bg-black/10 z-20 md:hidden" onClick={() => setIsMenuOpen(false)} />}
+                )}
+            </AnimatePresence>
         </>
     );
 };

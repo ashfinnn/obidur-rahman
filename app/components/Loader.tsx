@@ -1,14 +1,50 @@
-// app/components/Loader.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Loader = () => {
-  const [loading, setLoading] = useState(true);
+const CornerBracket = ({ position }: { position: string }) => {
+    // This component is correct and does not need changes
+    const baseClasses = 'absolute w-8 h-8';
+    const borderClasses = 'border-neutral-700';
+    let positionClasses = '';
+    let origins = { x: 0.5, y: 0.5 };
+
+    switch (position) {
+        case 'top-left':
+            positionClasses = 'top-4 left-4 border-l-2 border-t-2';
+            origins = { x: 0, y: 0 };
+            break;
+        case 'top-right':
+            positionClasses = 'top-4 right-4 border-r-2 border-t-2';
+            origins = { x: 1, y: 0 };
+            break;
+        case 'bottom-left':
+            positionClasses = 'bottom-4 left-4 border-l-2 border-b-2';
+            origins = { x: 0, y: 1 };
+            break;
+        case 'bottom-right':
+            positionClasses = 'bottom-4 right-4 border-r-2 border-b-2';
+            origins = { x: 1, y: 1 };
+            break;
+    }
+
+    return (
+        <motion.div
+            className={`${baseClasses} ${positionClasses} ${borderClasses}`}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+            style={{ transformOrigin: `${origins.x * 100}% ${origins.y * 100}%` }}
+        />
+    );
+};
+
+
+const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
   const [progress, setProgress] = useState(0);
   const [currentSystem, setCurrentSystem] = useState(0);
 
-  // 1. Updated system messages for consistency
   const systems = [
     'INITIATING_SYSTEM_BOOT...',
     'CALIBRATING_NEURAL_INTERFACE...',
@@ -16,26 +52,20 @@ const Loader = () => {
     'ESTABLISHING_GRID_CONNECTION...',
     'SYSTEM_READY'
   ];
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
-    // This hook manages the loading progress and text cycling.
-    // The timing logic is good, so we'll keep it.
-    
-    // Prevent scrolling while loader is active
     document.body.style.overflow = 'hidden';
 
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval);
-          // Complete loading, fade out, and re-enable scroll
           setTimeout(() => {
-            setLoading(false);
             document.body.style.overflow = '';
-          }, 400);
+            onLoaded(); // Signal to the parent component that loading is done
+          }, 500); // Wait for fade out animation
           return 100;
         }
-        // Smooth but fast progress
         return prev + Math.random() * 3;
       });
     }, 50);
@@ -47,58 +77,67 @@ const Loader = () => {
     return () => {
       clearInterval(progressInterval);
       clearInterval(systemInterval);
-      if (!loading) {
-        document.body.style.overflow = '';
-      }
     };
-  }, []);
+  }, [onLoaded, systems.length]);
 
-  // Update to final message when complete
   useEffect(() => {
     if (progress >= 100) {
       setCurrentSystem(systems.length - 1);
     }
-  }, [progress]);
-
-  if (!loading && progress >= 100) return null;
+  }, [progress, systems.length]);
 
   return (
-    // 2. Main container with fade-out transition
-    <div 
-      className={`fixed inset-0 bg-white z-[100] flex items-center justify-center transition-opacity duration-500 ease-in-out ${
-        progress >= 100 ? 'opacity-0' : 'opacity-100'
+    <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: progress >= 100 ? 0 : 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      className={`fixed inset-0 bg-black z-[100] flex items-center justify-center ${
+        progress >= 100 ? 'pointer-events-none' : ''
       }`}
     >
-      {/* 3. Sharp corner brackets for a HUD frame */}
-      <div className="absolute w-8 h-8 top-4 left-4 border-l border-t border-gray-300"></div>
-      <div className="absolute w-8 h-8 top-4 right-4 border-r border-t border-gray-300"></div>
-      <div className="absolute w-8 h-8 bottom-4 left-4 border-l border-b border-gray-300"></div>
-      <div className="absolute w-8 h-8 bottom-4 right-4 border-r border-b border-gray-300"></div>
+      <CornerBracket position="top-left" />
+      <CornerBracket position="top-right" />
+      <CornerBracket position="bottom-left" />
+      <CornerBracket position="bottom-right" />
       
-      {/* 4. Thematic corner text */}
-      <div className="absolute top-6 left-6 font-mono text-xs text-gray-400">SYS_LOAD::v3.0</div>
-      <div className="absolute top-6 right-6 font-mono text-xs text-gray-400">{new Date().getFullYear()}</div>
-      <div className="absolute bottom-6 left-6 font-mono text-xs text-gray-400">[OBIDUR.RAHMAN]</div>
-      <div className="absolute bottom-6 right-6 font-mono text-xs text-gray-400">STATUS: <span className="text-black">LOADING</span></div>
+      <div className="absolute top-6 left-6 font-mono text-xs text-neutral-500">SYS_LOAD::v3.0</div>
+      <div className="absolute top-6 right-6 font-mono text-xs text-neutral-500">{new Date().getFullYear()}</div>
+      <div className="absolute bottom-6 left-6 font-mono text-xs text-neutral-500">[OBIDUR.RAHMAN]</div>
+      <div className="absolute bottom-6 right-6 font-mono text-xs text-neutral-500 flex items-center gap-2">
+        STATUS: <span className="text-cyan-300">ACTIVE</span>
+        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+      </div>
 
-      {/* Central content */}
-      <div className="text-center w-full max-w-sm sm:max-w-md px-4">
-        {/* Progress Bar */}
-        <div className="w-full h-px bg-gray-200">
+      <motion.div
+        animate={{ scale: progress >= 100 ? 0.9 : 1, opacity: progress >= 100 ? 0 : 1 }}
+        transition={{ duration: 0.4, ease: 'easeIn' }}
+        className="text-center w-full max-w-sm sm:max-w-md px-4"
+      >
+        <div className="w-full h-px bg-neutral-800">
           <div
-            className="h-full bg-black transition-all duration-150 ease-linear"
+            className="h-full bg-cyan-300 transition-all duration-150 ease-linear shadow-[0_0_10px_0px] shadow-cyan-300/50"
             style={{ width: `${progress}%` }}
           />
         </div>
         
-        {/* Status Line */}
-        <div className="mt-4 flex justify-between font-mono text-xs text-black">
-          <span>{systems[currentSystem]}</span>
+        <div className="mt-4 flex justify-between font-mono text-xs text-neutral-300 h-4">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={currentSystem}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {systems[currentSystem]}
+            </motion.span>
+          </AnimatePresence>
           <span>{Math.floor(progress)}%</span>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
+// THE FIX IS HERE: Add the missing export statement.
 export default Loader;

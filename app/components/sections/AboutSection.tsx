@@ -1,7 +1,7 @@
-// app/components/sections/AboutSection.tsx
 'use client';
 
 import { motion } from 'framer-motion';
+import QuoteBlock from '../QuoteBlock'; // 1. IMPORT: The new quote component
 
 // Reusable variants for motion
 const containerVariants = {
@@ -24,17 +24,48 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   </motion.h3>
 );
 
+// 2. REFACTOR: Leadership data moved to an array for clean mapping
+const leadershipData = [
+  {
+    role: 'FOUNDER',
+    organization: 'The Code Forum',
+    description: 'Built a tech community of 100+ members and established 5 comprehensive learning paths for aspiring developers.',
+  },
+  {
+    role: 'R&D SECRETARY',
+    organization: 'CU Math Club',
+    description: 'Leading research initiatives and organizing events that bridge academic theory with practical application.',
+  },
+  {
+    role: 'CONTENT CREATOR',
+    organization: 'Educational Content',
+    description: 'Created 10+ videos on ML & Math, and published 13 articles on Python & ML topics with over 1000+ reads.',
+  },
+];
+
+// 3. REFACTOR: Created a dedicated component for leadership roles
+const LeadershipCard = ({ role, organization, description }: typeof leadershipData[0]) => (
+    <div className="group relative p-8 bg-white transition-all duration-300">
+        {/* IMPROVEMENT: Interactive top border on hover */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 transition-all duration-300 group-hover:bg-black" />
+        <h4 className="font-mono text-xs text-gray-500 mb-3">{role}</h4>
+        <h5 className="font-sans text-lg font-bold mb-2 text-black">{organization}</h5>
+        <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
+    </div>
+);
+
+
 const AboutSection = () => {
     return (
         <motion.section 
-            className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-white"
+            id="about" // Added ID for navigation
+            className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-white" // Slightly off-white background for depth
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
         >
             <div className="max-w-7xl mx-auto">
-                {/* 1. Main Section Header (Thematic & Monochromatic) */}
                 <header className="mb-16 md:mb-24">
                     <motion.h2 
                         className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-black"
@@ -51,9 +82,7 @@ const AboutSection = () => {
                     </motion.p>
                 </header>
 
-                {/* 2. Main Content Grid (Redesigned with lines instead of cards) */}
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 mb-24">
-                    {/* Left side: Philosophy & Journey */}
                     <div className="lg:col-span-3 space-y-12">
                         <motion.div variants={itemVariants}>
                             <h4 className="font-mono text-xs text-gray-500 tracking-widest mb-4">[PHILOSOPHY]</h4>
@@ -65,7 +94,9 @@ const AboutSection = () => {
                         <motion.div variants={itemVariants}>
                             <h4 className="font-mono text-xs text-gray-500 tracking-widest mb-4">[EDUCATION_TIMELINE]</h4>
                             <div className="relative border-l border-gray-200 pl-8 space-y-8">
-                                <div className="absolute left-[-1px] top-1 w-px h-12 bg-black"></div>
+                                {/* IMPROVEMENT: Visual "node" on the timeline */}
+                                <div className="absolute left-[-2px] top-1 w-1 h-12 bg-black"></div>
+                                <div className="absolute left-[-6px] top-1 w-3 h-3 bg-black rounded-full border-2 border-gray-50"></div>
                                 <div>
                                     <p className="font-mono text-xs text-black">2022 - 2026</p>
                                     <h5 className="font-sans text-lg font-bold mt-1">BSc in Mathematics</h5>
@@ -75,8 +106,8 @@ const AboutSection = () => {
                             </div>
                         </motion.div>
                     </div>
-                    {/* Right side: Status & Metrics */}
-                    <div className="lg:col-span-2 space-y-12">
+                    {/* IMPROVEMENT: Wrapped metrics in a styled container for visual separation */}
+                    <div className="lg:col-span-2 space-y-12 bg-white border border-gray-200 p-8">
                         <motion.div variants={itemVariants}>
                             <h4 className="font-mono text-xs text-gray-500 tracking-widest mb-4">[OPERATIONAL_STATUS]</h4>
                             <div className="space-y-3 font-mono text-sm border-t border-b border-gray-200 py-4">
@@ -97,34 +128,20 @@ const AboutSection = () => {
                     </div>
                 </div>
 
-                {/* 3. Leadership Section (Redesigned with a clean grid) */}
                 <div className="mb-24">
                     <SectionTitle>[LEADERSHIP_&_COMMUNITY]</SectionTitle>
+                    {/* 4. REFACTOR: Leadership section now maps over data, rendering the new card component */}
                     <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200 border border-gray-200" variants={itemVariants}>
-                        <div className="p-8 bg-white">
-                            <h4 className="font-mono text-xs text-gray-500 mb-3">FOUNDER</h4>
-                            <h5 className="font-sans text-lg font-bold mb-2">The Code Forum</h5>
-                            <p className="text-sm text-gray-600 leading-relaxed">Built a tech community of 100+ members and established 5 comprehensive learning paths for aspiring developers.</p>
-                        </div>
-                        <div className="p-8 bg-white">
-                            <h4 className="font-mono text-xs text-gray-500 mb-3">R&D SECRETARY</h4>
-                            <h5 className="font-sans text-lg font-bold mb-2">CU Math Club</h5>
-                            <p className="text-sm text-gray-600 leading-relaxed">Leading research initiatives and organizing events that bridge academic theory with practical application.</p>
-                        </div>
-                        <div className="p-8 bg-white">
-                            <h4 className="font-mono text-xs text-gray-500 mb-3">CONTENT CREATOR</h4>
-                            <h5 className="font-sans text-lg font-bold mb-2">Educational Content</h5>
-                            <p className="text-sm text-gray-600 leading-relaxed">Created 10+ videos on ML & Math, and published 13 articles on Python & ML topics with over 1000+ reads.</p>
-                        </div>
+                        {leadershipData.map((item) => (
+                           <LeadershipCard key={item.organization} {...item} />
+                        ))}
                     </motion.div>
                 </div>
 
-                {/* 4. Quote Section (Minimalist & impactful) */}
-                <motion.div className="text-center py-16 border-t border-gray-200" variants={itemVariants}>
-                    <blockquote className="font-sans text-xl lg:text-2xl font-medium text-black max-w-4xl mx-auto leading-relaxed">
-                        "The beauty of mathematics lies not just in its precision, but in its power to reveal the hidden patterns that govern our universe."
-                    </blockquote>
-                </motion.div>
+                {/* 5. REFACTOR: Replaced inline quote with the new QuoteBlock component */}
+                <QuoteBlock variants={itemVariants}>
+                    "The beauty of mathematics lies not just in its precision, but in its power to reveal the hidden patterns that govern our universe."
+                </QuoteBlock>
             </div>
         </motion.section>
     );
