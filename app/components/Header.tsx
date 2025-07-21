@@ -1,5 +1,5 @@
 // app/components/Header.tsx
-"use client";
+'use client';
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -52,7 +52,7 @@ const Header = () => {
                     }
                 });
             },
-            { threshold: 0.3, rootMargin: "-50% 0px -50% 0px" } // Detect when section is in middle of screen
+            { threshold: 0.3, rootMargin: '-50% 0px -50% 0px' } // Detect when section is in middle of screen
         );
 
         const sections = ['about', 'skills', 'projects', 'contact'];
@@ -74,9 +74,9 @@ const Header = () => {
     // 1. Refactored NavLink for futuristic style
     const NavLink = ({ href, label, mobile = false }: { href: string; label: string; mobile?: boolean }) => {
         const isActive = activeSection === href.slice(1);
-        const baseClasses = "font-mono tracking-wider transition-colors duration-300 relative";
-        const mobileClasses = mobile ? "block text-base py-3" : "text-xs";
-        const activeClasses = isActive ? "text-black" : "text-gray-500 hover:text-black";
+        const baseClasses = 'font-mono tracking-wider transition-colors duration-300 relative';
+        const mobileClasses = mobile ? 'block text-base py-3' : 'text-xs';
+        const activeClasses = isActive ? 'text-black' : 'text-gray-500 hover:text-black';
 
         return (
             <Link 
@@ -143,7 +143,7 @@ const Header = () => {
                             key={item.href}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.05, ease: "easeOut" }}
+                            transition={{ duration: 0.3, delay: index * 0.05, ease: 'easeOut' }}
                         >
                             <NavLink href={item.href} label={item.label} mobile />
                         </motion.div>

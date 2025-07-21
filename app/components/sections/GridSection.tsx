@@ -1,5 +1,5 @@
 // app/components/sections/GridSection.tsx
-"use client";
+'use client';
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -62,7 +62,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 100, damping: 10 },
+    transition: { type: 'spring' as const, stiffness: 100, damping: 10 },
   },
 };
 

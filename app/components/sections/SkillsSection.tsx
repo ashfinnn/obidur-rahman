@@ -1,5 +1,5 @@
 // app/components/sections/SkillsSection.tsx
-"use client";
+'use client';
 
 import { motion } from 'framer-motion';
 

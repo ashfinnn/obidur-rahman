@@ -1,5 +1,5 @@
 // lib/data.ts
-import { AllProjectsData } from "./types";
+import { AllProjectsData } from './types';
 
 export const allProjectsData: AllProjectsData = {
     'data-science': {
