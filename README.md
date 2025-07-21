@@ -2,7 +2,7 @@
 
 Welcome to the source code for my personal portfolio website. This project is a fully responsive, futuristic, and interactive web experience built with Next.js, TypeScript, and Tailwind CSS. The design is inspired by modern Heads-Up Displays (HUDs) and system interfaces, featuring a monochromatic color scheme, sharp typography, and subtle animations.
 
-**Live Site:** [**obidurrahman.com**](https://obidur.vercel.app) *(Replace with your actual URL)*
+**Live Site:** [**obidur.vercel.app**](https://obidur.vercel.app) *(Replace with your actual URL)*
 
 ---
 

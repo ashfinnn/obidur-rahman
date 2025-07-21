@@ -14,3 +14,7 @@ const eslintConfig = [
 ];
 
 export default eslintConfig;
+export const rules = {
+  "quotes": ["error", "single", { "avoidEscape": true }],
+  "apostrophe": "off"
+};
