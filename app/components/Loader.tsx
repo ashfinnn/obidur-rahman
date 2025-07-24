@@ -1,10 +1,11 @@
+// app/components/sections/Loader.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// This sub-component is perfect as is.
 const CornerBracket = ({ position }: { position: string }) => {
-    // This component is correct and does not need changes
     const baseClasses = 'absolute w-8 h-8';
     const borderClasses = 'border-neutral-700';
     let positionClasses = '';
@@ -53,6 +54,7 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
     'SYSTEM_READY'
   ];
 
+  // The useEffect logic is solid. No changes needed here.
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
@@ -62,8 +64,8 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
           clearInterval(progressInterval);
           setTimeout(() => {
             document.body.style.overflow = '';
-            onLoaded(); // Signal to the parent component that loading is done
-          }, 500); // Wait for fade out animation
+            onLoaded();
+          }, 500);
           return 100;
         }
         return prev + Math.random() * 3;
@@ -113,7 +115,15 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
         transition={{ duration: 0.4, ease: 'easeIn' }}
         className="text-center w-full max-w-sm sm:max-w-md px-4"
       >
-        <div className="w-full h-px bg-neutral-800">
+        {/* ++ ACCESSIBILITY IMPROVEMENT ++ */}
+        <div 
+          className="w-full h-px bg-neutral-800"
+          role="progressbar"
+          aria-valuenow={Math.floor(progress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Loading page content"
+        >
           <div
             className="h-full bg-cyan-300 transition-all duration-150 ease-linear shadow-[0_0_10px_0px] shadow-cyan-300/50"
             style={{ width: `${progress}%` }}
@@ -139,5 +149,5 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
   );
 };
 
-// THE FIX IS HERE: Add the missing export statement.
+// ++ THE BUG FIX ++ Add the missing export statement.
 export default Loader;

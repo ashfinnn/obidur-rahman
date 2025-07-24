@@ -13,7 +13,7 @@ export default function Home() {
     <main className="overflow-x-hidden">
       <Header />
       <Hero />
-      <GridSection />
+      {/* <GridSection /> */}
       <div id="about">
         <AboutSection />
       </div>

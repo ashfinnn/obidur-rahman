@@ -3,12 +3,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-// Icons are kept for the rich visual experience
 import { FiMail, FiArrowUp } from 'react-icons/fi';
 import { FaLinkedin, FaGithub, FaYoutube, FaTwitter, FaLastfm } from 'react-icons/fa';
 import { SiAnilist } from 'react-icons/si';
 
-// Full list of social links with icons
+// --- Data is perfect, no changes needed ---
 const socialLinks = [
     { name: 'Email', icon: FiMail, href: 'mailto:obidur.shawal@gmail.com' },
     { name: 'LinkedIn', icon: FaLinkedin, href: 'https://www.linkedin.com/in/obidur-rahman-shawal/' },
@@ -19,15 +18,14 @@ const socialLinks = [
     { name: 'Anilist', icon: SiAnilist, href: 'https://anilist.co/user/Ashfin/' },
 ];
 
-// Reusable components styled for the light theme
+// Reusable components styled for the DARK theme
 const SocialIconLink = ({ href, icon: Icon, name }: typeof socialLinks[0]) => (
     <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={name}
-        // Updated: Colors adapted for light theme
-        className="text-gray-400 transition-colors hover:text-black"
+        className="text-neutral-400 transition-colors hover:text-cyan-300" // CHANGED
     >
         <Icon size={18} />
     </a>
@@ -36,8 +34,7 @@ const SocialIconLink = ({ href, icon: Icon, name }: typeof socialLinks[0]) => (
 const BackToTopButton = () => (
     <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        // Updated: Colors adapted for light theme
-        className="group flex items-center gap-2 font-mono text-xs text-gray-500 transition-colors hover:text-black"
+        className="group flex items-center gap-2 font-mono text-xs text-neutral-400 transition-colors hover:text-cyan-300" // CHANGED
         aria-label="Scroll to top"
     >
         <span>BACK_TO_TOP</span>
@@ -52,7 +49,6 @@ const Footer = () => {
     useEffect(() => {
         const updateTime = () => {
             const now = new Date();
-            // Reverted to Dhaka for consistency with the original light theme version
             const timeString = now.toLocaleTimeString('en-US', {
                 timeZone: 'Asia/Dhaka',
                 hour12: false,
@@ -69,8 +65,7 @@ const Footer = () => {
 
     return (
         <motion.footer
-            // Updated: Background and border for light theme
-            className="px-6 sm:px-8 lg:px-16 py-8 border-t border-gray-200 bg-white"
+            className="px-6 sm:px-8 lg:px-16 py-8 border-t border-neutral-800 bg-black" // CHANGED
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -78,30 +73,25 @@ const Footer = () => {
         >
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-8">
-                    
-                    {/* Copyright (colors updated) */}
-                    <p className="font-mono text-xs text-gray-500">
+
+                    <p className="font-mono text-xs text-neutral-500"> {/* CHANGED */}
                         © {new Date().getFullYear()} OBIDUR.RAHMAN
                     </p>
 
-                    {/* Social Links (using the updated sub-component) */}
                     <div className="flex items-center gap-5">
                         {socialLinks.map(link => (
                             <SocialIconLink key={link.name} {...link} />
                         ))}
                     </div>
 
-                    {/* Status and Back to Top */}
                     <div className="flex items-center gap-6">
-                        {/* Status Indicator (colors updated) */}
-                        <div className="hidden md:flex items-center gap-2 font-mono text-xs text-gray-500">
-                            {/* Updated: Green pulse for better contrast on white */}
+                        <div className="hidden md:flex items-center gap-2 font-mono text-xs text-neutral-400"> {/* CHANGED */}
+                            {/* The green pulse dot is fine, it has great contrast on black */}
                             <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                             <span>STATUS: OPERATIONAL</span>
-                            <span className="text-black">{time}</span>
+                            <span className="text-white">{time}</span> {/* CHANGED */}
                         </div>
-                        
-                        {/* Back to Top Button (using the updated sub-component) */}
+
                         <div className="hidden lg:block">
                             <BackToTopButton />
                         </div>

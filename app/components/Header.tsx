@@ -3,103 +3,61 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useTransform } from 'framer-motion';
+import { useScroll } from '../hooks/useScroll';
+import { useActiveSection } from '../hooks/useActiveSection';
+
+const navItems = [
+    { id: 'about', label: 'ABOUT' },
+    { id: 'skills', label: 'SKILLS' },
+    { id: 'projects', label: 'WORK' },
+    { id: 'contact', label: 'CONTACT' }
+];
+
+const sectionIds = ['grid-section', 'about', 'skills', 'projects', 'contact'];
 
 const Header = () => {
-    const [isScrolled, setIsScrolled] = useState(false); 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [scrollProgress, setScrollProgress] = useState(0);
-    const [activeSection, setActiveSection] = useState('grid-section');
+    const { isScrolled, scrollYProgress } = useScroll();
+    const activeSection = useActiveSection(sectionIds, 'grid-section');
 
-    // THE FIX: This new useEffect hook manages body scroll based on menu state.
     useEffect(() => {
         if (isMenuOpen) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';
         }
-        // Cleanup function to ensure scroll is re-enabled if component unmounts
         return () => {
             document.body.style.overflow = '';
         };
     }, [isMenuOpen]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (typeof window !== 'undefined') {
-                setIsScrolled(window.scrollY > 10);
-                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-                setScrollProgress((window.scrollY / totalHeight) * 100);
-            }
-        };
-
-        const handleResize = () => setIsMenuOpen(false);
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
-        
-        handleScroll();
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []); // Removed isMenuOpen from dependency array here
-
-    // ... The rest of the useEffects and constants remain the same ...
-    useEffect(() => {
-        const sections = ['grid-section', 'about', 'skills', 'projects', 'contact'];
-        const observers = sections.map(id => {
-            const element = document.getElementById(id);
-            if (!element) return null;
-
-            const observer = new IntersectionObserver(
-                ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-                { threshold: 0.3, rootMargin: '-40% 0px -60% 0px' }
-            );
-            observer.observe(element);
-            return observer;
-        });
-
-        return () => observers.forEach(obs => obs?.disconnect());
-    }, []);
-
-    const navItems = [
-        { id: 'about', label: 'ABOUT' },
-        { id: 'skills', label: 'SKILLS' },
-        { id: 'projects', label: 'WORK' },
-        { id: 'contact', label: 'CONTACT' }
-    ];
-
-    const headerBaseClasses = "fixed top-0.5 left-0 right-0 z-40 h-20 transition-all duration-300 ease-in-out";
+    const headerBaseClasses = "fixed top-0 left-0 right-0 z-40 h-20 transition-all duration-300 ease-in-out";
     const scrolledClasses = "bg-black/80 backdrop-blur-md border-b border-neutral-800";
     const topClasses = "bg-white border-b border-gray-200";
     const logoColor = isScrolled ? "text-white" : "text-black";
     const mobileIconColor = isScrolled ? "bg-white" : "bg-black";
 
+    const progressBarColor = useTransform(scrollYProgress, [0, 0.01], ['#000000', '#67E8F9']);
+
     return (
         <>
-            {/* Scroll Progress Bar */}
-            <div className="fixed top-0 left-0 w-full h-0.5 bg-transparent z-50">
-                <div 
-                    className={`h-full ${isScrolled ? 'bg-cyan-300' : 'bg-black'}`}
-                    style={{ width: `${scrollProgress}%` }} 
-                />
-            </div>
+            <motion.div
+                className="fixed top-0 left-0 w-full h-0.5 z-50"
+                style={{ scaleX: scrollYProgress, backgroundColor: progressBarColor, transformOrigin: 'left' }}
+            />
 
-            {/* Header with dynamic styling */}
             <header className={`${headerBaseClasses} ${isScrolled ? scrolledClasses : topClasses}`}>
                 <div className="h-full px-4 sm:px-8 lg:px-16 flex items-center justify-between">
                     <Link href="/" className={`font-mono font-bold text-sm tracking-widest transition-colors ${logoColor} hover:text-cyan-300`}>
                         OBIDUR.RAHMAN
                     </Link>
 
-                    {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-8 lg:gap-10">
                         {navItems.map((item) => {
                             const isActive = activeSection === item.id;
-                            const linkColor = isScrolled 
-                                ? (isActive ? 'text-white' : 'text-neutral-300 hover:text-white') 
+                            const linkColor = isScrolled
+                                ? (isActive ? 'text-white' : 'text-neutral-300 hover:text-white')
                                 : (isActive ? 'text-black' : 'text-neutral-500 hover:text-black');
                             const indicatorColor = isScrolled ? 'bg-cyan-300' : 'bg-black';
 
@@ -107,6 +65,7 @@ const Header = () => {
                                 <Link
                                     key={item.id}
                                     href={`#${item.id}`}
+                                    aria-current={isActive ? 'page' : undefined}
                                     className={`relative font-mono text-xs tracking-wider transition-colors duration-300 ${linkColor}`}
                                 >
                                     {item.label}
@@ -122,7 +81,6 @@ const Header = () => {
                         })}
                     </nav>
 
-                    {/* Mobile Menu Button */}
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu" className="relative w-8 h-8 flex items-center justify-center md:hidden z-50">
                         <div className="space-y-1.5">
                             <span className={`block w-5 h-px ${mobileIconColor} transition-all duration-300 ease-in-out ${isMenuOpen ? 'translate-y-1 rotate-45' : ''}`} />
@@ -132,8 +90,7 @@ const Header = () => {
                     </button>
                 </div>
             </header>
-            
-            {/* Mobile Menu (always dark for consistency) */}
+
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
