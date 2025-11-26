@@ -10,31 +10,26 @@ import SlideSection from './components/ui/SlideSection';
 
 export default function Home() {
   return (
-    <main className="relative w-full bg-black">
+    <main className="relative w-full bg-black overflow-x-clip">
       <Header />
 
-      {/* 1. HERO (Z-Index 1) */}
-      <SlideSection index={1} className="bg-[#050505]">
+      {/* 1. HERO */}
+      <SlideSection index={1} id="hero" className="bg-[#050505]">
         <Hero />
       </SlideSection>
 
-      {/* 2. ABOUT (Z-Index 2 - Slides OVER Hero) */}
-      <SlideSection index={2} className="bg-[#f4f4f0]">
+      {/* 2. ABOUT + SKILLS (Merged) */}
+      <SlideSection index={2} id="about" className="bg-[#f4f4f0]">
         <AboutSection />
       </SlideSection>
 
-      {/* 3. SKILLS (Z-Index 3 - Slides OVER About) */}
-      <SlideSection index={3} className="bg-gray-100">
-        <SkillsSection />
-      </SlideSection>
-
-      {/* 4. PROJECTS (Z-Index 4 - Slides OVER Skills) */}
-      <SlideSection index={4} className="bg-[#0a0a0a]">
+      {/* 3. PROJECTS (Adjusted index) */}
+      <SlideSection index={3} id="projects" className="bg-[#000]">
         <ProjectsSection />
       </SlideSection>
 
-      {/* 5. CONTACT (Z-Index 5 - Slides OVER Projects) */}
-      <SlideSection index={5} className="bg-white">
+      {/* 4. CONTACT (Adjusted index) */}
+      <SlideSection index={4} id="contact" className="bg-white">
         <div className="min-h-[100dvh] flex flex-col justify-between">
             <ContactSection />
             <Footer />

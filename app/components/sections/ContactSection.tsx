@@ -74,7 +74,7 @@ const ContactItem = ({ icon: Icon, label, href }: typeof contactLinks[0]) => (
 const ContactSection = () => {
     return (
         <motion.section
-            id="contact"
+            id="contact" data-theme="light"
             className="relative px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-gray-50 overflow-hidden"
             variants={containerVariants}
             initial="hidden"

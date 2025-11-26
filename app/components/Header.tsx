@@ -1,10 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { FiMenu } from 'react-icons/fi'; // Mobile icon
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const navItems = [
     { id: 'hero', label: 'HOME' },
@@ -14,81 +13,74 @@ const navItems = [
     { id: 'contact', label: 'CONTACT' },
 ];
 
+// Intersection observer initial setup removed from module scope because it referenced component state.
+// The observer is already created inside the Header component's useEffect where setActiveSection and setIsDark are available.
+
 const Header = () => {
     const [activeSection, setActiveSection] = useState('hero');
-    const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+    const [isDark, setIsDark] = useState(true);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    // Scroll Spy Logic
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY + window.innerHeight / 3;
-            
-            // Check themes and active sections
-            for (const item of navItems) {
-                const section = document.getElementById(item.id);
-                if (section) {
-                    const top = section.offsetTop;
-                    const height = section.offsetHeight;
-                    if (scrollPosition >= top && scrollPosition < top + height) {
-                        setActiveSection(item.id);
-                        const currentTheme = section.getAttribute('data-theme') as 'dark' | 'light' || 'dark';
-                        setTheme(currentTheme);
-                    }
-                }
-            }
+        // INTERSECTION OBSERVER: The robust way to track sticky sections
+        const observerOptions = {
+            root: null,
+            rootMargin: '-45% 0px -45% 0px', // Detects what is in the MIDDLE 10% of screen
+            threshold: 0
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                    
+                    // Auto-detect theme based on section data-attribute
+                    // Note: You need to add data-theme="light" or "dark" to your sections
+                    const theme = entry.target.closest('section')?.getAttribute('data-theme');
+                    if (theme) setIsDark(theme === 'dark');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        navItems.forEach((item) => {
+            const element = document.getElementById(item.id);
+            if (element) observer.observe(element);
+        });
+
+        return () => observer.disconnect();
     }, []);
 
-    const isDark = theme === 'dark';
-    const borderColor = isDark ? 'border-white/10' : 'border-black/10';
-    const textColor = isDark ? 'text-white' : 'text-black';
-    const sidebarBg = isDark ? 'bg-black/40' : 'bg-white/60';
+    // Dynamic styles
+    const bgClass = isDark ? 'bg-black/20 border-white/10' : 'bg-white/40 border-black/10';
+    const textClass = isDark ? 'text-white' : 'text-black';
+    const muteClass = isDark ? 'text-gray-500' : 'text-gray-400';
 
     return (
         <>
-            {/* --- DESKTOP SIDEBAR (Wider & Easier to Click) --- */}
-            <motion.header 
-                className={`hidden md:flex fixed left-0 top-0 bottom-0 w-28 flex-col justify-between py-8 z-999 border-r backdrop-blur-xl transition-colors duration-500 ${sidebarBg} ${borderColor}`}
-            >
+            {/* --- DESKTOP SIDEBAR --- */}
+            <aside className={`hidden md:flex fixed left-0 top-0 bottom-0 w-28 flex-col justify-between py-8 z-[999] border-r backdrop-blur-xl transition-all duration-500 ${bgClass}`}>
                 {/* Logo */}
-                <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full flex justify-center py-4">
-                    <div className={`font-black text-2xl tracking-tighter transition-colors ${textColor}`}>
-                        OR<span className="text-cyan-500">.</span>
-                    </div>
+                <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full flex justify-center">
+                    <span className={`font-black text-2xl tracking-tighter ${textClass}`}>OR.</span>
                 </button>
 
-                {/* Navigation - Full Width Clickable Areas */}
-                <nav className="flex flex-col w-full">
+                {/* Nav */}
+                <nav className="flex flex-col w-full gap-2">
                     {navItems.map((item) => {
                         const isActive = activeSection === item.id;
                         return (
                             <Link
                                 key={item.id}
                                 href={`#${item.id}`}
-                                className="group relative flex items-center justify-center h-16 w-full cursor-pointer"
+                                className="relative flex items-center justify-center h-12 w-full group"
                             >
-                                {/* Hover Background Slide */}
-                                <div className="absolute inset-0 bg-cyan-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                                
-                                {/* Active Indicator Line (Left Border) */}
-                                {isActive && (
-                                    <motion.div 
-                                        layoutId="activeSidebarLine"
-                                        className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500" 
-                                    />
-                                )}
-
-                                {/* Label or Dot */}
-                                <div className="flex flex-col items-center gap-1 transition-all duration-300">
-                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-widest transition-all duration-300 ${isActive ? 'text-cyan-500 scale-110' : isDark ? 'text-gray-500 group-hover:text-white' : 'text-gray-400 group-hover:text-black'}`}>
+                                <div className={`flex items-center gap-2 transition-all duration-300 ${isActive ? 'translate-x-2' : ''}`}>
+                                    <span className={`text-[10px] font-mono font-bold uppercase tracking-widest transition-colors ${isActive ? 'text-cyan-500' : 'text-transparent group-hover:text-gray-400'}`}>
                                         {item.label}
                                     </span>
-                                    
-                                    {/* Small dot below text for active visual */}
-                                    <div className={`w-1 h-1 rounded-full transition-all duration-300 ${isActive ? 'bg-cyan-500 opacity-100' : 'opacity-0'}`} />
+                                    <div className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${isActive ? 'bg-cyan-500 scale-125' : isDark ? 'bg-white/20' : 'bg-black/20'}`} />
                                 </div>
                             </Link>
                         );
@@ -98,28 +90,37 @@ const Header = () => {
                 {/* Socials */}
                 <div className="flex flex-col items-center gap-6">
                     {[FaGithub, FaLinkedin, FaTwitter].map((Icon, i) => (
-                        <a key={i} href="#" className={`transition-colors duration-300 hover:text-cyan-500 hover:scale-110 p-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-                            <Icon size={20} />
+                        <a key={i} href="#" className={`hover:text-cyan-500 transition-colors ${muteClass}`}>
+                            <Icon size={18} />
                         </a>
                     ))}
                 </div>
-            </motion.header>
+            </aside>
 
-            {/* --- MOBILE HEADER (Top Bar instead of bottom for better UX) --- */}
-            <div className={`md:hidden fixed top-0 left-0 right-0 z-999 px-6 py-4 flex justify-between items-center backdrop-blur-lg border-b ${isDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white/90 border-black/10 text-black'}`}>
+            {/* --- MOBILE TOP BAR --- */}
+            <header className={`md:hidden fixed top-0 left-0 right-0 z-[999] px-6 py-4 flex justify-between items-center backdrop-blur-xl border-b transition-colors duration-500 ${isDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white/90 border-black/10 text-black'}`}>
                 <span className="font-black text-xl">OR.</span>
-                <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
+                <button onClick={() => setMobileMenuOpen(true)}>
                     <FiMenu size={24} />
                 </button>
-            </div>
-            
-            {/* Mobile Menu Overlay */}
+            </header>
+
+            {/* MOBILE MENU OVERLAY */}
             {mobileMenuOpen && (
-                <div className="fixed inset-0 z-[60] bg-black text-white flex flex-col items-center justify-center gap-8 md:hidden">
-                     <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6 text-sm font-mono">CLOSE</button>
-                     {navItems.map(item => (
-                         <Link key={item.id} href={`#${item.id}`} onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold hover:text-cyan-500">{item.label}</Link>
-                     ))}
+                <div className="fixed inset-0 z-[1000] bg-black text-white flex flex-col items-center justify-center gap-8">
+                    <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6">
+                        <FiX size={24} />
+                    </button>
+                    {navItems.map(item => (
+                        <Link 
+                            key={item.id} 
+                            href={`#${item.id}`} 
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`text-3xl font-black ${activeSection === item.id ? 'text-cyan-500' : 'text-white'}`}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
                 </div>
             )}
         </>

@@ -2,108 +2,139 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { allProjectsData } from '../lib/data'; // Keep your existing data import
-import { FiArrowUpRight, FiFolder } from 'react-icons/fi';
+import { allProjectsData } from '../lib/data';
+import { FiArrowUpRight, FiCode } from 'react-icons/fi';
 
 const ProjectsSection = () => {
-    const [filter, setFilter] = useState('all');
+    const [activeId, setActiveId] = useState<string | null>(null);
 
-    const allProjects = useMemo(() => {
+    // Flatten data and grab only the TOP 5 to ensure it fits one screen
+    const featuredProjects = useMemo(() => {
         if(!allProjectsData) return [];
-        return Object.values(allProjectsData).flatMap(cat =>
-            cat.items.map(item => ({ ...item, category: cat.title }))
+        const flat = Object.values(allProjectsData).flatMap(cat => 
+            cat.items.map(item => ({...item, category: cat.title}))
         );
+        return flat.slice(0, 5);
     }, []);
 
-    const categories = useMemo(() => {
-        if(!allProjectsData) return ['all'];
-        return ['all', ...Object.values(allProjectsData).map(cat => cat.title)];
-    }, []);
-
-    const filteredProjects = filter === 'all' 
-        ? allProjects 
-        : allProjects.filter(project => project.category === filter);
+    // Default to first project if none hovered
+    const activeProject = activeId 
+        ? featuredProjects.find(p => p.title === activeId) 
+        : featuredProjects[0];
 
     return (
-        <section id="projects" data-theme="dark" className="relative  bg-[#000000] py-24 md:py-32 min-h-full">
-             {/* Background Grid */}
-             <div className="absolute inset-0 opacity-10" 
-                style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '30px 30px' }} 
-            />
-
-            <div className="max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 relative z-10">
+        <section id="projects" className="h-full w-full bg-[#050505] text-white overflow-hidden flex flex-col justify-center relative">
+            
+            {/* Background Noise */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
+            
+            {/* Main Container - Centered Vertically */}
+            <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 flex flex-col md:flex-row gap-8 md:gap-16 items-center h-full max-h-[900px] py-12">
                 
-                {/* Header & Filter Row */}
-                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
-                    <div>
-                        <span className="font-mono text-xs text-cyan-400 tracking-widest uppercase">
-                            03 // Selected Works
-                        </span>
-                        <h2 className="text-5xl md:text-7xl font-black mt-2 leading-none">
-                            PROJECT<br/><span className="text-gray-600">ARCHIVE</span>
-                        </h2>
+                {/* LEFT COLUMN: Project Menu */}
+                <div className="w-full md:w-5/12 flex flex-col justify-center relative z-20">
+                    <div className="mb-8">
+                         <span className="font-mono text-xs text-cyan-500 tracking-widest uppercase">03 // Selected Works</span>
+                         <h2 className="text-4xl md:text-6xl font-black mt-2 leading-none tracking-tight text-white">
+                            PROJECTS
+                         </h2>
                     </div>
 
-                    {/* Big Pill Filters */}
-                    <div className="flex flex-wrap gap-3">
-                        {categories.map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setFilter(cat)}
-                                className={`px-6 py-3 text-xs font-mono uppercase tracking-wider border rounded-full transition-all duration-300
-                                    ${filter === cat 
-                                        ? 'bg-cyan-500 border-cyan-500 text-black font-bold'
-                                        : 'bg-transparent border-white/20 text-gray-400 hover:border-white hover:text-white'
-                                    }`}
+                    {/* The List */}
+                    <div className="flex flex-col">
+                        {featuredProjects.map((project, index) => (
+                            <motion.div
+                                key={project.title}
+                                onMouseEnter={() => setActiveId(project.title)}
+                                className="group relative cursor-pointer border-b border-white/10"
                             >
-                                {cat}
-                            </button>
+                                <div className={`flex items-center justify-between py-4 transition-all duration-300
+                                    ${activeProject?.title === project.title ? 'pl-4 border-l-4 border-cyan-500 bg-white/5' : 'pl-0 border-l-0 hover:pl-2'}`}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <span className={`font-mono text-xs transition-colors ${activeProject?.title === project.title ? 'text-cyan-500' : 'text-gray-600'}`}>
+                                            0{index + 1}
+                                        </span>
+                                        <h3 className={`text-lg md:text-xl font-bold uppercase tracking-tight transition-colors ${activeProject?.title === project.title ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
+                                            {project.title}
+                                        </h3>
+                                    </div>
+                                    
+                                    {/* Arrow Icon - Only visible on active */}
+                                    <FiArrowUpRight className={`text-xl transition-all duration-300 
+                                        ${activeProject?.title === project.title ? 'opacity-100 translate-x-0 text-cyan-500' : 'opacity-0 -translate-x-2'}`} 
+                                    />
+                                </div>
+                            </motion.div>
                         ))}
+                        
+                        <div className="mt-6">
+                            <a href="#" className="text-[10px] font-mono text-gray-500 hover:text-white transition-colors uppercase tracking-widest">
+                                [ View Full Archive ]
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                {/* Grid */}
-                <motion.div layout className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                    <AnimatePresence mode='popLayout'>
-                        {filteredProjects.map((project) => (
-                            <motion.a
-                                key={project.title}
-                                href={project.link || '#'}
-                                target="_blank"
-                                layout
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                className="group relative bg-[#111] border border-white/10 p-8 hover:border-cyan-500/50 transition-colors duration-500 flex flex-col h-[400px]"
-                            >
-                                {/* Folder Tab visual */}
-                                <div className="absolute top-0 left-0 w-24 h-1 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {/* RIGHT COLUMN: The Preview Card (Desktop Only) */}
+                <div className="hidden md:flex w-7/12 h-full max-h-[500px] flex-col justify-center relative">
+                    {/* Static Border Frame */}
+                    <div className="absolute inset-0 border border-white/10 bg-[#0a0a0a]">
+                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-cyan-500" />
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-cyan-500" />
+                    </div>
 
-                                <div className="flex justify-between items-start mb-8">
-                                    <div className="w-10 h-10 bg-white/5 rounded flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-black transition-colors duration-500">
-                                        <FiFolder size={20} />
+                    <AnimatePresence mode="wait">
+                        {activeProject && (
+                            <motion.div 
+                                key={activeProject.title}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className="relative z-10 p-10 h-full flex flex-col justify-between"
+                            >
+                                {/* Top Meta */}
+                                <div className="flex justify-between items-start">
+                                    <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10">
+                                        <FiCode className="text-cyan-500" />
+                                        <span className="font-mono text-xs text-gray-300 uppercase">{activeProject.category}</span>
                                     </div>
-                                    <FiArrowUpRight className="text-gray-600 group-hover:text-cyan-500 transition-colors" size={24} />
+                                    <div className="font-mono text-[10px] text-gray-600">STATUS: DEPLOYED</div>
                                 </div>
 
-                                <div className="flex-grow">
-                                    <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
-                                        {project.subtitle}
+                                {/* Middle Description */}
+                                <div className="max-w-lg">
+                                    <h4 className="text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">
+                                        {activeProject.title}
+                                    </h4>
+                                    <p className="text-gray-400 leading-relaxed text-sm border-l-2 border-cyan-900 pl-4">
+                                        {activeProject.subtitle}
                                     </p>
                                 </div>
 
-                                <div className="mt-6 pt-6 border-t border-white/5 flex flex-wrap gap-2">
-                                    {project.tags.slice(0,3).map(tag => (
-                                        <span key={tag} className="text-[10px] font-mono text-gray-500 bg-black px-2 py-1 border border-white/10 rounded">
-                                            {tag}
-                                        </span>
-                                    ))}
+                                {/* Bottom Tags & Action */}
+                                <div>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {activeProject.tags.slice(0,5).map((tag: string) => (
+                                            <span key={tag} className="px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-gray-500">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    
+                                    <a 
+                                        href={activeProject.link || '#'} 
+                                        target="_blank"
+                                        className="inline-flex items-center justify-center w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm font-mono uppercase tracking-widest transition-colors"
+                                    >
+                                        Launch Project
+                                    </a>
                                 </div>
-                            </motion.a>
-                        ))}
+                            </motion.div>
+                        )}
                     </AnimatePresence>
-                </motion.div>
+                </div>
             </div>
         </section>
     );
