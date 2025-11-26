@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Loader from '@/app/components/Loader';
 import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
+// import Footer from '@/app/components/Footer';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +30,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         >
             <Header />
             <main className="flex-grow">{children}</main>
-            <Footer />
+            {/* <Footer /> */}
         </motion.div>
       )}
     </>
