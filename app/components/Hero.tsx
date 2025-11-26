@@ -1,140 +1,127 @@
-// app/components/Hero.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, easeOut } from 'framer-motion';
-import Link from 'next/link';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import HeroBackground from './HeroBackground';
-import { HudBox } from './ui/HudBox';
-
-// +++ NEW: Reusable Button Component for consistency +++
-type ButtonProps = {
-  href: string;
-  variant?: 'primary' | 'secondary';
-  children: React.ReactNode;
-  isExternal?: boolean;
-};
-
-const Button = ({ href, variant = 'primary', children, isExternal = false }: ButtonProps) => {
-  const baseClasses = "px-6 py-3 font-mono text-sm tracking-wider transition-all duration-300 border";
-
-  const styles = {
-    primary: 'bg-black text-white border-black hover:bg-gray-800',
-    secondary: 'bg-transparent text-black border-gray-400 hover:bg-black hover:text-white',
-  };
-
-  const Component = isExternal ? 'a' : Link;
-
-  return (
-    <Component
-      href={href}
-      className={`${baseClasses} ${styles[variant]}`}
-      {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
-    >
-      {children}
-    </Component>
-  );
-};
+import { ScrambleText } from './ui/ScrambleText';
+import { useEffect } from 'react';
 
 const Hero = () => {
-  const [time, setTime] = useState('');
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    
+    // Magnetic text effect configuration
+    const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+    const mouseXSpring = useSpring(mouseX, springConfig);
+    const mouseYSpring = useSpring(mouseY, springConfig);
+    
+    // Text moves slightly opposite to mouse (Parallax)
+    const x = useTransform(mouseXSpring, [-0.5, 0.5], ["-2%", "2%"]);
+    const y = useTransform(mouseYSpring, [-0.5, 0.5], ["-2%", "2%"]);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Dhaka', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      setTime(`CTG ${timeString}`);
-    };
-    updateTime();
-    const timerId = setInterval(updateTime, 1000);
-    return () => clearInterval(timerId);
-  }, []);
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Normalize mouse position from -0.5 to 0.5
+            const xPct = (e.clientX / window.innerWidth) - 0.5;
+            const yPct = (e.clientY / window.innerHeight) - 0.5;
+            mouseX.set(xPct);
+            mouseY.set(yPct);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, [mouseX, mouseY]);
 
-  // --- Variants are perfect, no changes needed ---
-  const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } } };
-  const itemVariants = { hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } } };
-  const rightClusterVariants = { hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeOut, delay: 0.8 } } };
-  const bottomElementVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.5, delay: 1.2 } } };
+    return (
+        <section className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center px-6 md:px-12 bg-[#050505] text-white selection:bg-cyan-500 selection:text-black">
+            <HeroBackground />
 
-  return (
-    <section className="min-h-screen flex items-center relative p-4 sm:p-6 lg:p-8 overflow-hidden">
-      <HeroBackground />
-
-      <HudBox
-        className="z-10 w-full max-w-7xl mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        bracketClassName="border-black/30" // IMPROVEMENT: Slightly softer brackets
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-          <div className="lg:col-span-2 space-y-8">
-            <motion.div variants={itemVariants} className="flex items-center gap-3 text-sm" role="status">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="font-mono tracking-wider text-black font-medium">SYSTEM.STATUS: OPERATIONAL</span>
-              <div className="w-px h-4 bg-gray-300"></div>
-              <span className="font-mono tracking-wider text-gray-500" aria-live="polite">{time}</span> {/* ACCESSIBILITY: Aria-live for time */}
-            </motion.div>
-
-            <div className="space-y-4">
-              <motion.h1 variants={itemVariants} className="font-sans text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold leading-none text-black">
-                OBIDUR<br />RAHMAN
-              </motion.h1>
-              <motion.div variants={itemVariants} className="h-12 overflow-hidden">
-                <div className="animate-text-slide">
-                  <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{'// MATHEMATICIAN'}</p>
-                  <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{'// DATA SCIENTIST'}</p>
-                  <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{'// DEVELOPER'}</p>
-                  <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{'// INNOVATOR'}</p>
-                  <p className="font-mono text-xl md:text-2xl lg:text-3xl h-12 flex items-center text-gray-700">{'// MATHEMATICIAN'}</p>
+            {/* Left Vertical Line */}
+            <div className="absolute left-6 md:left-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block" />
+            
+            {/* Content Grid */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                
+                {/* 1. Left Info - Fixed */}
+                <div className="md:col-span-2 flex flex-col justify-center h-full space-y-6 border-l border-white/10 pl-6 md:border-none md:pl-0">
+                    <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-cyan-500 tracking-widest">ROLE</p>
+                        <p className="text-sm font-bold text-gray-300">ARCHITECT & DEV</p>
+                    </div>
+                    <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-cyan-500 tracking-widest">LOCATION</p>
+                        <p className="text-sm font-bold text-gray-300">DHAKA, BD</p>
+                    </div>
                 </div>
-              </motion.div>
+
+                {/* 2. CENTER - MASSIVE INTERACTIVE TEXT */}
+                <motion.div 
+                    style={{ x, y }} // Applies the magnetic effect
+                    className="md:col-span-8 flex flex-col items-center md:items-start"
+                >
+                    <h1 className="flex flex-col text-[12vw] md:text-[8rem] font-black leading-[0.85] tracking-tighter uppercase mix-blend-screen">
+                        {/* Interactive Scramble Text Components */}
+                        <div className="relative group cursor-default">
+                            <span className="absolute -left-8 top-4 text-base font-mono text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">{`->`}</span>
+                            <ScrambleText text="OBIDUR" className="text-white group-hover:text-cyan-50 transition-colors duration-300" />
+                        </div>
+                        
+                        <div className="relative group cursor-default flex items-center">
+                            <ScrambleText text="RAHMAN" className="text-gray-500 group-hover:text-white transition-colors duration-300" />
+                            <span className="text-cyan-500 animate-pulse">_</span>
+                        </div>
+                    </h1>
+
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="mt-12 md:ml-2 max-w-xl"
+                    >
+                        <p className="font-mono text-sm md:text-base text-gray-400 leading-relaxed">
+                            Constructing high-performance digital infrastructure. Focusing on{' '}
+                            <span className="text-cyan-400 hover:bg-cyan-400/10 cursor-cell px-1 transition-colors">computational geometry</span>{' '}
+                            and algorithmic efficiency.
+                        </p>
+
+                        <div className="mt-8 flex flex-wrap gap-4">
+                            <a href="#projects" className="group relative px-6 py-3 bg-white text-black font-bold font-mono text-sm overflow-hidden">
+                                <div className="absolute inset-0 bg-cyan-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                <span className="relative group-hover:text-white transition-colors">VIEW PROJECTS</span>
+                            </a>
+                            <a href="#contact" className="px-6 py-3 border border-white/20 text-white font-mono text-sm hover:bg-white/5 transition-colors">
+                                CONTACT ME
+                            </a>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* 3. Right - Interactive Decor */}
+                <div className="md:col-span-2 flex flex-col items-end justify-end h-full pointer-events-none">
+                    {/* Decorative Coordinate Crosshair */}
+                    <div className="relative w-32 h-32 border border-dashed border-white/10 rounded-full animate-[spin_10s_linear_infinite]">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-1 h-1 bg-cyan-500 rounded-full" />
+                        </div>
+                        <div className="absolute top-0 left-1/2 w-[1px] h-4 bg-white/20 -translate-x-1/2" />
+                        <div className="absolute bottom-0 left-1/2 w-[1px] h-4 bg-white/20 -translate-x-1/2" />
+                        <div className="absolute left-0 top-1/2 h-[1px] w-4 bg-white/20 -translate-y-1/2" />
+                        <div className="absolute right-0 top-1/2 h-[1px] w-4 bg-white/20 -translate-y-1/2" />
+                    </div>
+                </div>
             </div>
-
-            <motion.p variants={itemVariants} className="max-w-xl text-gray-600 leading-relaxed text-base lg:text-lg">
-              BSc Mathematics student passionate about the intersection of pure mathematics,
-              computational sciences, and artificial intelligence. Transforming complex problems
-              into elegant solutions.
-            </motion.p>
-
-            {/* +++ REFACTORED: Using the new Button component for cleaner code +++ */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <Button href="/resume.pdf" isExternal>
-                [ CHECK RESUME ]
-              </Button>
-              <Button href="mailto:obidur.shawal@gmail.com" variant="secondary" isExternal>
-                [ INITIATE_CONTACT ]
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* +++ IMPROVEMENT: Enhanced data cluster with a blinking cursor effect +++ */}
-          <motion.div className="hidden lg:flex flex-col items-start gap-4 self-center" variants={rightClusterVariants}>
-            <div className="w-px h-24 bg-gradient-to-b from-transparent via-black/30 to-transparent"></div>
-            <p className="font-mono text-xs text-gray-400 tracking-widest">[//SYSTEM_GRID: ONLINE]</p>
-            <p className="font-mono text-xs text-gray-400 tracking-widest">[//PARALLAX_MODULE: ACTIVE]</p>
-            <div className='flex items-center gap-1.5'>
-              <p className="font-mono text-xs text-gray-400 tracking-widest">[//GEO_SIG: 23.8°N, 90.4°E]</p>
-              <div className="w-1.5 h-3 bg-gray-400 animate-pulse"></div> {/* Blinking cursor */}
+            
+            {/* Bottom Footer */}
+            <div className="absolute bottom-6 left-6 md:left-12 right-6 md:right-12 flex justify-between items-end border-t border-white/10 pt-6 text-[10px] font-mono text-gray-500 uppercase">
+               <div>
+                  SYSTEM: <span className="text-green-500">ONLINE</span>
+               </div>
+               <div className="flex gap-4">
+                   <span>Next.js 14</span>
+                   <span>Framer Motion</span>
+                   <span>Tailwind</span>
+               </div>
             </div>
-            <div className="w-px h-24 bg-gradient-to-t from-transparent via-black/30 to-transparent"></div>
-          </motion.div>
-        </div>
-      </HudBox>
-
-      <motion.div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" variants={bottomElementVariants}>
-        <span className="font-mono text-xs text-black/50">[SCROLL_DOWN]</span>
-        <svg
-          className="w-4 h-4 text-black/60 animate-pulse-arrow"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-        </svg>
-      </motion.div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Hero;

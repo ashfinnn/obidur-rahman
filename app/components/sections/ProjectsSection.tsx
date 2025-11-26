@@ -1,131 +1,112 @@
-// app/components/sections/ProjectsSection.tsx
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { allProjectsData } from '../lib/data'; // Adjust import path as needed
-import { Project } from '../lib/types'; // Adjust import path as needed
-
-// ProjectEntry component adapted for a dark theme
-const ProjectEntry = ({ item }: { item: Project }) => (
-  <Link
-    href={item.link || '#'}
-    target={item.link ? "_blank" : "_self"}
-    rel="noopener noreferrer"
-    className={`group relative block transition-colors ${!item.link ? 'cursor-default' : ''}`}
-    aria-disabled={!item.link}
-    onClick={(e) => !item.link && e.preventDefault()}
-  >
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="border-b border-neutral-800 py-6" // CHANGED: border-neutral-800
-    >
-      {/* Animated left border on hover */}
-      <div className="absolute left-0 top-0 h-full w-0.5 bg-cyan-300 scale-y-0 origin-top transition-transform duration-300 ease-in-out group-hover:scale-y-100" /> {/* CHANGED: bg-cyan-300 */}
-
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-4 items-center pl-4 md:pl-8">
-        <div className="md:col-span-4">
-          <h4 className="font-sans text-lg font-bold text-white">{item.title}</h4> {/* CHANGED: text-white */}
-          <p className="text-sm text-neutral-400 mt-1">{item.subtitle}</p> {/* CHANGED: text-neutral-400 */}
-        </div>
-
-        <div className="md:col-span-5">
-          <div className="flex flex-wrap gap-2">
-            {item.tags.map(tag => (
-              <span key={tag} className="px-2 py-1 bg-transparent text-neutral-300 font-mono text-xs border border-neutral-700 transition-colors duration-300 group-hover:border-cyan-300/50 group-hover:text-cyan-300"> {/* CHANGED: colors */}
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="md:col-span-3 flex justify-start md:justify-end">
-          {item.link ? (
-            <div className="font-mono text-xs text-cyan-300 tracking-wider flex items-center gap-2"> {/* CHANGED: text-cyan-300 */}
-              <span>VIEW_DETAILS</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </div>
-          ) : (
-            <span className="font-mono text-xs text-neutral-500 tracking-wider">IN_PROGRESS</span> // CHANGED: text-neutral-500
-          )}
-        </div>
-      </div>
-    </motion.div>
-  </Link>
-);
+import { allProjectsData } from '../lib/data'; // Keep your existing data import
+import { FiArrowUpRight, FiFolder } from 'react-icons/fi';
 
 const ProjectsSection = () => {
-  const categories = Object.keys(allProjectsData) as Array<keyof typeof allProjectsData>;
-  const [selectedCategory, setSelectedCategory] = useState<keyof typeof allProjectsData>(categories[0]);
+    const [filter, setFilter] = useState('all');
 
-  return (
-    <motion.section
-      id="projects"
-      className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-black" // CHANGED: bg-black
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <motion.header
-          className="mb-12 md:mb-16"
-          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-        >
-          <h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white"> {/* CHANGED: text-white */}
-            PROJECT_ARCHIVE
-          </h2>
-          <div className="mt-4 w-32 h-px bg-cyan-300" /> {/* CHANGED: bg-cyan-300 */}
-          <p className="mt-6 text-neutral-400 max-w-2xl text-base lg:text-lg"> {/* CHANGED: text-neutral-400 */}
-            A curated collection of my technical projects. Select a directory to filter the archive.
-          </p>
-        </motion.header>
+    const allProjects = useMemo(() => {
+        if(!allProjectsData) return [];
+        return Object.values(allProjectsData).flatMap(cat =>
+            cat.items.map(item => ({ ...item, category: cat.title }))
+        );
+    }, []);
 
-        <motion.div
-          className="flex flex-wrap gap-2 mb-12"
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.05 } } }}
-        >
-          {categories.map(cat => (
-            <motion.button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 font-mono text-xs tracking-wider border transition-colors duration-200
-                                ${selectedCategory === cat
-                  ? 'bg-cyan-300 text-black border-cyan-300' // CHANGED: Active state
-                  : 'bg-transparent text-neutral-300 border-neutral-700 hover:border-cyan-300/50 hover:text-cyan-300'}` // CHANGED: Inactive state
-              }
-              variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
-            >
-              {`// ${allProjectsData[cat].title.toUpperCase()}`}
-            </motion.button>
-          ))}
-        </motion.div>
+    const categories = useMemo(() => {
+        if(!allProjectsData) return ['all'];
+        return ['all', ...Object.values(allProjectsData).map(cat => cat.title)];
+    }, []);
 
-        <motion.div
-          className="min-h-[300px] border-t border-neutral-800" // CHANGED: border-neutral-800
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedCategory}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.2 } }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            >
-              {allProjectsData[selectedCategory].items.map(item => (
-                <ProjectEntry key={item.title} item={item} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </motion.section>
-  );
+    const filteredProjects = filter === 'all' 
+        ? allProjects 
+        : allProjects.filter(project => project.category === filter);
+
+    return (
+        <section id="projects" data-theme="dark" className="relative bg-[#0a0a0a] text-white py-32">
+             {/* Background Grid */}
+             <div className="absolute inset-0 opacity-10" 
+                style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '30px 30px' }} 
+            />
+
+            <div className="max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 relative z-10">
+                
+                {/* Header & Filter Row */}
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
+                    <div>
+                        <span className="font-mono text-xs text-cyan-400 tracking-widest uppercase">
+                            03 // Selected Works
+                        </span>
+                        <h2 className="text-5xl md:text-7xl font-black mt-2 leading-none">
+                            PROJECT<br/><span className="text-gray-600">ARCHIVE</span>
+                        </h2>
+                    </div>
+
+                    {/* Big Pill Filters */}
+                    <div className="flex flex-wrap gap-3">
+                        {categories.map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => setFilter(cat)}
+                                className={`px-6 py-3 text-xs font-mono uppercase tracking-wider border rounded-full transition-all duration-300
+                                    ${filter === cat 
+                                        ? 'bg-cyan-500 border-cyan-500 text-black font-bold'
+                                        : 'bg-transparent border-white/20 text-gray-400 hover:border-white hover:text-white'
+                                    }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Grid */}
+                <motion.div layout className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <AnimatePresence mode='popLayout'>
+                        {filteredProjects.map((project) => (
+                            <motion.a
+                                key={project.title}
+                                href={project.link || '#'}
+                                target="_blank"
+                                layout
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                className="group relative bg-[#111] border border-white/10 p-8 hover:border-cyan-500/50 transition-colors duration-500 flex flex-col h-[400px]"
+                            >
+                                {/* Folder Tab visual */}
+                                <div className="absolute top-0 left-0 w-24 h-1 bg-cyan-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+                                <div className="flex justify-between items-start mb-8">
+                                    <div className="w-10 h-10 bg-white/5 rounded flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-black transition-colors duration-500">
+                                        <FiFolder size={20} />
+                                    </div>
+                                    <FiArrowUpRight className="text-gray-600 group-hover:text-cyan-500 transition-colors" size={24} />
+                                </div>
+
+                                <div className="flex-grow">
+                                    <h3 className="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
+                                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
+                                        {project.subtitle}
+                                    </p>
+                                </div>
+
+                                <div className="mt-6 pt-6 border-t border-white/5 flex flex-wrap gap-2">
+                                    {project.tags.slice(0,3).map(tag => (
+                                        <span key={tag} className="text-[10px] font-mono text-gray-500 bg-black px-2 py-1 border border-white/10 rounded">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </motion.a>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
+            </div>
+        </section>
+    );
 };
 
 export default ProjectsSection;

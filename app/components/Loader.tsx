@@ -1,153 +1,97 @@
-// app/components/sections/Loader.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// This sub-component is perfect as is.
-const CornerBracket = ({ position }: { position: string }) => {
-    const baseClasses = 'absolute w-8 h-8';
-    const borderClasses = 'border-neutral-700';
-    let positionClasses = '';
-    let origins = { x: 0.5, y: 0.5 };
-
-    switch (position) {
-        case 'top-left':
-            positionClasses = 'top-4 left-4 border-l-2 border-t-2';
-            origins = { x: 0, y: 0 };
-            break;
-        case 'top-right':
-            positionClasses = 'top-4 right-4 border-r-2 border-t-2';
-            origins = { x: 1, y: 0 };
-            break;
-        case 'bottom-left':
-            positionClasses = 'bottom-4 left-4 border-l-2 border-b-2';
-            origins = { x: 0, y: 1 };
-            break;
-        case 'bottom-right':
-            positionClasses = 'bottom-4 right-4 border-r-2 border-b-2';
-            origins = { x: 1, y: 1 };
-            break;
-    }
-
-    return (
-        <motion.div
-            className={`${baseClasses} ${positionClasses} ${borderClasses}`}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
-            style={{ transformOrigin: `${origins.x * 100}% ${origins.y * 100}%` }}
-        />
-    );
-};
-
-
 const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
   const [progress, setProgress] = useState(0);
-  const [currentSystem, setCurrentSystem] = useState(0);
 
-  const systems = [
-    'INITIATING_SYSTEM_BOOT...',
-    'CALIBRATING_NEURAL_INTERFACE...',
-    'COMPILING_SHADERS...',
-    'ESTABLISHING_GRID_CONNECTION...',
-    'SYSTEM_READY'
-  ];
-
-  // The useEffect logic is solid. No changes needed here.
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          setTimeout(() => {
-            document.body.style.overflow = '';
-            onLoaded();
-          }, 500);
+    // Smooth random progress simulation
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        // Slow down as we get closer to 100
+        const remaining = 100 - prev;
+        const jump = Math.random() * (remaining / 5) + 0.5;
+        
+        if (prev + jump >= 100) {
+          clearInterval(interval);
           return 100;
         }
-        return prev + Math.random() * 3;
+        return prev + jump;
       });
-    }, 50);
+    }, 100);
 
-    const systemInterval = setInterval(() => {
-      setCurrentSystem(prev => (prev + 1) % (systems.length - 1));
-    }, 700);
+    // Force finish logic
+    const timeout = setTimeout(() => {
+        setProgress(100);
+    }, 2500); // Max load time 2.5s
 
     return () => {
-      clearInterval(progressInterval);
-      clearInterval(systemInterval);
+        clearInterval(interval);
+        clearTimeout(timeout);
     };
-  }, [onLoaded, systems.length]);
+  }, []);
 
+  // Trigger onLoaded when progress hits 100
   useEffect(() => {
-    if (progress >= 100) {
-      setCurrentSystem(systems.length - 1);
+    if (progress === 100) {
+        setTimeout(() => {
+            document.body.style.overflow = '';
+            onLoaded();
+        }, 800); // Wait for exit animation
     }
-  }, [progress, systems.length]);
+  }, [progress, onLoaded]);
 
   return (
     <motion.div
-      initial={{ opacity: 1 }}
-      animate={{ opacity: progress >= 100 ? 0 : 1 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
-      className={`fixed inset-0 bg-black z-[100] flex items-center justify-center ${
-        progress >= 100 ? 'pointer-events-none' : ''
-      }`}
+        className="fixed inset-0 z-[9999] bg-[#050505] text-white flex items-center justify-center"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.5, delay: 0.4 } }}
     >
-      <CornerBracket position="top-left" />
-      <CornerBracket position="top-right" />
-      <CornerBracket position="bottom-left" />
-      <CornerBracket position="bottom-right" />
-      
-      <div className="absolute top-6 left-6 font-mono text-xs text-neutral-500">SYS_LOAD::v3.0</div>
-      <div className="absolute top-6 right-6 font-mono text-xs text-neutral-500">{new Date().getFullYear()}</div>
-      <div className="absolute bottom-6 left-6 font-mono text-xs text-neutral-500">[OBIDUR.RAHMAN]</div>
-      <div className="absolute bottom-6 right-6 font-mono text-xs text-neutral-500 flex items-center gap-2">
-        STATUS: <span className="text-cyan-300">ACTIVE</span>
-        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-      </div>
-
-      <motion.div
-        animate={{ scale: progress >= 100 ? 0.9 : 1, opacity: progress >= 100 ? 0 : 1 }}
-        transition={{ duration: 0.4, ease: 'easeIn' }}
-        className="text-center w-full max-w-sm sm:max-w-md px-4"
-      >
-        {/* ++ ACCESSIBILITY IMPROVEMENT ++ */}
-        <div 
-          className="w-full h-px bg-neutral-800"
-          role="progressbar"
-          aria-valuenow={Math.floor(progress)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label="Loading page content"
+        {/* The Split Shutter Effect */}
+        <motion.div 
+            className="absolute inset-0 bg-[#050505] z-20"
+            initial={{ scaleY: 1 }}
+            exit={{ scaleY: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
+            style={{ originY: 0.5 }} // Splits from center vertically
         >
-          <div
-            className="h-full bg-cyan-300 transition-all duration-150 ease-linear shadow-[0_0_10px_0px] shadow-cyan-300/50"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        
-        <div className="mt-4 flex justify-between font-mono text-xs text-neutral-300 h-4">
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={currentSystem}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {systems[currentSystem]}
-            </motion.span>
-          </AnimatePresence>
-          <span>{Math.floor(progress)}%</span>
-        </div>
-      </motion.div>
+             {/* Background Scanline Texture */}
+             <div className="absolute inset-0 opacity-10" 
+                style={{ backgroundImage: 'linear-gradient(transparent 50%, rgba(0,0,0,0.5) 50%)', backgroundSize: '100% 4px' }} 
+             />
+             
+             {/* CONTENT */}
+             <div className="relative h-full w-full flex flex-col items-center justify-center">
+                
+                {/* Vertical Line Container */}
+                <div className="relative h-[40vh] w-[1px] bg-gray-800 overflow-hidden mb-8">
+                    {/* Filling Bar */}
+                    <motion.div 
+                        className="absolute bottom-0 left-0 w-full bg-cyan-500 box-shadow-[0_0_20px_cyan]"
+                        style={{ height: `${progress}%` }}
+                    />
+                </div>
+
+                {/* Percentage & Data */}
+                <div className="flex flex-col items-center gap-2 font-mono">
+                    <div className="text-4xl font-bold tabular-nums tracking-tighter">
+                        {Math.floor(progress).toString().padStart(3, '0')}
+                    </div>
+                    <div className="text-[10px] text-gray-500 tracking-[0.2em] animate-pulse">
+                        LOADING_MODULES
+                    </div>
+                </div>
+
+                {/* Corner Brackets */}
+                <div className="absolute top-12 left-12 w-4 h-4 border-t border-l border-gray-600 hidden md:block" />
+                <div className="absolute bottom-12 right-12 w-4 h-4 border-b border-r border-gray-600 hidden md:block" />
+             </div>
+        </motion.div>
     </motion.div>
   );
 };
 
-// ++ THE BUG FIX ++ Add the missing export statement.
 export default Loader;

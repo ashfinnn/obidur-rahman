@@ -3,52 +3,75 @@ import { AllProjectsData } from './types';
 
 export const allProjectsData: AllProjectsData = {
     'data-science': {
-        title: 'Data Science Projects',
+        title: 'Data Science & Machine Learning Projects',
         items: [
             {
-                label: 'DEEP LEARNING',
-                title: 'Tomato Leaf Disease Classification',
-                subtitle: 'Comparative analysis of traditional ML and deep learning models (Xception, EfficientNet, MobileNet) for tomato leaf disease classification. Explored background removal and real-world data impact.',
-                tags: ['Python', 'TensorFlow', 'Keras', 'scikit-learn', 'Xception', 'EfficientNet', 'MobileNet', 'Computer Vision'],
-                stats: [
-                    { label: 'Xception Acc', value: '97.00%' },
-                    { label: 'EfficientNet Acc', value: '94.26%' },
-                    { label: 'MobileNet Acc', value: '92.79%' }
-                ],
-                link: null
-            },
-            {
                 label: 'EDUCATION ANALYTICS',
-                title: 'Undergraduate Admission Prediction Model',
-                subtitle: 'Comprehensive ML model for predicting undergraduate admission outcomes. Included feature engineering, hyperparameter optimization, and explainable AI for actionable insights.',
-                tags: ['Python', 'scikit-learn', 'XGBoost', 'SHAP', 'Pandas', 'NumPy', 'Predictive Modeling'],
+                title: 'Undergraduate Admission Prediction System',
+                subtitle:
+                    'A supervised learning system built on 15K+ admission records. Implemented advanced feature engineering, model comparison pipelines, and SHAP-based explainability to support transparent decision-making.',
+                tags: [
+                    'Python',
+                    'XGBoost',
+                    'scikit-learn',
+                    'SHAP',
+                    'ML Engineering',
+                    'Feature Engineering'
+                ],
                 stats: [
                     { label: 'Accuracy', value: '83.87%' },
                     { label: 'Precision', value: '89%' },
-                    { label: 'Records', value: '15K+' }
+                    { label: 'Dataset Size', value: '15K+' }
                 ],
                 link: 'https://github.com/Ashfinn/Undergraduate-Admission-Prediction'
             },
             {
-                label: 'PUBLIC HEALTH',
-                title: 'Diarrheal Disease Prediction Model',
-                subtitle: 'Research project analyzing the relationship between environmental factors and diarrheal disease incidence across four major divisions in Bangladesh.',
-                tags: ['Machine Learning', 'Research', 'Predictive Modeling', 'Correlation Analysis'],
+                label: 'DEEP LEARNING',
+                title: 'Hybrid Transformers vs CNNs on CPU-Constrained Environments',
+                subtitle:
+                    'Benchmarked ResNet-50, ConvNeXt-Tiny, and FastViT-T8 on PlantVillage to evaluate real-world feasibility of deploying plant disease detection in regions without GPU access. Focused on inference latency, accuracy, and efficiency.',
+                tags: [
+                    'PyTorch',
+                    'Computer Vision',
+                    'Transformers',
+                    'Model Benchmarking',
+                    'Deep Learning'
+                ],
                 stats: [
-                    { label: 'Divisions', value: '4' },
-                    { label: 'Type', value: 'Research' }
+                    { label: 'ResNet-50', value: '97.00%' },
+                    { label: 'ConvNeXt-Tiny', value: '99%' },
+                    { label: 'FastViT-T8', value: '98%' }
+                ],
+                link: 'https://github.com/Ashfinn/efficient-leaf-disease'
+            },
+            {
+                label: 'PUBLIC HEALTH AI',
+                title: 'Environmental Correlates of Diarrheal Disease — ML Forecasting',
+                subtitle:
+                    'Explored the relationship between climatic factors and diarrheal incidence across four divisions in Bangladesh using predictive modeling and statistical correlation analysis.',
+                tags: [
+                    'Machine Learning',
+                    'Public Health',
+                    'Research Analysis',
+                    'Predictive Modeling'
+                ],
+                stats: [
+                    { label: 'Regions', value: '4 Divisions' },
+                    { label: 'Study Type', value: 'Research' }
                 ],
                 link: 'https://github.com/Ashfinn/Diarrhea-Prediction-Model'
             }
         ]
     },
+
     'web-development': {
         title: 'Web Development Projects',
         items: [
             {
                 label: 'PORTFOLIO',
                 title: 'ashfinn.github.io',
-                subtitle: 'The site you are viewing now! Built with modern HTML, CSS, and JavaScript. Features animated transitions, responsive design, and a dynamic project showcase.',
+                subtitle:
+                    'A modern portfolio built with Next.js and React featuring motion-based UI, responsive layouts, and dynamically rendered project data using a modular architecture.',
                 tags: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
                 stats: [
                     { label: 'Type', value: 'Portfolio' },
@@ -58,112 +81,33 @@ export const allProjectsData: AllProjectsData = {
             },
             {
                 label: 'WEB PLATFORM',
-                title: 'Matlab-Hero',
-                subtitle: 'Next.js-based web platform for coding challenges related to MATLAB. Demonstrates frontend skills, React/Next.js expertise, and interactive learning tools.',
-                tags: ['Next.js', 'React', 'MATLAB', 'Frontend'],
+                title: 'Matlab-Hero — Interactive Learning Platform',
+                subtitle:
+                    'A Next.js-powered platform that hosts interactive MATLAB coding challenges. Designed with reusable UI components, server-side rendering, and scalable page architecture.',
+                tags: ['Next.js', 'React', 'Frontend Development', 'Platform Design'],
                 stats: [
                     { label: 'Framework', value: 'Next.js' },
                     { label: 'Status', value: 'Live' }
                 ],
                 link: 'https://matlab-hero.vercel.app/'
-            },
-            {
-                label: 'FORUM',
-                title: 'The Code Forum',
-                subtitle: 'Responsive web forum with Tailwind CSS and GSAP animations. Excellent example of frontend design, animations, and user experience.',
-                tags: ['Tailwind CSS', 'GSAP', 'Frontend', 'Forum'],
-                stats: [
-                    { label: 'Animations', value: 'GSAP' },
-                    { label: 'Styling', value: 'Tailwind' }
-                ],
-                link: 'https://the-code-forum.github.io/website/'
-            },
-            {
-                label: 'FULL-STACK',
-                title: 'Letterboxd-Lifesaver',
-                subtitle: 'Full-stack app with Flask backend and React frontend that helps users discover movies. Features API integration, user-friendly UI, and clean architecture.',
-                tags: ['Flask', 'React', 'API', 'Full-Stack'],
-                stats: [
-                    { label: 'Backend', value: 'Flask' },
-                    { label: 'Frontend', value: 'React' }
-                ],
-                link: 'https://github.com/Ashfinn/Letterboxd-Lifesaver'
             }
         ]
     },
-    'programming': {
-        title: 'Programming Projects',
-        items: [
-            {
-                label: 'NETWORKING',
-                title: 'httPy',
-                subtitle: 'Custom Python HTTP server demonstrating understanding of web protocols and backend fundamentals. Lightweight, educational project showing low-level web technology knowledge.',
-                tags: ['Python', 'HTTP', 'Networking', 'Backend'],
-                stats: [
-                    { label: 'Language', value: 'Python' },
-                    { label: 'Type', value: 'Server' }
-                ],
-                link: 'https://github.com/Ashfinn/httPY'
-            }
-        ]
-    },
+
     'certifications': {
-        title: 'Certifications & Training',
+        title: 'Fellowship & Training',
         items: [
             {
                 label: 'FELLOWSHIP',
-                title: 'Software Engineering Fellowship – Headstarter',
-                subtitle: 'Developed five full-stack web applications using Firebase, Git, and JavaScript. Collaborated in a team of four developers, following agile methodologies.',
-                tags: ['Headstarter', 'Full-Stack', 'Firebase', 'JavaScript', 'Agile'],
+                title: 'Software Engineering Fellowship — Headstarter',
+                subtitle:
+                    'Built and deployed five full-stack applications using Firebase, JavaScript, and version-controlled agile workflows. Worked in a collaborative engineering team following weekly product development cycles.',
+                tags: ['Headstarter', 'Software Engineering', 'Full-Stack', 'Agile', 'Firebase'],
                 stats: [
-                    { label: 'Projects', value: '5' },
-                    { label: 'Team Size', value: '4' }
+                    { label: 'Projects Built', value: '5' },
+                    { label: 'Team Collaboration', value: '4 Developers' }
                 ],
                 link: null
-            },
-            {
-                label: 'MOOC',
-                title: 'Introduction to Programming with MATLAB',
-                subtitle: 'Comprehensive programming course by Vanderbilt University covering MATLAB fundamentals and advanced concepts for mathematical computing.',
-                tags: ['Vanderbilt', 'MATLAB', 'Programming', 'Coursera'],
-                stats: [
-                    { label: 'Completed', value: 'Jun 2024' },
-                    { label: 'Provider', value: 'Coursera' }
-                ],
-                link: 'https://www.coursera.org/account/accomplishments/certificate/Z6HMC9DS5LSM'
-            },
-            {
-                label: 'MOOC',
-                title: 'Developing AI Applications with Python & Flask',
-                subtitle: 'Advanced course by IBM on building AI-powered applications using Python and Flask framework with practical implementations.',
-                tags: ['IBM', 'Python', 'Flask', 'AI', 'Coursera'],
-                stats: [
-                    { label: 'Completed', value: 'Jan 2024' },
-                    { label: 'Provider', value: 'Coursera' }
-                ],
-                link: 'https://www.coursera.org/account/accomplishments/certificate/HV6QNTGU2KHY'
-            },
-            {
-                label: 'SPECIALIZATION',
-                title: 'Programming in C++: A Hands-on Introduction',
-                subtitle: 'Comprehensive C++ programming specialization by Codio covering object-oriented programming, data structures, and algorithms.',
-                tags: ['Codio', 'C++', 'Programming', 'OOP'],
-                stats: [
-                    { label: 'Completed', value: 'Dec 2023' },
-                    { label: 'Provider', value: 'Coursera' }
-                ],
-                link: 'https://www.coursera.org/account/accomplishments/specialization/certificate/MNYQFWD4JX4P'
-            },
-            {
-                label: 'MOOC',
-                title: 'Python for Data Science, AI & Development',
-                subtitle: 'Foundational course by IBM in Python programming with focus on data science applications and AI development.',
-                tags: ['IBM', 'Python', 'Data Science', 'AI', 'Coursera'],
-                stats: [
-                    { label: 'Completed', value: 'Nov 2023' },
-                    { label: 'Provider', value: 'Coursera' }
-                ],
-                link: 'https://www.coursera.org/account/accomplishments/certificate/4LK9Y375MAQ7'
             }
         ]
     }

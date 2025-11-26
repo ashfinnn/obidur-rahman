@@ -1,110 +1,85 @@
-// app/components/sections/SkillsSection.tsx
 'use client';
 
 import { motion } from 'framer-motion';
-import { FiChevronRight } from 'react-icons/fi'; // +++ IMPROVEMENT: Icon for a cleaner visual cue
+import { FiCode, FiDatabase, FiCpu, FiLayers } from 'react-icons/fi';
 
-// --- Data structure is perfect, no changes needed ---
-const contextualSkills = [
-  {
-    category: 'LANGUAGES & DATABASES',
-    skills: [
-      { name: 'Python', context: 'Primary language for ML, statistical modeling, and data analysis.' },
-      { name: 'R', context: 'Utilized for advanced statistical analysis and academic research projects.' },
-      { name: 'JavaScript / TypeScript', context: 'For building interactive data visualizations and web interfaces.' },
-      { name: 'SQL (PostgreSQL, MySQL)', context: 'Querying and managing relational data for analysis pipelines.' },
-    ],
-  },
-  {
-    category: 'DATA SCIENCE & ML',
-    skills: [
-      { name: 'Data Wrangling (Pandas, NumPy)', context: 'Expertise in cleaning, transforming, and preparing complex datasets.' },
-      { name: 'Machine Learning (Scikit-learn)', context: 'Implementing models for classification, regression, and clustering.' },
-      { name: 'Deep Learning (TensorFlow, PyTorch)', context: 'Building and training neural networks for computer vision tasks.' },
-      { name: 'Data Visualization (Matplotlib, Seaborn)', context: 'Creating insightful plots to communicate findings and model performance.' },
-      { name: 'Statistical Analysis', context: 'Applying statistical tests and methods to validate hypotheses.' },
-    ],
-  },
-  {
-    category: 'TOOLS & PLATFORMS',
-    skills: [
-      { name: 'Jupyter Ecosystem', context: 'Preferred environment for iterative research and development.' },
-      { name: 'Git & GitHub', context: 'For version control, collaboration, and CI/CD pipelines.' },
-      { name: 'Linux / Bash', context: 'Comfortable in shell environments for scripting and system management.' },
-      { name: 'Docker', context: 'Containerizing applications for reproducible and scalable deployments.' },
-      { name: 'AWS (S3, EC2, SageMaker)', context: 'Leveraging cloud services for data storage, computation, and model deployment.' },
-    ],
-  },
+const skillGroups = [
+    {
+        title: "LANGUAGES",
+        icon: FiCode,
+        skills: ["Python", "TypeScript", "C++", "SQL", "Bash"],
+        desc: "The syntax of my solutions."
+    },
+    {
+        title: "INTELLIGENCE",
+        icon: FiCpu,
+        skills: ["PyTorch", "TensorFlow", "Scikit-Learn", "OpenCV", "Pandas"],
+        desc: "Building brains from data."
+    },
+    {
+        title: "INFRASTRUCTURE",
+        icon: FiDatabase,
+        skills: ["PostgreSQL", "Docker", "Git", "Linux", "AWS"],
+        desc: "Robust foundations for scale."
+    },
+    {
+        title: "INTERFACE",
+        icon: FiLayers,
+        skills: ["React", "Next.js", "Tailwind", "Framer Motion", "D3.js"],
+        desc: "Visualizing complex systems."
+    }
 ];
 
-// --- Animation variants are perfect, no changes needed ---
-const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
-
-
-// +++ IMPROVEMENT: A dedicated, interactive component for each skill entry +++
-const SkillItem = ({ name, context }: { name: string; context: string }) => (
-  <div className="group/skill relative flex items-start gap-3 p-3 -m-3 rounded-lg transition-colors hover:bg-gray-100">
-    <div className="flex-shrink-0 mt-1 text-gray-400 transition-colors duration-300 group-hover/skill:text-black">
-      <FiChevronRight size={16} />
-    </div>
-    <div>
-      <h4 className="font-mono text-base text-gray-800 font-medium">
-        {name}
-      </h4>
-      <p className="mt-1 font-sans text-sm text-gray-500">
-        {context}
-      </p>
-    </div>
-  </div>
-);
-
 const SkillsSection = () => {
-  return (
-    <motion.section
-      id="skills"
-      className="px-6 sm:px-8 lg:px-16 py-24 sm:py-32 bg-white" // CHANGED: bg-white for light theme
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <header className="mb-12 md:mb-16">
-          <motion.h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-black" variants={itemVariants}> {/* CHANGED: text-black */}
-            TECHNICAL_ARSENAL
-          </motion.h2>
-          <motion.div className="mt-4 w-32 h-px bg-black" variants={itemVariants} /> {/* CHANGED: bg-black */}
-          <motion.p className="mt-6 text-gray-600 max-w-2xl text-base lg:text-lg" variants={itemVariants}> {/* CHANGED: text-gray-600 */}
-            A curated list of technologies I leverage to analyze data, build models, and create impactful solutions.
-          </motion.p>
-        </header>
+    return (
+        <section id="skills" data-theme="light" className="relative bg-[#f5f5f5] py-32 overflow-hidden">
+            {/* Architectural Grid Background */}
+            <div className="absolute inset-0 w-full h-full"
+                style={{
+                    backgroundImage: `linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px'
+                }}
+            />
 
-        {/* +++ IMPROVEMENT: Layout is now a grid of cards for better visual separation +++ */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-        >
-          {contextualSkills.map((category) => (
-            <motion.div
-              key={category.category}
-              className="border border-gray-200 p-8" // Card container
-              variants={itemVariants}
-            >
-              <h3 className="pb-4 mb-6 font-mono text-sm font-bold text-black border-b border-gray-200"> {/* CHANGED: Colors */}
-                {`// ${category.category}`}
-              </h3>
-              <div className="space-y-4">
-                {category.skills.map((skill) => (
-                  <SkillItem key={skill.name} {...skill} />
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </motion.section>
-  );
+            <div className="max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 relative z-10">
+                <div className="mb-20 border-l-2 border-black pl-6">
+                     <span className="font-mono text-xs text-cyan-600 tracking-widest uppercase">02 // Capabilities</span>
+                     <h2 className="text-5xl md:text-6xl font-black mt-2 text-black">TECHNICAL<br/>ARSENAL</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-300 border border-gray-300">
+                    {skillGroups.map((group, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                            className="bg-white p-8 h-full hover:bg-gray-50 transition-colors group relative"
+                        >
+                            {/* Hover Corner Accent */}
+                            <div className="absolute top-0 right-0 w-0 h-0 border-t-[20px] border-r-[20px] border-t-transparent border-r-transparent group-hover:border-r-cyan-500 transition-all duration-300" />
+
+                            <div className="w-10 h-10 border border-gray-200 rounded-md flex items-center justify-center mb-6 text-gray-400 group-hover:text-cyan-600 group-hover:border-cyan-500 transition-colors">
+                                <group.icon className="w-5 h-5" />
+                            </div>
+                            
+                            <h3 className="font-bold text-lg mb-2 tracking-tight">{group.title}</h3>
+                            <p className="text-xs text-gray-500 font-mono mb-6 h-8 leading-relaxed">{group.desc}</p>
+                            
+                            <div className="flex flex-wrap gap-2 mt-auto">
+                                {group.skills.map(skill => (
+                                    <span key={skill} className="px-2 py-1 bg-gray-100 text-[10px] font-mono uppercase text-gray-600 border border-transparent group-hover:border-cyan-200 transition-colors">
+                                        {skill}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default SkillsSection;

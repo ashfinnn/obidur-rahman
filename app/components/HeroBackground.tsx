@@ -1,45 +1,68 @@
-// app/components/HeroBackground.tsx
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { throttle } from '../utils/throttle'; // Import the new performance utility
+import { useMotionValue, useSpring, motion, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const HeroBackground = () => {
-    const gridRef = useRef<HTMLDivElement>(null);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Smooth out the mouse movement for the spotlight
+    const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
+    const x = useSpring(mouseX, springConfig);
+    const y = useSpring(mouseY, springConfig);
+
+    // Tilt calculations
+    const rotateX = useTransform(y, [0, window.innerHeight], [15, -15]);
+    const rotateY = useTransform(x, [0, window.innerWidth], [-15, 15]);
 
     useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            if (!gridRef.current) return;
-            const { clientX, clientY } = event;
-            const x = (clientX - window.innerWidth / 2) / 35;
-            const y = (clientY - window.innerHeight / 2) / 35;
-
-            gridRef.current.style.transform = `perspective(1000px) rotateX(${y * -1}deg) rotateY(${x}deg) scale(1.2)`;
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
-
-        // Throttle the event listener to fire at most once every 16ms (~60fps) for performance
-        const throttledMouseMove = throttle(handleMouseMove, 16);
-
-        window.addEventListener('mousemove', throttledMouseMove);
-        return () => window.removeEventListener('mousemove', throttledMouseMove);
-    }, []);
+        
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, [mouseX, mouseY]);
 
     return (
-        <div
-            className="absolute inset-0 z-0 overflow-hidden bg-white"
-            style={{
-                maskImage: 'radial-gradient(ellipse at center, black 50%, transparent 90%)',
-                WebkitMaskImage: 'radial-gradient(ellipse at center, black 50%, transparent 90%)',
-            }}
-        >
-            <div
-                ref={gridRef}
-                 className="absolute inset-[-20%] h-[140%] w-[140%] animate-pan-grid transition-transform duration-300 ease-out"
+        <div className="absolute inset-0 -z-10 bg-[#050505] overflow-hidden perspective-[1000px]">
+            
+            {/* 1. The Spotlight Gradient (Moves with mouse) */}
+            <motion.div
+                className="absolute inset-0 z-10 opacity-20"
                 style={{
-                    backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' width=\'100\' height=\'100\'%3e%3cpath d=\'M0 1L100 1M1 0L1 100\' stroke=\'black\' stroke-width=\'0.5\' stroke-opacity=\'0.1\'/%3e%3c/svg%3e")',
-                    backgroundSize: '75px 75px',
+                    background: useTransform(
+                        [x, y],
+                        ([latestX, latestY]) => 
+                            `radial-gradient(600px circle at ${latestX}px ${latestY}px, rgba(6,182,212,0.15), transparent 40%)`
+                    )
                 }}
             />
+
+            {/* 2. The 3D Grid (Reacts to mouse tilt) */}
+            <motion.div
+                style={{ 
+                    rotateX: useTransform(y, [0, 1000], [20, 25]), // Slight constant tilt
+                    rotateY: 0,
+                    transformStyle: "preserve-3d",
+                }}
+                className="absolute inset-[-50%] w-[200%] h-[200%] origin-center"
+            >
+                <div 
+                    className="w-full h-full opacity-[0.2]"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '50px 50px',
+                        // The grid fades out at the edges
+                        maskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)',
+                    }} 
+                />
+            </motion.div>
         </div>
     );
 };

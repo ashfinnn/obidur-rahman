@@ -1,104 +1,79 @@
-// app/components/Footer.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiArrowUp } from 'react-icons/fi';
-import { FaLinkedin, FaGithub, FaYoutube, FaTwitter, FaLastfm } from 'react-icons/fa';
-import { SiAnilist } from 'react-icons/si';
-
-// --- Data is perfect, no changes needed ---
-const socialLinks = [
-    { name: 'Email', icon: FiMail, href: 'mailto:obidur.shawal@gmail.com' },
-    { name: 'LinkedIn', icon: FaLinkedin, href: 'https://www.linkedin.com/in/obidur-rahman-shawal/' },
-    { name: 'GitHub', icon: FaGithub, href: 'https://github.com/Ashfinn' },
-    { name: 'YouTube', icon: FaYoutube, href: 'https://www.youtube.com/channel/UC63n2xBEcdTIBITPpNEgoFQ' },
-    { name: 'Twitter', icon: FaTwitter, href: 'https://twitter.com/obidur__rahman' },
-    { name: 'Last.fm', icon: FaLastfm, href: 'https://www.last.fm/user/Ashfin' },
-    { name: 'Anilist', icon: SiAnilist, href: 'https://anilist.co/user/Ashfin/' },
-];
-
-// Reusable components styled for the DARK theme
-const SocialIconLink = ({ href, icon: Icon, name }: typeof socialLinks[0]) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={name}
-        className="text-neutral-400 transition-colors hover:text-cyan-300" // CHANGED
-    >
-        <Icon size={18} />
-    </a>
-);
-
-const BackToTopButton = () => (
-    <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="group flex items-center gap-2 font-mono text-xs text-neutral-400 transition-colors hover:text-cyan-300" // CHANGED
-        aria-label="Scroll to top"
-    >
-        <span>BACK_TO_TOP</span>
-        <FiArrowUp className="transition-transform group-hover:-translate-y-1" />
-    </button>
-);
-
+import { FaArrowRight } from 'react-icons/fa';
 
 const Footer = () => {
-    const [time, setTime] = useState('');
-
-    useEffect(() => {
-        const updateTime = () => {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {
-                timeZone: 'Asia/Dhaka',
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            setTime(`DHK ${timeString}`);
-        };
-
-        updateTime();
-        const timerId = setInterval(updateTime, 1000 * 60);
-        return () => clearInterval(timerId);
-    }, []);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <motion.footer
-            className="px-6 sm:px-8 lg:px-16 py-8 border-t border-neutral-800 bg-black" // CHANGED
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5 }}
-        >
-            <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-8">
+        <footer className="relative bg-[#050505] text-white pt-24 pb-12 overflow-hidden">
+            
+            {/* Background Glow on Hover */}
+            <motion.div 
+                animate={{ opacity: isHovered ? 0.2 : 0 }}
+                className="absolute inset-0 bg-gradient-to-t from-cyan-900 to-transparent pointer-events-none transition-opacity duration-500"
+            />
 
-                    <p className="font-mono text-xs text-neutral-500"> {/* CHANGED */}
-                        © {new Date().getFullYear()} OBIDUR.RAHMAN
-                    </p>
+            <div className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10">
+                
+                {/* 1. Massive Call To Action */}
+                <div className="border-b border-white/10 pb-12 mb-12">
+                    <h2 className="font-mono text-sm text-cyan-500 mb-4 tracking-widest">WHAT'S NEXT?</h2>
+                    <a 
+                        href="mailto:hello@obidur.com"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        className="group block w-fit"
+                    >
+                        <div className="flex items-baseline gap-4 md:gap-8">
+                            <span className="text-[12vw] leading-[0.8] font-black tracking-tighter group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-cyan-500 transition-all duration-500">
+                                LET'S TALK
+                            </span>
+                            <FaArrowRight className="text-4xl md:text-6xl text-white group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500" />
+                        </div>
+                    </a>
+                </div>
 
-                    <div className="flex items-center gap-5">
-                        {socialLinks.map(link => (
-                            <SocialIconLink key={link.name} {...link} />
-                        ))}
+                {/* 2. Grid Info */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+                    
+                    {/* Brand */}
+                    <div className="space-y-4">
+                        <h3 className="font-black text-2xl tracking-tight">OBIDUR.</h3>
+                        <p className="font-mono text-xs text-gray-400 max-w-[200px]">
+                            Digital Architect crafting experiences for the modern web.
+                        </p>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        <div className="hidden md:flex items-center gap-2 font-mono text-xs text-neutral-400"> {/* CHANGED */}
-                            {/* The green pulse dot is fine, it has great contrast on black */}
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                            <span>STATUS: OPERATIONAL</span>
-                            <span className="text-white">{time}</span> {/* CHANGED */}
-                        </div>
+                    {/* Socials */}
+                    <div className="flex flex-col gap-2">
+                        <span className="font-mono text-xs text-gray-500 mb-2">SOCIALS</span>
+                        <a href="#" className="font-mono text-sm hover:text-cyan-500 transition-colors">LINKEDIN</a>
+                        <a href="#" className="font-mono text-sm hover:text-cyan-500 transition-colors">GITHUB</a>
+                        <a href="#" className="font-mono text-sm hover:text-cyan-500 transition-colors">TWITTER</a>
+                    </div>
 
-                        <div className="hidden lg:block">
-                            <BackToTopButton />
+                    {/* Links */}
+                    <div className="flex flex-col gap-2">
+                        <span className="font-mono text-xs text-gray-500 mb-2">SITEMAP</span>
+                        <a href="#about" className="font-mono text-sm hover:text-cyan-500 transition-colors">ABOUT</a>
+                        <a href="#work" className="font-mono text-sm hover:text-cyan-500 transition-colors">WORK</a>
+                        <a href="#contact" className="font-mono text-sm hover:text-cyan-500 transition-colors">CONTACT</a>
+                    </div>
+
+                    {/* Technical Details */}
+                    <div className="flex flex-col justify-end items-start md:items-end">
+                        <div className="text-[10px] font-mono text-gray-600 text-right space-y-1">
+                            <p>LOCAL_TIME: {new Date().toLocaleTimeString()}</p>
+                            <p>LAT: 23.8103 N / LNG: 90.4125 E</p>
+                            <p>© {new Date().getFullYear()} ALL RIGHTS RESERVED</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </motion.footer>
+        </footer>
     );
 };
 
