@@ -14,7 +14,7 @@ const eslintConfig = [
   {
     rules: {
       quotes: ['error', 'single', { avoidEscape: true }],
-      'react/no-unescaped-entities': 'on', // this disables apostrophe warnings
+      'react/no-unescaped-entities': 'off', // this disables apostrophe warnings
     },
   },
 ];
