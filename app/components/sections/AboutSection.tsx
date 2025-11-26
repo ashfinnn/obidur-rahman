@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { 
     SiPython, SiTypescript, SiCplusplus, SiPytorch, 
     SiPostgresql, SiDocker, SiNextdotjs, SiAwslambda 
-} from 'react-icons/si'; // Using Simple Icons for cleaner look
+} from 'react-icons/si';
 
 // --- Tech Stack Data ---
 const techStack = [
@@ -48,40 +48,39 @@ const AboutSection = () => {
                     >
                         {/* Badge */}
                         <div className="inline-block px-3 py-1 mb-6 border border-black/10 rounded-full bg-white shadow-sm">
-                            <span className="font-mono text-xs text-cyan-600 tracking-widest uppercase">01 // The Narrative</span>
+                            <span className="font-mono text-xs text-cyan-600 tracking-widest uppercase">01 // The Story</span>
                         </div>
                         
                         {/* Headline */}
                         <h2 className="text-5xl md:text-7xl font-black text-black mb-8 leading-[0.9] tracking-tighter">
-                            DEFINING<br />
+                            BUILDING<br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">
-                                THE FUTURE
+                                WHAT MATTERS
                             </span>
                         </h2>
 
-                        {/* Expanded, Personal Bio */}
+                        {/* Enhanced, Natural Bio */}
                         <div className="space-y-5 text-base md:text-lg text-gray-600 leading-relaxed font-light">
                             <p>
-                                It started with <span className="text-black font-semibold">Calculus</span>. The idea that you could describe the curvature of the world with a single equation fascinated me. Growing up in Bangladesh, I realized that while mathematics described the world, code <span className="italic">changed</span> it.
+                                My journey into tech started with a simple fascination: watching patterns emerge from chaos. Growing up in Bangladesh, I'd spend hours thinking about how tiny decisions compound into massive systems—how a single line of code could ripple into something that touches millions.
                             </p>
                             <p>
-                                I don't just write software; I treat code as <span className="text-cyan-700 font-medium">executable architecture</span>. Whether I'm optimizing a Neural Network or architecting a scalable backend, I obsess over the intersection of <strong>algorithmic efficiency</strong> and <strong>human impact</strong>. I build systems that are as beautiful under the hood as they are on the screen.
+                                These days, I'm deep in the trenches of machine learning and full-stack development, building things that actually matter. I love that moment when theory clicks into practice—when an algorithm you've been debugging finally converges, or when a user interface just <span className="italic">feels right</span>. For me, great software sits at the intersection of elegant code and genuine human needs.
                             </p>
                             <p>
-                                When I'm not buried in documentation or training models, you'll find me organizing R&D initiatives at <span className="text-black font-semibold underline decoration-cyan-400 underline-offset-4">The Code Forum</span> or exploring the bleeding edge of Edge AI.
+                                Outside of coding, I'm usually reading <span className="text-black font-semibold underline decoration-cyan-400 underline-offset-4">research papers</span>  over coffee, or experimenting with whatever caught my curiosity that week. Currently obsessed with making AI models run faster on edge devices.
                             </p>
                         </div>
 
-                        {/* --- NEW: INTEGRATED SKILLS ROW --- */}
+                        {/* --- INTEGRATED SKILLS ROW --- */}
                         <div className="mt-10 pt-8 border-t border-black/10">
                             <span className="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-4">
-                                CURRENTLY BUILDING WITH
+                                CURRENT STACK
                             </span>
                             <div className="flex flex-wrap gap-6">
                                 {techStack.map((tech, i) => (
                                     <div key={i} className="group flex flex-col items-center gap-2 cursor-help">
                                         <tech.icon className={`text-2xl text-gray-400 transition-colors duration-300 ${tech.color}`} />
-                                        {/* Tooltip-like label that appears on hover */}
                                         <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute mt-8 text-[10px] font-mono bg-black text-white px-2 py-1 rounded">
                                             {tech.name}
                                         </span>
@@ -114,7 +113,7 @@ const AboutSection = () => {
                                     className="absolute -bottom-6 -left-12 bg-black text-white p-6 shadow-2xl max-w-[220px] border-l-4 border-cyan-500"
                                 >
                                     <div className="text-4xl font-bold text-white">3<span className="text-cyan-500">+</span></div>
-                                    <div className="text-xs font-mono text-gray-400 tracking-widest mt-1">YEARS RESEARCH & DEV EXPERIENCE</div>
+                                    <div className="text-xs font-mono text-gray-400 tracking-widest mt-1">YEARS IN THE FIELD</div>
                                 </motion.div>
                             </div>
                         </motion.div>

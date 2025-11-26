@@ -48,7 +48,7 @@ const Hero = () => {
                     </div>
                     <div className="space-y-1">
                         <p className="text-[10px] font-mono text-cyan-500 tracking-widest">LOCATION</p>
-                        <p className="text-sm font-bold text-gray-300">DHAKA, BD</p>
+                        <p className="text-sm font-bold text-gray-300">CHITTAGONG, BD</p>
                     </div>
                 </div>
 
@@ -77,9 +77,9 @@ const Hero = () => {
                         className="mt-12 md:ml-2 max-w-xl"
                     >
                         <p className="font-mono text-sm md:text-base text-gray-400 leading-relaxed">
-                            Constructing high-performance digital infrastructure. Focusing on{' '}
-                            <span className="text-cyan-400 hover:bg-cyan-400/10 cursor-cell px-1 transition-colors">computational geometry</span>{' '}
-                            and algorithmic efficiency.
+                            Creating high-performance AI Models. Focusing on{' '}
+                            <span className="text-cyan-400 hover:bg-cyan-400/10 cursor-cell px-1 transition-colors">Artificial Intelligence</span>{' '}
+                            and optimizing algorithms.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-4">
