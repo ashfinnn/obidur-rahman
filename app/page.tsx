@@ -1,46 +1,49 @@
-// app/page.tsx
+'use client';
+
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutSection from './components/sections/AboutSection';
-import ContactSection from './components/sections/ContactSection';
-import ProjectsSection from './components/sections/ProjectsSection';
 import SkillsSection from './components/sections/SkillsSection';
+import ProjectsSection from './components/sections/ProjectsSection';
+import ContactSection from './components/sections/ContactSection';
 import Footer from './components/Footer';
-import StickySection from './components/ui/StickySection';
+import SlideSection from './components/ui/SlideSection';
 
 export default function Home() {
   return (
     <main className="relative w-full bg-black">
-      {/* Header stays fixed on top of everything */}
+      {/* Header is fixed z-[999] inside the component */}
       <Header />
 
-      {/* 1. HERO (Black) */}
-      <StickySection index={1} className="bg-[#050505]">
+      {/* 1. HERO (Black Background) */}
+      <SlideSection index={1} className="bg-[#050505]">
         <Hero />
-      </StickySection>
+      </SlideSection>
 
-      {/* 2. ABOUT (Light) */}
-      <StickySection index={2} className="bg-[#f4f4f0]">
+      {/* 2. ABOUT (Light Background) */}
+      <SlideSection index={2} className="bg-[#f5f5f5]">
         <AboutSection />
-      </StickySection>
+      </SlideSection>
 
-      {/* 3. SKILLS (Light Gray) */}
-      <StickySection index={3} className="bg-gray-100">
+      {/* 3. SKILLS (Dark/Gray Background) */}
+      <SlideSection index={3} className="bg-[#111111]">
         <SkillsSection />
-      </StickySection>
+      </SlideSection>
 
-      {/* 4. PROJECTS (Dark) */}
-      <StickySection index={4} className="bg-[#0a0a0a]">
+      {/* 4. PROJECTS (Black Background) */}
+      <SlideSection index={4} className="bg-[#000000]">
         <ProjectsSection />
-      </StickySection>
+      </SlideSection>
 
-      {/* 5. CONTACT & FOOTER (Light) */}
-      <StickySection index={5} className="bg-white">
-        <div className="min-h-screen flex flex-col justify-between">
-           <ContactSection />
-           <Footer />
+      {/* 5. CONTACT & FOOTER (White Background) */}
+      <SlideSection index={5} className="bg-white text-black">
+        {/* Wrapper to ensure Footer sits at the bottom of this slide */}
+        <div className="min-h-[100dvh] flex flex-col justify-between">
+          <ContactSection />
+          <Footer />
         </div>
-      </StickySection>
+      </SlideSection>
+
     </main>
   );
 }

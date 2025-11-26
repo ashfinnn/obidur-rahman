@@ -32,7 +32,7 @@ const skillGroups = [
 
 const SkillsSection = () => {
     return (
-        <section id="skills" data-theme="light" className="relative bg-[#f5f5f5] py-32 overflow-hidden">
+        <section id="skills" data-theme="light" className="relative  bg-[#000000] py-24 md:py-32 min-h-full">
             {/* Architectural Grid Background */}
             <div className="absolute inset-0 w-full h-full"
                 style={{

@@ -25,7 +25,7 @@ const ProjectsSection = () => {
         : allProjects.filter(project => project.category === filter);
 
     return (
-        <section id="projects" data-theme="dark" className="relative bg-[#0a0a0a] text-white py-32">
+        <section id="projects" data-theme="dark" className="relative  bg-[#000000] py-24 md:py-32 min-h-full">
              {/* Background Grid */}
              <div className="absolute inset-0 opacity-10" 
                 style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '30px 30px' }} 

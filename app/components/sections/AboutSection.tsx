@@ -17,7 +17,7 @@ const AboutSection = () => {
     const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
     return (
-        <section id="about" className="relative bg-white py-32 overflow-hidden">
+        <section id="about" className="relative  bg-[#000000] py-24 md:py-32 min-h-full">
             <MovingGrid />
             
             <div className="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10">
