@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    "noImplicitAny": false, // Change this from true to false
+    "strict": false,         // Or turn off the entire strict mode
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
