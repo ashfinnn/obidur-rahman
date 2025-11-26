@@ -1,10 +1,10 @@
-import Header from './components/Header';
-import Hero from './components/Hero';
-import AboutSection from './components/sections/AboutSection';
-import ContactSection from './components/sections/ContactSection';
-import ProjectsSection from './components/sections/ProjectsSection';
-import Footer from './components/Footer';
-import SlideSection from './components/ui/SlideSection';
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import AboutSection from "./components/sections/AboutSection";
+import ContactSection from "./components/sections/ContactSection";
+import ProjectsSection from "./components/sections/ProjectsSection";
+
+import SlideSection from "./components/ui/SlideSection";
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export default function Home() {
       <SlideSection index={4} id="contact" className="bg-white">
         {/* Flex wrapper to ensure footer stays at bottom */}
         <div className="min-h-full flex flex-col justify-between">
-            <ContactSection />
+          <ContactSection />
         </div>
       </SlideSection>
     </main>
