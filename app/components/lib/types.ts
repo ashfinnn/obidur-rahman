@@ -35,6 +35,6 @@ export interface ProjectCategory {
 export interface AllProjectsData {
   'data-science': ProjectCategory;
   'web-development': ProjectCategory;
-  'programming': ProjectCategory;
+  'programming'?: ProjectCategory;
   'certifications': ProjectCategory;
 }

@@ -51,7 +51,7 @@ const Header = () => {
         <>
             {/* --- DESKTOP SIDEBAR (Wider & Easier to Click) --- */}
             <motion.header 
-                className={`hidden md:flex fixed left-0 top-0 bottom-0 w-28 flex-col justify-between py-8 z-50 border-r backdrop-blur-xl transition-colors duration-500 ${sidebarBg} ${borderColor}`}
+                className={`hidden md:flex fixed left-0 top-0 bottom-0 w-28 flex-col justify-between py-8 z-999 border-r backdrop-blur-xl transition-colors duration-500 ${sidebarBg} ${borderColor}`}
             >
                 {/* Logo */}
                 <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full flex justify-center py-4">
@@ -106,7 +106,7 @@ const Header = () => {
             </motion.header>
 
             {/* --- MOBILE HEADER (Top Bar instead of bottom for better UX) --- */}
-            <div className={`md:hidden fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center backdrop-blur-lg border-b ${isDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white/90 border-black/10 text-black'}`}>
+            <div className={`md:hidden fixed top-0 left-0 right-0 z-999 px-6 py-4 flex justify-between items-center backdrop-blur-lg border-b ${isDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white/90 border-black/10 text-black'}`}>
                 <span className="font-black text-xl">OR.</span>
                 <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
                     <FiMenu size={24} />
