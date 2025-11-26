@@ -11,46 +11,45 @@ interface SlideSectionProps {
 }
 
 const SlideSection = ({ children, className = "", index, id }: SlideSectionProps) => {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLDivElement>(null);
 
+    // Track scroll relative to THIS section
     const { scrollYProgress } = useScroll({
-        target: containerRef,
-        // "start start": Top of element hits top of viewport
-        // "end start": Bottom of element hits top of viewport
-        offset: ["start start", "end start"] 
+        target: ref,
+        // "start start": Top of card hits Top of viewport (Sticks)
+        // "end start": Bottom of card hits Top of viewport (Fully covered)
+        offset: ["start start", "end start"]
     });
 
-    // SMOOTH TRANSITIONS
-    // Scale: 1 -> 0.9 (Shrinks slightly as it goes up/gets covered)
-    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-    // Opacity/Brightness: Fades slightly to create depth
-    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+    // FADE OUT EFFECT:
+    // As the user scrolls and the NEXT section slides up,
+    // THIS section will fade from Opacity 1 to 0.
+    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
     
+    // DEPTH EFFECT:
+    // Slight scale down to make it look like it's going into the background
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+
     return (
-        <div 
-            ref={containerRef} 
-            className="relative w-full"
+        // IMPORTANT: motion.div is the sticky container directly.
+        // No outer wrapper. This ensures it stays fixed.
+        <motion.div
+            ref={ref}
             style={{ 
-                // This is the magic. We force the container to be scrollable.
-                // The zIndex ensures stacking order.
+                opacity, 
+                scale,
                 zIndex: index 
-            }} 
+            }}
+            className={`sticky top-0 h-[100dvh] w-full overflow-hidden origin-top ${className}`}
         >
-            <div className="sticky top-0 h-screen overflow-hidden">
-                <motion.div
-                    style={{ scale, opacity }}
-                    className={`relative h-full w-full ${className}`}
-                >
-                    {/* Internal Scroll for Mobile Content */}
-                    <div 
-                        id={id}
-                        className="h-full w-full overflow-y-auto scrollbar-none touch-pan-y"
-                    >
-                        {children}
-                    </div>
-                </motion.div>
+            {/* Internal Scroll for Mobile/Tall Content */}
+            <div 
+                id={id}
+                className="h-full w-full overflow-y-auto scrollbar-none touch-pan-y"
+            >
+                {children}
             </div>
-        </div>
+        </motion.div>
     );
 };
 

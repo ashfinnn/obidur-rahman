@@ -2,21 +2,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+html,
+body,
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 /* --- BASE & UNIVERSAL STYLES --- */
 html {
     scroll-behavior: smooth;
     font-size: clamp(0.875rem, 0.778rem + 0.48vw, 1rem);
 }
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
   .scrollbar-none::-webkit-scrollbar {
       display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
   .scrollbar-none {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
   }
 }
 body {
@@ -58,10 +69,6 @@ body {
     transform: translateY(-0.5rem);
 }
 
-/* --- THEME-AWARE UTILITIES --- */
-/* Now you can apply these classes to elements within your light or dark sections */
-
-/* Example: <div class="glass-sharp on-light">...</div> */
 
 /* -- Glass Effects -- */
 .glass-sharp.on-light {

@@ -1,4 +1,3 @@
-// app/page.tsx
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutSection from './components/sections/AboutSection';
@@ -9,29 +8,30 @@ import SlideSection from './components/ui/SlideSection';
 
 export default function Home() {
   return (
-    <main className="relative w-full bg-black overflow-x-clip">
+    // bg-black ensures that when a slide fades out, it reveals black (not white)
+    <main className="w-full bg-black relative">
       <Header />
 
-      {/* 1. HERO */}
+      {/* 1. HERO (Black) */}
       <SlideSection index={1} id="hero" className="bg-[#050505]">
         <Hero />
       </SlideSection>
 
-      {/* 2. ABOUT + SKILLS (Merged) */}
+      {/* 2. ABOUT (Light) - Slides up & covers Hero */}
       <SlideSection index={2} id="about" className="bg-[#f4f4f0]">
         <AboutSection />
       </SlideSection>
 
-      {/* 3. PROJECTS (Adjusted index) */}
+      {/* 3. PROJECTS (Black) - Slides up & covers About */}
       <SlideSection index={3} id="projects" className="bg-[#000]">
         <ProjectsSection />
       </SlideSection>
 
-      {/* 4. CONTACT (Adjusted index) */}
+      {/* 4. CONTACT (White) - Slides up & covers Projects */}
       <SlideSection index={4} id="contact" className="bg-white">
-        <div className="min-h-[100dvh] flex flex-col justify-between">
+        {/* Flex wrapper to ensure footer stays at bottom */}
+        <div className="min-h-full flex flex-col justify-between">
             <ContactSection />
-            <Footer />
         </div>
       </SlideSection>
     </main>
