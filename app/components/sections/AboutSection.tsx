@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, cubicBezier } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
@@ -33,7 +33,7 @@ const ScrambleText = ({
     if (intervalRef.current) clearInterval(intervalRef.current);
 
     intervalRef.current = setInterval(() => {
-      setDisplayText((prev) =>
+      setDisplayText(() =>
         text
           .split("")
           .map((letter, index) => {
@@ -50,7 +50,6 @@ const ScrambleText = ({
     }, 30);
   };
 
-  // Trigger on view (with optional delay)
   useEffect(() => {
     const timer = setTimeout(() => {
       scramble();
@@ -98,7 +97,7 @@ const AboutSection = () => {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
-  // Animation Variants for Staggered Entrance
+  // Fixed + Typed Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -115,7 +114,10 @@ const AboutSection = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+      transition: {
+        duration: 0.8,
+        ease: cubicBezier(0.22, 1, 0.36, 1), // FIXED ✔
+      },
     },
   };
 
@@ -123,14 +125,13 @@ const AboutSection = () => {
     <section
       id="about"
       data-theme="light"
-      // lg:h-screen ensures it fits one screen on desktop. min-h-screen handles mobile.
       className="relative bg-[#f4f4f0] min-h-screen lg:h-screen overflow-hidden flex items-center py-20 lg:py-0"
     >
       <MovingGrid />
 
       <div className="max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 relative z-10 w-full h-full flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* --- LEFT: NARRATIVE (Span 7) --- */}
+          {/* LEFT */}
           <motion.div
             className="lg:col-span-7 flex flex-col justify-center"
             variants={containerVariants}
@@ -158,7 +159,7 @@ const AboutSection = () => {
               </span>
             </motion.h2>
 
-            {/* Enhanced, Natural Bio */}
+            {/* Bio */}
             <div className="space-y-5 text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed font-light max-w-2xl">
               <motion.p variants={itemVariants}>
                 My journey into tech started with a simple fascination: watching
@@ -167,6 +168,7 @@ const AboutSection = () => {
                 systems—how a single line of code could ripple into something
                 that touches millions.
               </motion.p>
+
               <motion.p variants={itemVariants}>
                 These days, I'm deep in the trenches of machine learning and
                 full-stack development. I love that moment when theory clicks
@@ -174,9 +176,9 @@ const AboutSection = () => {
                 <span className="italic text-black font-medium">
                   feels right
                 </span>
-                . For me, great software sits at the intersection of elegant
-                code and genuine human needs.
+                .
               </motion.p>
+
               <motion.p variants={itemVariants}>
                 Outside of coding, I'm usually reading{" "}
                 <span className="text-black font-semibold underline decoration-cyan-400 underline-offset-4 cursor-pointer hover:bg-cyan-100 transition-colors">
@@ -186,7 +188,7 @@ const AboutSection = () => {
               </motion.p>
             </div>
 
-            {/* --- INTEGRATED SKILLS ROW --- */}
+            {/* Skills */}
             <motion.div
               variants={itemVariants}
               className="mt-10 pt-8 border-t border-black/10"
@@ -194,6 +196,7 @@ const AboutSection = () => {
               <span className="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-4">
                 CURRENT STACK
               </span>
+
               <div className="flex flex-wrap gap-6">
                 {techStack.map((tech, i) => (
                   <div
@@ -203,7 +206,6 @@ const AboutSection = () => {
                     <tech.icon
                       className={`text-2xl text-gray-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110 ${tech.color}`}
                     />
-                    {/* Tooltip */}
                     <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 text-[10px] font-mono bg-black text-white px-2 py-0.5 rounded whitespace-nowrap pointer-events-none">
                       {tech.name}
                     </span>
@@ -213,7 +215,7 @@ const AboutSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* --- RIGHT: IMAGE (Span 5) --- */}
+          {/* RIGHT IMAGE */}
           <div className="lg:col-span-5 relative hidden lg:block h-full">
             <motion.div
               style={{ y }}
@@ -224,23 +226,19 @@ const AboutSection = () => {
               className="relative z-10 w-full max-w-md ml-auto"
             >
               <div className="relative aspect-[4/5] w-full rotate-2 hover:rotate-0 transition-transform duration-700 ease-out group">
-                {/* Image Frame */}
                 <div className="absolute inset-0 border-2 border-black translate-x-3 translate-y-3 rounded-sm transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
 
                 <div className="relative h-full w-full overflow-hidden rounded-sm bg-gray-200 shadow-2xl">
                   <Image
-                    src="/me.jpg" // Ensure this path is correct in your public folder
+                    src="/me.jpg"
                     alt="Obidur Rahman"
                     fill
                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                     priority
                   />
-
-                  {/* Overlay Noise for texture */}
                   <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none" />
                 </div>
 
-                {/* Floating Stats Badge */}
                 <motion.div
                   animate={{ y: [0, -6, 0] }}
                   transition={{
@@ -260,7 +258,6 @@ const AboutSection = () => {
               </div>
             </motion.div>
 
-            {/* Ambient Glow Behind Image */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-200/40 to-blue-200/40 rounded-full blur-[100px] -z-10 mix-blend-multiply" />
           </div>
         </div>
