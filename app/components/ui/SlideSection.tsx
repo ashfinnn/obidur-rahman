@@ -1,56 +1,86 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 
 interface SlideSectionProps {
-    children: React.ReactNode;
-    className?: string;
-    index: number;
-    id?: string;
+  children: React.ReactNode;
+  className?: string;
+  index: number;
+  id?: string;
 }
 
-const SlideSection = ({ children, className = "", index, id }: SlideSectionProps) => {
-    const ref = useRef<HTMLDivElement>(null);
+const SlideSection = ({
+  children,
+  className = "",
+  index,
+  id,
+}: SlideSectionProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
 
-    // Track scroll relative to THIS section
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        // "start start": Top of card hits Top of viewport (Sticks)
-        // "end start": Bottom of card hits Top of viewport (Fully covered)
-        offset: ["start start", "end start"]
-    });
+  // 1. Detect Mobile to disable expensive animations
+  useEffect(() => {
+    const checkMobile = () => {
+      // 1024px is the standard LG breakpoint in Tailwind
+      setIsMobile(window.innerWidth < 1024);
+    };
 
-    // FADE OUT EFFECT:
-    // As the user scrolls and the NEXT section slides up,
-    // THIS section will fade from Opacity 1 to 0.
-    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-    
-    // DEPTH EFFECT:
-    // Slight scale down to make it look like it's going into the background
-    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-    return (
-        // IMPORTANT: motion.div is the sticky container directly.
-        // No outer wrapper. This ensures it stays fixed.
-        <motion.div
-            ref={ref}
-            style={{ 
-                opacity, 
-                scale,
-                zIndex: index 
-            }}
-            className={`sticky top-0 h-[100dvh] w-full overflow-hidden origin-top ${className}`}
-        >
-            {/* Internal Scroll for Mobile/Tall Content */}
-            <div 
-                id={id}
-                className="h-full w-full overflow-y-auto scrollbar-none touch-pan-y"
-            >
-                {children}
-            </div>
-        </motion.div>
-    );
+  // 2. Scroll Logic (Desktop Only)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  // 3. Calculate Effects (Only used on Desktop)
+  // Opacity fades out as the next card covers it
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  // Scale shrinks slightly to create depth
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+
+  // 4. Conditional Styles based on Device
+  // On Mobile: We return EMPTY styles so it scrolls naturally without transforms
+  const dynamicStyle = isMobile ? {} : { opacity, scale, zIndex: index };
+
+  return (
+    <motion.div
+      ref={ref}
+      style={dynamicStyle}
+      // WILL-CHANGE: Hints browser to optimize rendering for these properties
+      className={`
+                w-full
+                origin-top
+                will-change-transform
+
+                /* MOBILE STYLES (Default) */
+                relative
+                min-h-screen
+                h-auto
+
+                /* DESKTOP STYLES (lg+) */
+                lg:sticky
+                lg:top-0
+                lg:h-screen
+                lg:overflow-hidden
+
+                ${className}
+            `}
+    >
+      {/*
+               Inner Container:
+               On mobile, this allows content to grow naturally.
+               On desktop, it centers content if it's short, or fits strictly.
+            */}
+      <div id={id} className="relative w-full h-full flex flex-col">
+        {children}
+      </div>
+    </motion.div>
+  );
 };
 
 export default SlideSection;

@@ -4,39 +4,36 @@ import AboutSection from "./components/sections/AboutSection";
 import ContactSection from "./components/sections/ContactSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
 import ExperienceSection from "./components/sections/ExperienceSection";
+
 import SlideSection from "./components/ui/SlideSection";
+// ... imports
 
 export default function Home() {
   return (
-    // bg-black ensures that when a slide fades out, it reveals black (not white)
-    <main className="w-full bg-black relative">
-      <Header />
-
-      {/* 1. HERO (Black) */}
-      <SlideSection index={1} id="hero" className="bg-[#050505]">
+    <main className="bg-[#050505]">
+      {/* HERO: Index 1 */}
+      <SlideSection index={1} id="hero">
         <Hero />
       </SlideSection>
 
-      {/* 2. ABOUT (Light) - Slides up & covers Hero */}
-      <SlideSection index={2} id="about" className="bg-[#f4f4f0]">
+      {/* ABOUT: Index 2 (Slides over Hero) */}
+      <SlideSection index={2} id="about">
         <AboutSection />
       </SlideSection>
 
-      {/* 3. PROJECTS (Black) - Slides up & covers About */}
-      <SlideSection index={3} id="projects" className="bg-[#000]">
+      {/* PROJECTS: Index 3 */}
+      <SlideSection index={3} id="projects">
         <ProjectsSection />
       </SlideSection>
 
-      <SlideSection index={4} id="experience" className="bg-[#f4f4f0]">
+      {/* EXPERIENCE: Index 4 */}
+      <SlideSection index={4} id="experience">
         <ExperienceSection />
       </SlideSection>
 
-      {/* 4. CONTACT (White) - Slides up & covers Projects */}
-      <SlideSection index={4} id="contact" className="bg-white">
-        {/* Flex wrapper to ensure footer stays at bottom */}
-        <div className="min-h-full flex flex-col justify-between">
-          <ContactSection />
-        </div>
+      {/* CONTACT: Index 5 (Final card) */}
+      <SlideSection index={5} id="contact">
+        <ContactSection />
       </SlideSection>
     </main>
   );
