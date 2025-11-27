@@ -1,290 +1,325 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
+// --- 1. SCRAMBLE COMPONENT (No Layout Shift) ---
+const ScrambleText = ({
+  text,
+  hover = false,
+}: {
+  text: string;
+  hover?: boolean;
+}) => {
+  const [displayText, setDisplayText] = useState(text);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const chars = "XYZ0123456789!@#";
+
+  const scramble = () => {
+    let iteration = 0;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setDisplayText((prev) =>
+        text
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) return text[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join(""),
+      );
+      if (iteration >= text.length) clearInterval(intervalRef.current!);
+      iteration += 1;
+    }, 20);
+  };
+
+  // Scramble on mount if not hover-only
+  useEffect(() => {
+    if (!hover) scramble();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  return (
+    <span
+      onMouseEnter={hover ? scramble : undefined}
+      className="inline-block whitespace-nowrap relative"
+    >
+      {/* Ghost text for layout stability */}
+      <span className="opacity-0">{text}</span>
+      <span className="absolute left-0 top-0">{displayText}</span>
+    </span>
+  );
+};
+
+// --- DATA ---
 const navItems = [
-    { id: 'hero', label: 'HOME' },
-    { id: 'about', label: 'ABOUT' },
-    { id: 'skills', label: 'SKILLS' },
-    { id: 'projects', label: 'WORK' },
-    { id: 'contact', label: 'CONTACT' },
+  { id: "hero", label: "HOME" },
+  { id: "about", label: "ABOUT" },
+  { id: "projects", label: "WORK" },
+  { id: "contact", label: "CONTACT" },
 ];
 
 const socialLinks = [
-    { icon: FaGithub, href: 'https://github.com/yourusername', label: 'GitHub' },
-    { icon: FaLinkedin, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
-    { icon: FaTwitter, href: 'https://twitter.com/yourusername', label: 'Twitter' },
+  { icon: FaGithub, href: "https://github.com", label: "GitHub" },
+  { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: FaTwitter, href: "https://twitter.com", label: "Twitter" },
 ];
 
 const Header = () => {
-    const [activeSection, setActiveSection] = useState('hero');
-    const [isDark, setIsDark] = useState(true);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [time, setTime] = useState("");
 
-    useEffect(() => {
-        // Track scroll for additional effects
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
+  // Handle Scroll & Active Section
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
 
-        // Intersection observer for active section tracking
-        const observerOptions = {
-            root: null,
-            rootMargin: '-45% 0px -45% 0px',
-            threshold: 0
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id);
-                    const theme = entry.target.closest('section')?.getAttribute('data-theme');
-                    if (theme) setIsDark(theme === 'dark');
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        navItems.forEach((item) => {
-            const element = document.getElementById(item.id);
-            if (element) observer.observe(element);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
+            setActiveSection(entry.target.id);
+          }
         });
-
-        return () => {
-            observer.disconnect();
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    // Prevent body scroll when mobile menu is open
-    useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [mobileMenuOpen]);
-
-    const bgClass = isDark 
-        ? 'bg-black/20 border-white/10' 
-        : 'bg-white/60 border-black/10';
-    const textClass = isDark ? 'text-white' : 'text-black';
-    const muteClass = isDark ? 'text-gray-400' : 'text-gray-500';
-
-    return (
-        <>
-            {/* --- DESKTOP SIDEBAR --- */}
-            <motion.aside 
-                initial={{ x: -100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                className={`hidden md:flex fixed left-0 top-0 bottom-0 w-28 flex-col justify-between py-8 z-[999] border-r backdrop-blur-xl transition-all duration-500 ${bgClass} ${scrolled ? 'shadow-2xl' : ''}`}
-            >
-                {/* Logo */}
-                <motion.button 
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-                    className="w-full flex justify-center group"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    <span className={`font-black text-2xl tracking-tighter transition-colors ${textClass} group-hover:text-cyan-500`}>
-                        OR.
-                    </span>
-                </motion.button>
-
-                {/* Nav */}
-                <nav className="flex flex-col w-full gap-1">
-                    {navItems.map((item, idx) => {
-                        const isActive = activeSection === item.id;
-                        return (
-                            <motion.div
-                                key={item.id}
-                                initial={{ x: -20, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: idx * 0.1 }}
-                            >
-                                <Link
-                                    href={`#${item.id}`}
-                                    className="relative flex items-center justify-center h-14 w-full group"
-                                >
-                                    {/* Active indicator line */}
-                                    <motion.div 
-                                        className="absolute left-0 w-1 h-8 bg-cyan-500 rounded-r-full"
-                                        initial={false}
-                                        animate={{ 
-                                            opacity: isActive ? 1 : 0,
-                                            scaleY: isActive ? 1 : 0.5
-                                        }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                    
-                                    <div className={`flex items-center gap-2.5 transition-all duration-300 ${isActive ? 'translate-x-1' : ''}`}>
-                                        <span className={`text-[9px] font-mono font-bold uppercase tracking-widest transition-all duration-300 ${
-                                            isActive 
-                                                ? 'text-cyan-500 opacity-100' 
-                                                : 'opacity-0 group-hover:opacity-60'
-                                        } ${muteClass}`}>
-                                            {item.label}
-                                        </span>
-                                        <motion.div 
-                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                                                isActive 
-                                                    ? 'bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]' 
-                                                    : isDark ? 'bg-white/30' : 'bg-black/30'
-                                            }`}
-                                            whileHover={{ scale: 1.3 }}
-                                        />
-                                    </div>
-                                </Link>
-                            </motion.div>
-                        );
-                    })}
-                </nav>
-
-                {/* Socials */}
-                <div className="flex flex-col items-center gap-5">
-                    {/* Divider */}
-                    <div className={`w-px h-12 ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
-                    
-                    {socialLinks.map((social, i) => (
-                        <motion.a
-                            key={i}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`transition-colors relative group ${muteClass}`}
-                            whileHover={{ scale: 1.15, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                            aria-label={social.label}
-                        >
-                            <social.icon size={18} className="group-hover:text-cyan-500 transition-colors" />
-                            
-                            {/* Tooltip */}
-                            <span className="absolute left-full ml-4 px-2 py-1 bg-black text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                {social.label}
-                            </span>
-                        </motion.a>
-                    ))}
-                </div>
-            </motion.aside>
-
-            {/* --- MOBILE TOP BAR --- */}
-            <motion.header 
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={`md:hidden fixed top-0 left-0 right-0 z-[999] px-6 py-4 flex justify-between items-center backdrop-blur-xl border-b transition-all duration-500 ${
-                    isDark 
-                        ? 'bg-black/80 border-white/10 text-white' 
-                        : 'bg-white/90 border-black/10 text-black'
-                } ${scrolled ? 'shadow-lg py-3' : ''}`}
-            >
-                <motion.span 
-                    className="font-black text-xl"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    OR.
-                </motion.span>
-                
-                <motion.button 
-                    onClick={() => setMobileMenuOpen(true)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="relative z-10"
-                >
-                    <FiMenu size={24} />
-                </motion.button>
-            </motion.header>
-
-            {/* MOBILE MENU OVERLAY */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <>
-                        {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-sm"
-                            onClick={() => setMobileMenuOpen(false)}
-                        />
-                        
-                        {/* Menu Content */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.3 }}
-                            className="fixed inset-0 z-[1001] flex flex-col items-center justify-center gap-6 text-white"
-                        >
-                            {/* Close Button */}
-                            <motion.button 
-                                onClick={() => setMobileMenuOpen(false)} 
-                                className="absolute top-6 right-6 p-2"
-                                whileHover={{ rotate: 90, scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <FiX size={28} />
-                            </motion.button>
-                            
-                            {/* Nav Items */}
-                            {navItems.map((item, idx) => (
-                                <motion.div
-                                    key={item.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                >
-                                    <Link 
-                                        href={`#${item.id}`} 
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className={`text-4xl font-black tracking-tight transition-colors ${
-                                            activeSection === item.id ? 'text-cyan-500' : 'text-white hover:text-cyan-400'
-                                        }`}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                            
-                            {/* Social Links */}
-                            <motion.div 
-                                className="flex gap-6 mt-8"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                            >
-                                {socialLinks.map((social, i) => (
-                                    <motion.a
-                                        key={i}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-gray-400 hover:text-cyan-500 transition-colors"
-                                        whileHover={{ scale: 1.2, y: -2 }}
-                                        whileTap={{ scale: 0.9 }}
-                                    >
-                                        <social.icon size={24} />
-                                    </motion.a>
-                                ))}
-                            </motion.div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
+      },
+      { rootMargin: "-20% 0px -20% 0px", threshold: 0.2 },
     );
+
+    navItems.forEach((item) => {
+      const el = document.getElementById(item.id);
+      if (el) observer.observe(el);
+    });
+
+    // Clock for Mobile Menu
+    const timer = setInterval(() => {
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      );
+    }, 1000);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(timer);
+    };
+  }, []);
+
+  // Lock Body Scroll on Mobile Menu
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "unset";
+  }, [mobileMenuOpen]);
+
+  return (
+    <>
+      {/* --- DESKTOP SIDEBAR (Fixed Left) --- */}
+      <motion.aside
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-24 flex-col justify-between py-10 z-50 border-r border-white/5 bg-[#050505]/50 backdrop-blur-md"
+      >
+        {/* Logo Area */}
+        <div className="flex flex-col items-center gap-4">
+          <Link
+            href="#hero"
+            className="font-black text-xl tracking-tighter text-white hover:text-cyan-500 transition-colors"
+          >
+            OR.
+          </Link>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-white/20 to-transparent" />
+        </div>
+
+        {/* Vertical Navigation */}
+        <nav className="flex flex-col w-full items-center gap-8">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <Link
+                key={item.id}
+                href={`#${item.id}`}
+                className="group relative flex items-center justify-center py-2"
+              >
+                {/* Label (Rotated vertical text) */}
+                <div className="absolute left-full ml-4 px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-cyan-500 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 pointer-events-none whitespace-nowrap z-50">
+                  <ScrambleText text={item.label} />
+                </div>
+
+                {/* Visual Indicator */}
+                <div
+                  className={`relative flex items-center justify-center w-3 h-3 transition-all duration-500 ${isActive ? "scale-100" : "scale-75 group-hover:scale-90"}`}
+                >
+                  {/* Active Glow */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute inset-0 bg-cyan-500 rounded-sm shadow-[0_0_10px_rgba(6,182,212,0.8)]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  {/* Inactive State */}
+                  {!isActive && (
+                    <div className="w-1.5 h-1.5 bg-white/20 rotate-45 group-hover:bg-white/50 transition-colors" />
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Social Icons */}
+        <div className="flex flex-col items-center gap-6">
+          {socialLinks.map((social, i) => (
+            <a
+              key={i}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-white transition-colors relative group"
+            >
+              <social.icon size={16} />
+            </a>
+          ))}
+          <div className="text-[10px] font-mono text-gray-600 vertical-text tracking-widest opacity-50">
+            2024
+          </div>
+        </div>
+      </motion.aside>
+
+      {/* --- MOBILE HEADER (Top Bar) --- */}
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`lg:hidden fixed top-0 left-0 right-0 z-50 px-6 flex justify-between items-center transition-all duration-300 border-b border-white/5 ${
+          scrolled
+            ? "py-4 bg-[#050505]/80 backdrop-blur-xl"
+            : "py-6 bg-transparent"
+        }`}
+      >
+        <Link
+          href="#hero"
+          className="font-black text-xl tracking-tighter text-white z-50"
+        >
+          OR.
+        </Link>
+
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="p-2 text-white hover:text-cyan-500 transition-colors z-50"
+        >
+          <FiMenu size={24} />
+        </button>
+      </motion.header>
+
+      {/* --- MOBILE MENU OVERLAY --- */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[999] bg-[#050505] flex flex-col"
+          >
+            {/* Background Textures */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+
+            {/* Header */}
+            <div className="flex justify-between items-center px-6 py-6 border-b border-white/10">
+              <span className="font-mono text-xs text-gray-500">
+                MENU // NAVIGATION
+              </span>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 text-white hover:text-red-500 transition-colors"
+              >
+                <FiX size={24} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="flex-1 flex flex-col justify-center px-8 gap-6">
+              {navItems.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ x: -50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Link
+                    href={`#${item.id}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="group flex items-center justify-between border-b border-white/10 pb-4"
+                  >
+                    <span
+                      className={`text-4xl md:text-5xl font-black uppercase tracking-tight transition-colors ${
+                        activeSection === item.id
+                          ? "text-cyan-500"
+                          : "text-white group-hover:text-gray-300"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                    <FiArrowUpRight
+                      className={`text-2xl transition-all ${
+                        activeSection === item.id
+                          ? "text-cyan-500 opacity-100"
+                          : "text-gray-500 opacity-0 group-hover:opacity-100"
+                      }`}
+                    />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Footer Info */}
+            <div className="px-8 py-8 border-t border-white/10 flex justify-between items-end">
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-6">
+                  {socialLinks.map((social, i) => (
+                    <a
+                      key={i}
+                      href={social.href}
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      <social.icon size={20} />
+                    </a>
+                  ))}
+                </div>
+                <div className="text-[10px] font-mono text-gray-600">
+                  © 2024 OBIDUR RAHMAN
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xl font-mono text-white font-bold">
+                  {time}
+                </div>
+                <div className="text-[10px] font-mono text-green-500 uppercase tracking-widest flex items-center justify-end gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  System Online
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 };
 
 export default Header;
