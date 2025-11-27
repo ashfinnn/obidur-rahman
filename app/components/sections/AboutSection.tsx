@@ -1,264 +1,110 @@
 "use client";
 
-import { motion, useScroll, useTransform, cubicBezier } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   SiPython,
-  SiTypescript,
-  SiCplusplus,
   SiPytorch,
+  SiTensorflow,
+  SiScikitlearn,
+  SiPandas,
   SiPostgresql,
   SiDocker,
-  SiNextdotjs,
   SiAwslambda,
+  SiNextdotjs,
+  SiTypescript,
 } from "react-icons/si";
 
-// --- 1. SCRAMBLE TEXT COMPONENT ---
-const ScrambleText = ({
-  text,
-  className,
-  delay = 0,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-}) => {
-  const [displayText, setDisplayText] = useState(text);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-
-  const scramble = () => {
-    let iteration = 0;
-    if (intervalRef.current) clearInterval(intervalRef.current);
-
-    intervalRef.current = setInterval(() => {
-      setDisplayText(() =>
-        text
-          .split("")
-          .map((letter, index) => {
-            if (index < iteration) return text[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join(""),
-      );
-
-      if (iteration >= text.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-      }
-      iteration += 1 / 3;
-    }, 30);
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      scramble();
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <span
-      className={`${className} cursor-default inline-block`}
-      onMouseEnter={scramble}
-    >
-      {displayText}
-    </span>
-  );
-};
-
-// --- 2. TECH STACK DATA ---
-const techStack = [
-  { icon: SiPython, name: "Python", color: "group-hover:text-[#3776AB]" },
-  {
-    icon: SiTypescript,
-    name: "TypeScript",
-    color: "group-hover:text-[#3178C6]",
-  },
-  { icon: SiNextdotjs, name: "Next.js", color: "group-hover:text-black" },
-  { icon: SiPytorch, name: "PyTorch", color: "group-hover:text-[#EE4C2C]" },
-  { icon: SiCplusplus, name: "C++", color: "group-hover:text-[#00599C]" },
-  { icon: SiPostgresql, name: "Postgres", color: "group-hover:text-[#4169E1]" },
-  { icon: SiDocker, name: "Docker", color: "group-hover:text-[#2496ED]" },
-  { icon: SiAwslambda, name: "AWS", color: "group-hover:text-[#FF9900]" },
-];
-
-// --- 3. BACKGROUND ANIMATION ---
-const MovingGrid = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
-    <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin_60s_linear_infinite]">
-      <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:40px_40px]" />
-    </div>
-  </div>
-);
-
-// --- 4. MAIN COMPONENT ---
 const AboutSection = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
-  // Fixed + Typed Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: cubicBezier(0.22, 1, 0.36, 1), // FIXED ✔
-      },
-    },
-  };
+  const skills = [
+    { name: "Python", icon: SiPython },
+    { name: "PyTorch", icon: SiPytorch },
+    { name: "TensorFlow", icon: SiTensorflow },
+    { name: "SQL", icon: SiPostgresql },
+    { name: "Docker", icon: SiDocker },
+    { name: "AWS", icon: SiAwslambda },
+    { name: "TypeScript", icon: SiTypescript },
+    { name: "Next.js", icon: SiNextdotjs },
+  ];
 
   return (
     <section
       id="about"
-      data-theme="light"
-      className="relative bg-[#f4f4f0] min-h-screen lg:h-screen overflow-hidden flex items-center py-20 lg:py-0"
+      className="relative w-full bg-[#f4f4f0] text-black min-h-screen flex items-center py-24 z-20 overflow-hidden"
     >
-      <MovingGrid />
-
-      <div className="max-w-[90rem] mx-auto px-6 md:px-12 md:pl-32 relative z-10 w-full h-full flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* LEFT */}
-          <motion.div
-            className="lg:col-span-7 flex flex-col justify-center"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-20%" }}
-          >
-            {/* Badge */}
-            <motion.div variants={itemVariants} className="mb-6">
-              <div className="inline-block px-3 py-1 border border-black/10 rounded-full bg-white shadow-sm">
-                <span className="font-mono text-xs text-cyan-600 tracking-widest uppercase">
-                  <ScrambleText text="01 // The Story" delay={500} />
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h2
-              variants={itemVariants}
-              className="text-4xl md:text-6xl lg:text-7xl font-black text-black mb-8 leading-[0.9] tracking-tighter uppercase"
-            >
-              <ScrambleText text="BUILDING" className="block" delay={800} />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">
-                WHAT MATTERS
+      <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 lg:pl-32 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          {/* LEFT: The Statement */}
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="font-mono text-xs text-cyan-700 tracking-widest uppercase">
+                01 // The Philosophy
               </span>
-            </motion.h2>
-
-            {/* Bio */}
-            <div className="space-y-5 text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed font-light max-w-2xl">
-              <motion.p variants={itemVariants}>
-                My journey into tech started with a simple fascination: watching
-                patterns emerge from chaos. Growing up in Bangladesh, I'd spend
-                hours thinking about how tiny decisions compound into massive
-                systems—how a single line of code could ripple into something
-                that touches millions.
-              </motion.p>
-
-              <motion.p variants={itemVariants}>
-                These days, I'm deep in the trenches of machine learning and
-                full-stack development. I love that moment when theory clicks
-                into practice—when an algorithm finally converges, or a UI just{" "}
-                <span className="italic text-black font-medium">
-                  feels right
-                </span>
-                .
-              </motion.p>
-
-              <motion.p variants={itemVariants}>
-                Outside of coding, I'm usually reading{" "}
-                <span className="text-black font-semibold underline decoration-cyan-400 underline-offset-4 cursor-pointer hover:bg-cyan-100 transition-colors">
-                  research papers
-                </span>{" "}
-                over coffee, or experimenting with edge AI models.
-              </motion.p>
             </div>
 
-            {/* Skills */}
-            <motion.div
-              variants={itemVariants}
-              className="mt-10 pt-8 border-t border-black/10"
-            >
-              <span className="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-4">
-                CURRENT STACK
-              </span>
+            <h2 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tighter leading-[0.9] mb-10">
+              Decoding <br />
+              <span className="text-gray-300">Complexity</span>
+            </h2>
 
-              <div className="flex flex-wrap gap-6">
-                {techStack.map((tech, i) => (
-                  <div
-                    key={i}
-                    className="group flex flex-col items-center gap-2 cursor-help relative"
-                  >
-                    <tech.icon
-                      className={`text-2xl text-gray-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110 ${tech.color}`}
-                    />
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 text-[10px] font-mono bg-black text-white px-2 py-0.5 rounded whitespace-nowrap pointer-events-none">
-                      {tech.name}
-                    </span>
-                  </div>
+            <div className="space-y-8 text-lg md:text-xl leading-relaxed font-light text-gray-800 max-w-2xl border-l-2 border-black/5 pl-8">
+              <p>
+                Data is just noise until you give it structure. My work sits at
+                the intersection of{" "}
+                <strong className="font-bold">Statistical Rigor</strong> and{" "}
+                <strong className="font-bold">Engineering Precision</strong>.
+              </p>
+              <p>
+                I don't just build models; I build pipelines. From raw math in a
+                notebook to scalable deployment on the edge, I handle the full
+                lifecycle of intelligence.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: The Visual Stack */}
+          <div className="lg:col-span-5">
+            <div className="relative p-8 border border-black/5 bg-white shadow-sm">
+              <div className="absolute top-0 left-0 w-full h-1 bg-cyan-600" />
+              <div className="mb-6 flex justify-between items-center">
+                <span className="font-mono text-xs text-gray-400">
+                  STACK_CONFIG.JSON
+                </span>
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 rounded-full bg-red-400/20" />
+                  <div className="w-2 h-2 rounded-full bg-yellow-400/20" />
+                  <div className="w-2 h-2 rounded-full bg-green-400/20" />
+                </div>
+              </div>
+
+              <div className="space-y-4 font-mono text-sm">
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-gray-400">CORE_LANG</span>
+                  <span className="text-black font-bold">PYTHON 3.11+</span>
+                </div>
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-gray-400">FRAMEWORK</span>
+                  <span className="text-black font-bold">PYTORCH / TF</span>
+                </div>
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-gray-400">INFRA</span>
+                  <span className="text-black font-bold">AWS / DOCKER</span>
+                </div>
+                <div className="flex justify-between border-b border-black/5 pb-2">
+                  <span className="text-gray-400">FRONTEND</span>
+                  <span className="text-black font-bold">NEXT.JS / TS</span>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-black/5 grid grid-cols-4 gap-4 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                {skills.map((s) => (
+                  <s.icon
+                    key={s.name}
+                    className="text-2xl mx-auto hover:text-cyan-600 transition-colors"
+                    title={s.name}
+                  />
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
-
-          {/* RIGHT IMAGE */}
-          <div className="lg:col-span-5 relative hidden lg:block h-full">
-            <motion.div
-              style={{ y }}
-              initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="relative z-10 w-full max-w-md ml-auto"
-            >
-              <div className="relative aspect-[4/5] w-full rotate-2 hover:rotate-0 transition-transform duration-700 ease-out group">
-                <div className="absolute inset-0 border-2 border-black translate-x-3 translate-y-3 rounded-sm transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2" />
-
-                <div className="relative h-full w-full overflow-hidden rounded-sm bg-gray-200 shadow-2xl">
-                  <Image
-                    src="/me.jpg"
-                    alt="Obidur Rahman"
-                    fill
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none" />
-                </div>
-
-                <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 4,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute -bottom-6 -left-8 bg-black text-white p-6 shadow-2xl max-w-[200px] border-l-4 border-cyan-500"
-                >
-                  <div className="text-3xl font-bold text-white flex items-baseline gap-1">
-                    3<span className="text-cyan-500">+</span>
-                  </div>
-                  <div className="text-[10px] font-mono text-gray-400 tracking-widest mt-1 uppercase leading-tight">
-                    Years of <br /> Innovation
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-200/40 to-blue-200/40 rounded-full blur-[100px] -z-10 mix-blend-multiply" />
+            </div>
           </div>
         </div>
       </div>

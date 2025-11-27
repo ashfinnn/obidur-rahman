@@ -1,154 +1,183 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { FiArrowRight } from 'react-icons/fi';
-import { FaLinkedin, FaGithub, FaTwitter, FaArrowRight as FaArrowRightSolid } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FiArrowRight, FiCopy, FiMail } from "react-icons/fi";
+import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 
 const contactLinks = [
-    { icon: FaLinkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/obidur-rahman-shawal/' },
-    { icon: FaGithub, label: 'GitHub', href: 'https://github.com/Ashfinn' },
-    { icon: FaTwitter, label: 'Twitter', href: 'https://twitter.com/obidur__rahman' },
+  {
+    icon: FaLinkedin,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/obidur-rahman-shawal/",
+  },
+  { icon: FaGithub, label: "GitHub", href: "https://github.com/Ashfinn" },
+  {
+    icon: FaTwitter,
+    label: "Twitter",
+    href: "https://twitter.com/obidur__rahman",
+  },
 ];
 
-const ContactItem = ({ icon: Icon, label, href }: { icon: any, label: string, href: string }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex items-center gap-3 p-3 border border-gray-200 bg-white 
-             transition-all duration-300 hover:border-cyan-500 hover:shadow-md"
-    >
-        <Icon className="text-gray-400 group-hover:text-cyan-600 transition-colors" size={16} />
-        <span className="font-mono text-[10px] font-bold text-gray-600 group-hover:text-black uppercase tracking-wider">
-            {label}
-        </span>
-    </a>
-);
-
 const ContactSection = () => {
-    const [isHovered, setIsHovered] = useState(false);
-    const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
+  const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        const updateTime = () => {
-            setTime(new Date().toLocaleTimeString('en-US', {
-                timeZone: 'Asia/Dhaka', hour12: false, hour: '2-digit', minute: '2-digit'
-            }));
-        };
-        updateTime();
-        const timer = setInterval(updateTime, 1000);
-        return () => clearInterval(timer);
-    }, []);
+  const handleCopy = () => {
+    navigator.clipboard.writeText("obidur.shawal@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-    return (
-        // H-SCREEN forces it to fill the viewport exactly. 
-        // Flex-col allows us to split children.
-        <section id="contact" data-theme="light" className="h-screen w-full flex flex-col">
-            
-            {/* =========================================
-                PART 1: TOP HALF (Light) 
-                flex-1 makes it take up exactly half the available space
-               ========================================= */}
-            <div className="flex-1 w-full bg-gray-50 flex flex-col justify-center border-b border-black/5">
-                
-                <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        
-                        {/* Left: Headline */}
-                        <div>
-                            <div className="inline-block font-mono text-[10px] text-cyan-600 mb-4 px-2 py-1 border border-cyan-600/20 rounded-full bg-cyan-50">
-                                Let&apos;s Connect
-                            </div>
-                            <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-gray-900 mb-4 leading-[0.9]">
-                                READY TO<br/>COLLABORATE?
-                            </h2>
-                            <p className="text-gray-600 max-w-md text-sm md:text-base leading-relaxed">
-                                I&apos;m always excited to discuss innovative ideas. Drop a message or connect socially.
-                            </p>
-                        </div>
+  useEffect(() => {
+    const updateTime = () => {
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          timeZone: "Asia/Dhaka",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      );
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
-                        {/* Right: Actions */}
-                        <div className="space-y-6">
-                            {/* Email Button */}
-                            <div>
-                                <h3 className="font-mono text-[10px] text-gray-400 tracking-widest mb-3 uppercase">Start a Conversation</h3>
-                                <Link
-                                    href="mailto:obidur.shawal@gmail.com"
-                                    className="group inline-flex items-center gap-4 px-6 py-4 bg-gray-900 text-white font-mono text-xs tracking-wider hover:bg-cyan-600 transition-all duration-300 shadow-xl w-full md:w-auto justify-center"
-                                >
-                                    <span>SEND EMAIL</span>
-                                    <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                                </Link>
-                            </div>
+  return (
+    <section
+      id="contact"
+      className="relative w-full bg-[#050505] text-white min-h-screen flex flex-col justify-between pt-20 pb-10 z-20 overflow-hidden border-t border-white/10"
+    >
+      {/* Background Textures */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none" />
 
-                            {/* Socials Row */}
-                            <div>
-                                <h3 className="font-mono text-[10px] text-gray-400 tracking-widest mb-3 uppercase">Or Follow Along</h3>
-                                <div className="flex flex-wrap gap-3">
-                                    {contactLinks.map(link => <ContactItem key={link.label} {...link} />)}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      {/* --- TOP CONTENT --- */}
+      <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 lg:pl-32 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+          {/* Left: Headline */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <span className="font-mono text-xs text-green-500 tracking-widest uppercase">
+                Open for Work
+              </span>
             </div>
 
-            {/* =========================================
-                PART 2: BOTTOM HALF (Dark)
-                flex-1 makes it take up the other half
-               ========================================= */}
-            <footer className="flex-1 w-full bg-[#050505] text-white flex flex-col justify-center relative overflow-hidden">
-                
-                {/* Hover Glow Effect */}
-                <motion.div 
-                    animate={{ opacity: isHovered ? 0.15 : 0 }}
-                    className="absolute inset-0 bg-gradient-to-t from-cyan-600 to-transparent pointer-events-none transition-opacity duration-500"
-                />
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
+              Ready to <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">
+                Collaborate?
+              </span>
+            </h2>
 
-                <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 relative z-10 flex flex-col h-full">
-                    
-                    {/* Massive CTA - Fills the middle space */}
-                    <div className="flex-grow flex items-center border-b border-white/10">
-                        <a 
-                            href="mailto:obidur.shawal@gmail.com"
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                            className="group w-full block"
-                        >
-                            <div className="flex items-center gap-4 md:gap-8 w-full">
-                                <span className="text-[13vw] md:text-[8rem] lg:text-[9rem] leading-[0.8] font-black tracking-tighter group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-cyan-500 transition-all duration-500">
-                                    LET&apos;S TALK
-                                </span>
-                                <FaArrowRightSolid className="text-3xl md:text-5xl lg:text-7xl text-white group-hover:-rotate-45 transition-transform duration-500" />
-                            </div>
-                        </a>
-                    </div>
+            <p className="text-gray-400 text-lg max-w-md leading-relaxed">
+              I'm currently looking for new opportunities in Data Science and
+              Engineering. Drop a message or connect socially.
+            </p>
+          </div>
 
-                    {/* Footer Meta - Anchored at bottom */}
-                    <div className="py-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 font-mono text-[10px] md:text-xs text-gray-500">
-                        
-                        <div className="space-y-1">
-                            <p className="text-white font-bold tracking-tight">OBIDUR RAHMAN</p>
-                            <p>Architect & Developer</p>
-                        </div>
+          {/* Right: Contact Actions */}
+          <div className="flex flex-col justify-center space-y-8">
+            {/* Email Box */}
+            <div className="p-6 border border-white/10 bg-white/[0.02] rounded-sm group hover:bg-white/[0.05] transition-colors">
+              <div className="font-mono text-xs text-cyan-500 mb-2 uppercase tracking-widest">
+                Direct Line
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <a
+                  href="mailto:obidur.shawal@gmail.com"
+                  className="text-xl md:text-2xl font-bold text-white font-mono truncate"
+                >
+                  obidur.shawal@gmail.com
+                </a>
+                <button
+                  onClick={handleCopy}
+                  className="p-2 text-gray-400 hover:text-white transition-colors relative"
+                >
+                  <FiCopy size={20} />
+                  {copied && (
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] bg-cyan-500 text-black px-2 py-1 rounded">
+                      COPIED
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
 
-                        <div className="flex gap-6">
-                            <a href="#about" className="hover:text-cyan-500 transition-colors">ABOUT</a>
-                            <a href="#projects" className="hover:text-cyan-500 transition-colors">WORK</a>
-                            <a href="#" className="hover:text-cyan-500 transition-colors">RESUME</a>
-                        </div>
+            {/* Socials */}
+            <div className="flex gap-4">
+              {contactLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-3 border border-white/10 bg-white/[0.02] hover:bg-cyan-900/20 hover:border-cyan-500/50 transition-all rounded-sm group"
+                >
+                  <link.icon className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
+                  <span className="text-xs font-mono text-gray-300 uppercase tracking-wider group-hover:text-white">
+                    {link.label}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-                        <div className="text-right">
-                            <p>DHAKA: <span className="text-cyan-500">{time}</span></p>
-                            <p>© {new Date().getFullYear()}</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    );
+      {/* --- MIDDLE: GIANT LINK --- */}
+      <div className="flex-1 flex items-center justify-center w-full border-y border-white/5 my-12 group relative overflow-hidden cursor-pointer">
+        <a
+          href="mailto:obidur.shawal@gmail.com"
+          className="block w-full text-center relative z-10"
+        >
+          <span className="text-[12vw] leading-none font-black tracking-tighter text-white/10 group-hover:text-white transition-colors duration-500 block">
+            LET'S TALK
+          </span>
+        </a>
+
+        {/* Background Hover Fill */}
+        <div className="absolute inset-0 bg-cyan-900/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+      </div>
+
+      {/* --- BOTTOM: FOOTER --- */}
+      <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 lg:pl-32">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-6 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+          <div className="flex gap-8">
+            <span className="text-white">Obidur Rahman</span>
+            <span>Data Scientist & ML Engineer</span>
+          </div>
+
+          <div className="flex gap-8">
+            <a href="#about" className="hover:text-cyan-500 transition-colors">
+              About
+            </a>
+            <a
+              href="#projects"
+              className="hover:text-cyan-500 transition-colors"
+            >
+              Work
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              className="hover:text-cyan-500 transition-colors"
+            >
+              Resume
+            </a>
+          </div>
+
+          <div className="text-right">
+            <span className="block text-cyan-500 mb-1">{time}</span>
+            <span>© {new Date().getFullYear()}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default ContactSection;

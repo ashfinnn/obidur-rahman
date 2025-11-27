@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- 1. SCRAMBLE COMPONENT (No Layout Shift) ---
+// --- 1. STABLE "GHOST" SCRAMBLE TEXT ---
 const ScrambleText = ({
   text,
   hover = false,
@@ -36,7 +36,6 @@ const ScrambleText = ({
     }, 20);
   };
 
-  // Scramble on mount if not hover-only
   useEffect(() => {
     if (!hover) scramble();
     return () => {
@@ -47,9 +46,8 @@ const ScrambleText = ({
   return (
     <span
       onMouseEnter={hover ? scramble : undefined}
-      className="inline-block whitespace-nowrap relative"
+      className="relative inline-block whitespace-nowrap"
     >
-      {/* Ghost text for layout stability */}
       <span className="opacity-0">{text}</span>
       <span className="absolute left-0 top-0">{displayText}</span>
     </span>
@@ -60,13 +58,18 @@ const ScrambleText = ({
 const navItems = [
   { id: "hero", label: "HOME" },
   { id: "about", label: "ABOUT" },
-  { id: "projects", label: "WORK" },
+  { id: "projects", label: "PROJECTS" },
+  { id: "experience", label: "EXP" }, // Added Experience
   { id: "contact", label: "CONTACT" },
 ];
 
 const socialLinks = [
-  { icon: FaGithub, href: "https://github.com", label: "GitHub" },
-  { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: FaGithub, href: "https://github.com/Ashfinn", label: "GitHub" },
+  {
+    icon: FaLinkedin,
+    href: "https://linkedin.com/in/obidur-rahman-shawal",
+    label: "LinkedIn",
+  },
   { icon: FaTwitter, href: "https://twitter.com", label: "Twitter" },
 ];
 
@@ -74,7 +77,7 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState<string | null>(null); // Null initial state for hydration
 
   // Handle Scroll & Active Section
   useEffect(() => {
@@ -97,8 +100,8 @@ const Header = () => {
       if (el) observer.observe(el);
     });
 
-    // Clock for Mobile Menu
-    const timer = setInterval(() => {
+    // Clock Logic (Client-side only)
+    const updateTime = () => {
       setTime(
         new Date().toLocaleTimeString("en-US", {
           hour12: false,
@@ -106,7 +109,9 @@ const Header = () => {
           minute: "2-digit",
         }),
       );
-    }, 1000);
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
 
     return () => {
       observer.disconnect();
@@ -127,43 +132,42 @@ const Header = () => {
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-24 flex-col justify-between py-10 z-50 border-r border-white/5 bg-[#050505]/50 backdrop-blur-md"
+        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-24 flex-col justify-between py-10 z-50 border-r border-white/5 bg-[#050505] backdrop-blur-md"
       >
         {/* Logo Area */}
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-6">
           <Link
             href="#hero"
             className="font-black text-xl tracking-tighter text-white hover:text-cyan-500 transition-colors"
           >
             OR.
           </Link>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-white/20 to-transparent" />
+          {/* Vertical Line Decor */}
+          <div className="w-[1px] h-16 bg-gradient-to-b from-white/10 to-transparent" />
         </div>
 
         {/* Vertical Navigation */}
-        <nav className="flex flex-col w-full items-center gap-8">
+        <nav className="flex flex-col w-full items-center gap-10">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <Link
                 key={item.id}
                 href={`#${item.id}`}
-                className="group relative flex items-center justify-center py-2"
+                className="group relative flex items-center justify-center w-full py-2"
               >
-                {/* Label (Rotated vertical text) */}
-                <div className="absolute left-full ml-4 px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-cyan-500 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 pointer-events-none whitespace-nowrap z-50">
+                {/* Tooltip Label (Rotated) */}
+                <div className="absolute left-full ml-6 px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-cyan-500 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 pointer-events-none whitespace-nowrap z-50">
                   <ScrambleText text={item.label} />
                 </div>
 
                 {/* Visual Indicator */}
-                <div
-                  className={`relative flex items-center justify-center w-3 h-3 transition-all duration-500 ${isActive ? "scale-100" : "scale-75 group-hover:scale-90"}`}
-                >
-                  {/* Active Glow */}
+                <div className="relative flex items-center justify-center w-full">
+                  {/* Active Glow Bar */}
                   {isActive && (
                     <motion.div
-                      layoutId="activeNav"
-                      className="absolute inset-0 bg-cyan-500 rounded-sm shadow-[0_0_10px_rgba(6,182,212,0.8)]"
+                      layoutId="activeNavIndicator"
+                      className="absolute right-0 w-[2px] h-8 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)]"
                       transition={{
                         type: "spring",
                         stiffness: 300,
@@ -171,10 +175,14 @@ const Header = () => {
                       }}
                     />
                   )}
-                  {/* Inactive State */}
-                  {!isActive && (
-                    <div className="w-1.5 h-1.5 bg-white/20 rotate-45 group-hover:bg-white/50 transition-colors" />
-                  )}
+                  {/* Dot */}
+                  <div
+                    className={`w-1.5 h-1.5 rotate-45 transition-all duration-300 ${
+                      isActive
+                        ? "bg-cyan-500 scale-125"
+                        : "bg-white/20 group-hover:bg-white/60"
+                    }`}
+                  />
                 </div>
               </Link>
             );
@@ -189,13 +197,13 @@ const Header = () => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-white transition-colors relative group"
+              className="text-gray-600 hover:text-white transition-colors relative group"
             >
               <social.icon size={16} />
             </a>
           ))}
-          <div className="text-[10px] font-mono text-gray-600 vertical-text tracking-widest opacity-50">
-            2024
+          <div className="text-[10px] font-mono text-gray-700 vertical-text tracking-widest opacity-50 select-none">
+            EST. 2024
           </div>
         </div>
       </motion.aside>
@@ -204,22 +212,22 @@ const Header = () => {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`lg:hidden fixed top-0 left-0 right-0 z-50 px-6 flex justify-between items-center transition-all duration-300 border-b border-white/5 ${
+        className={`lg:hidden fixed top-0 left-0 right-0 z-50 px-6 flex justify-between items-center transition-all duration-300 border-b ${
           scrolled
-            ? "py-4 bg-[#050505]/80 backdrop-blur-xl"
-            : "py-6 bg-transparent"
+            ? "py-4 bg-[#050505]/90 border-white/10 backdrop-blur-xl"
+            : "py-6 bg-transparent border-transparent"
         }`}
       >
         <Link
           href="#hero"
-          className="font-black text-xl tracking-tighter text-white z-50"
+          className="font-black text-xl tracking-tighter text-white z-50 mix-blend-difference"
         >
           OR.
         </Link>
 
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="p-2 text-white hover:text-cyan-500 transition-colors z-50"
+          className="p-2 text-white hover:text-cyan-500 transition-colors z-50 mix-blend-difference"
         >
           <FiMenu size={24} />
         </button>
@@ -237,13 +245,16 @@ const Header = () => {
           >
             {/* Background Textures */}
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
             {/* Header */}
             <div className="flex justify-between items-center px-6 py-6 border-b border-white/10">
-              <span className="font-mono text-xs text-gray-500">
-                MENU // NAVIGATION
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+                <span className="font-mono text-xs text-gray-500">
+                  SYSTEM // NAV
+                </span>
+              </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-2 text-white hover:text-red-500 transition-colors"
@@ -267,7 +278,7 @@ const Header = () => {
                     className="group flex items-center justify-between border-b border-white/10 pb-4"
                   >
                     <span
-                      className={`text-4xl md:text-5xl font-black uppercase tracking-tight transition-colors ${
+                      className={`text-4xl md:text-6xl font-black uppercase tracking-tight transition-colors ${
                         activeSection === item.id
                           ? "text-cyan-500"
                           : "text-white group-hover:text-gray-300"
@@ -306,12 +317,13 @@ const Header = () => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xl font-mono text-white font-bold">
-                  {time}
-                </div>
-                <div className="text-[10px] font-mono text-green-500 uppercase tracking-widest flex items-center justify-end gap-2">
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                  System Online
+                {time && (
+                  <div className="text-xl font-mono text-white font-bold">
+                    {time}
+                  </div>
+                )}
+                <div className="text-[10px] font-mono text-cyan-500 uppercase tracking-widest">
+                  Dhaka, BD
                 </div>
               </div>
             </div>

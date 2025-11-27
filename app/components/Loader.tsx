@@ -3,69 +3,64 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- Scramble Text Helper ---
-const ScrambleNumber = ({ value }: { value: number }) => {
-  const [display, setDisplay] = useState(value);
-
-  useEffect(() => {
-    // Simple visual scramble when number changes drastically
-    // Since the parent controls the number increment smoothly,
-    // we just render it. For a true scramble effect on numbers,
-    // we usually just let the rapid state updates handle the visual "chaos".
-    setDisplay(Math.floor(value));
-  }, [value]);
-
-  return <span className="tabular-nums">{display}</span>;
-};
-
+// --- STABLE "GHOST" SCRAMBLE (No Layout Shift) ---
 const ScrambleText = ({
   text,
+  className,
   delay = 0,
 }: {
   text: string;
+  className?: string;
   delay?: number;
 }) => {
   const [displayText, setDisplayText] = useState(text);
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const chars = "XYZ0123456789!@#";
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    let iteration = 0;
-
     const startScramble = () => {
-      interval = setInterval(() => {
-        setDisplayText(
+      let iteration = 0;
+      if (intervalRef.current) clearInterval(intervalRef.current);
+
+      intervalRef.current = setInterval(() => {
+        setDisplayText((prev) =>
           text
             .split("")
             .map((letter, index) => {
+              if (letter === " ") return " ";
               if (index < iteration) return text[index];
               return chars[Math.floor(Math.random() * chars.length)];
             })
             .join(""),
         );
 
-        if (iteration >= text.length) clearInterval(interval);
-        iteration += 1 / 3;
-      }, 30);
+        if (iteration >= text.length) {
+          if (intervalRef.current) clearInterval(intervalRef.current);
+        }
+        iteration += 1;
+      }, 20);
     };
 
-    const timeout = setTimeout(startScramble, delay);
+    const timer = setTimeout(startScramble, delay);
     return () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
+      clearTimeout(timer);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [text, delay]);
 
-  return <span>{displayText}</span>;
+  return (
+    <span className={`relative inline-block ${className}`}>
+      <span className="opacity-0">{text}</span>
+      <span className="absolute inset-0">{displayText}</span>
+    </span>
+  );
 };
 
 const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
   const [progress, setProgress] = useState(0);
-  const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    setDimension({ width: window.innerWidth, height: window.innerHeight });
     document.body.style.overflow = "hidden";
 
     const timeouts: NodeJS.Timeout[] = [];
@@ -76,11 +71,11 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
         setTimeout(() => {
           document.body.style.overflow = "";
           onLoaded();
-        }, 1000); // Wait for exit animation
+        }, 800);
         return;
       }
 
-      // Non-linear loading logic
+      // Realistic non-linear loading
       const jump =
         current < 30
           ? Math.random() * 10 + 5
@@ -105,7 +100,6 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
     };
 
     advanceProgress(0);
-
     return () => timeouts.forEach(clearTimeout);
   }, [onLoaded]);
 
@@ -113,64 +107,78 @@ const Loader = ({ onLoaded }: { onLoaded: () => void }) => {
     <AnimatePresence mode="wait">
       {!isComplete && (
         <motion.div
-          className="fixed inset-0 z-[9999] bg-[#050505] text-white overflow-hidden flex items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-[#050505] text-white overflow-hidden flex flex-col justify-between p-6 md:p-12"
           initial={{ y: 0 }}
           exit={{
             y: "-100%",
             transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
           }}
         >
-          {/* Noise & Grid Backgrounds */}
+          {/* --- Background Elements --- */}
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
-          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
+          {/* Subtle Scanline */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.3)_50%)] bg-[size:100%_4px] pointer-events-none opacity-20" />
 
-          <div className="relative w-full max-w-[90vw] md:max-w-3xl h-[60vh] flex items-center justify-center">
-            {/* LEFT COLUMN */}
-            <div className="absolute left-0 h-full flex flex-col justify-between py-4 hidden md:flex">
-              <div className="text-[10px] font-mono text-gray-500 tracking-widest">
-                <ScrambleText text="SYSTEM CHECK" />
-                <br />
-                <ScrambleText text="INITIALIZING..." delay={300} />
+          {/* --- TOP BAR --- */}
+          <div className="flex justify-between items-start relative z-10">
+            <div className="flex flex-col items-start">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+                <span className="font-mono text-[10px] tracking-widest text-cyan-500">
+                  <ScrambleText text="SYSTEM BOOT" />
+                </span>
               </div>
-              <div className="text-[10px] font-mono text-gray-500 tracking-widest">
-                {dimension.width} x {dimension.height}
-              </div>
+              <span className="font-mono text-[10px] text-gray-500 mt-1">
+                <ScrambleText text="INITIALIZING KERNEL..." delay={200} />
+              </span>
             </div>
+            <div className="hidden md:block font-mono text-[10px] text-gray-500">
+              EST. {new Date().getFullYear()}
+            </div>
+          </div>
 
-            {/* CENTER: Progress */}
-            <div className="flex items-center gap-8 md:gap-12">
-              <div className="h-[300px] w-[1px] bg-gray-800 relative overflow-hidden">
+          {/* --- CENTER CONTENT --- */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+            <div className="relative flex items-center gap-6 md:gap-10">
+              {/* Decorative Progress Bar (Vertical) */}
+              <div className="h-32 md:h-48 w-[2px] bg-white/10 relative overflow-hidden">
                 <motion.div
-                  className="absolute bottom-0 left-0 w-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+                  className="absolute bottom-0 left-0 w-full bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)]"
                   initial={{ height: "0%" }}
                   animate={{ height: `${progress}%` }}
                   transition={{ ease: "linear", duration: 0.1 }}
                 />
               </div>
 
+              {/* The Big Number */}
               <div className="relative">
-                <h1 className="text-8xl md:text-[10rem] font-bold leading-none tracking-tighter tabular-nums">
-                  <ScrambleNumber value={progress} />
+                <h1 className="text-8xl md:text-[12rem] font-black leading-none tracking-tighter text-white tabular-nums">
+                  {Math.floor(progress)}
                 </h1>
-                <span className="absolute -top-4 -right-4 md:top-4 md:-right-8 text-sm md:text-xl font-mono text-gray-500">
-                  %
-                </span>
+                {/* Decorative Brackets */}
+                <div className="absolute -top-4 -left-4 w-4 h-4 border-t border-l border-cyan-500/50" />
+                <div className="absolute -bottom-4 -right-4 w-4 h-4 border-b border-r border-cyan-500/50" />
               </div>
-            </div>
 
-            {/* RIGHT COLUMN */}
-            <div className="absolute right-0 h-full flex flex-col justify-between py-4 items-end hidden md:flex">
-              <div className="text-[10px] font-mono text-gray-500 tracking-widest text-right">
-                EST. {new Date().getFullYear()}
-                <br />
-                <ScrambleText text="CHITTAGONG, BD" delay={500} />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] font-mono text-gray-500 tracking-widest">
-                  <ScrambleText text="ONLINE" delay={800} />
-                </span>
-              </div>
+              {/* Percentage Symbol */}
+              <span className="self-start mt-4 md:mt-8 font-mono text-xl text-gray-500">
+                %
+              </span>
+            </div>
+          </div>
+
+          {/* --- BOTTOM BAR --- */}
+          <div className="flex justify-between items-end relative z-10">
+            <div className="font-mono text-[10px] text-gray-500">
+              <ScrambleText text="LOADING ASSETS..." delay={400} />
+            </div>
+            <div className="flex flex-col items-end">
+              <span className="font-mono text-[10px] text-gray-500 uppercase">
+                Obidur Rahman
+              </span>
+              <span className="font-mono text-[10px] text-cyan-500">
+                v2.0.4
+              </span>
             </div>
           </div>
         </motion.div>

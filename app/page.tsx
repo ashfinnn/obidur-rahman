@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import AboutSection from "./components/sections/AboutSection";
 import ContactSection from "./components/sections/ContactSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
-
+import ExperienceSection from "./components/sections/ExperienceSection";
 import SlideSection from "./components/ui/SlideSection";
 
 export default function Home() {
@@ -25,6 +25,10 @@ export default function Home() {
       {/* 3. PROJECTS (Black) - Slides up & covers About */}
       <SlideSection index={3} id="projects" className="bg-[#000]">
         <ProjectsSection />
+      </SlideSection>
+
+      <SlideSection index={4} id="experience" className="bg-[#f4f4f0]">
+        <ExperienceSection />
       </SlideSection>
 
       {/* 4. CONTACT (White) - Slides up & covers Projects */}
