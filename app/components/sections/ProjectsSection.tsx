@@ -1,340 +1,325 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   FiArrowUpRight,
-  FiCode,
   FiChevronDown,
   FiGithub,
-  FiBarChart2,
+  FiExternalLink,
+  FiLayers,
 } from "react-icons/fi";
 
-// --- DATA (Using your real research/projects) ---
-const projectsData = [
+// --- 1. REAL PROJECT DATA ---
+const projects = [
   {
-    title: "EduPredict: Admission Forecasting",
-    category: "Machine Learning",
-    subtitle:
-      "A supervised learning system built on 15K+ admission records. Implemented feature engineering and SHAP-based explainability to support transparent decision-making.",
-    tags: ["Python", "XGBoost", "Scikit-learn", "SHAP"],
-    link: "https://github.com/Ashfinn",
-  },
-  {
-    title: "EcoHealth: Disease ML Forecasting",
-    category: "Predictive Modeling",
-    subtitle:
-      "Analyzed environmental correlates of diarrheal disease. Utilized time-series forecasting to predict outbreaks based on climate data, aiding local health resource allocation.",
-    tags: ["Pandas", "Time-Series", "Matplotlib", "StatsModels"],
-    link: "https://github.com/Ashfinn",
-  },
-  {
-    title: "VisionEdge: Plant Disease Detection",
+    id: "01",
+    title: "Efficient Leaf Disease",
     category: "Computer Vision",
-    subtitle:
-      "Optimized CNN architecture for edge devices. Reduced model size by 60% while maintaining high classification accuracy for real-time agricultural monitoring.",
-    tags: ["TensorFlow Lite", "Keras", "OpenCV", "Edge AI"],
-    link: "https://github.com/Ashfinn",
+    tags: ["TensorFlow", "MobileNetV2", "Edge AI"],
+    color: "#10b981", // Green
+    desc: "Developed a lightweight deep learning model for real-time classification of plant leaf diseases. Optimized for edge devices with minimal computational footprint.",
+    link: "https://github.com/ashfinnn/efficient-leaf-disease",
+    github: "https://github.com/ashfinnn/efficient-leaf-disease",
+    year: "2024",
+    stats: { views: "2.1K", stars: "45" },
   },
   {
-    title: "Hybrid Transformers vs CNNs",
-    category: "Deep Learning Research",
-    subtitle:
-      "Comparative analysis of hybrid transformer architectures against standard CNNs in CPU-constrained environments. Published benchmarks on inference latency vs accuracy.",
-    tags: ["PyTorch", "Transformers", "Research", "Benchmarks"],
-    link: "https://github.com/Ashfinn",
+    id: "02",
+    title: "Geometric Dilution",
+    category: "Theoretical Research",
+    tags: ["Python", "Mathematics", "SMOTE"],
+    color: "#06b6d4", // Cyan
+    desc: "A novel theoretical framework proving why SMOTE fails in high-dimensional spaces using measure theory. Includes rigorous statistical validation on 5 datasets.",
+    link: "https://github.com/ashfinnn/geometric-dilution",
+    github: "https://github.com/ashfinnn/geometric-dilution",
+    year: "2023",
+    stats: { views: "1.5K", stars: "32" },
   },
   {
-    title: "Interactive Math Platform",
-    category: "Full Stack Data App",
-    subtitle:
-      "A Next.js based platform visualizing complex mathematical concepts. Demonstrates ability to deploy and visualize data models in a modern web stack.",
-    tags: ["Next.js", "TypeScript", "D3.js", "Vercel"],
+    id: "03",
+    title: "Portfolio V2",
+    category: "Full Stack Engineering",
+    tags: ["Next.js 14", "TypeScript", "Framer Motion"],
+    color: "#8b5cf6", // Purple
+    desc: "A high-performance, interactive portfolio built with the latest Next.js features. Implements advanced animations, responsive design, and optimized accessibility.",
     link: "https://obidur.vercel.app",
+    github: "https://github.com/ashfinnn/obidur-rahman",
+    year: "2024",
+    stats: { views: "890", stars: "12" },
   },
 ];
 
-// --- STABLE GHOST SCRAMBLE ---
-const ScrambleText = ({
-  text,
-  className,
-}: {
-  text: string;
-  className?: string;
-}) => {
-  const [displayText, setDisplayText] = useState(text);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const chars = "XYZ0123456789!@#";
-  useEffect(() => {
-    const start = () => {
-      let i = 0;
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        setDisplayText(
-          text
-            .split("")
-            .map((l, idx) =>
-              l === " "
-                ? " "
-                : idx < i
-                  ? text[idx]
-                  : chars[Math.floor(Math.random() * chars.length)],
-            )
-            .join(""),
-        );
-        if (i >= text.length) clearInterval(intervalRef.current!);
-        i += 1;
-      }, 20);
-    };
-    start();
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [text]);
+// --- 2. PREVIEW CARD (ABSTRACT VISUAL) ---
+// Since we don't have real screenshots hosted, we use a generated abstract art
+// based on the project color. This looks cleaner than broken images.
+const ProjectPreview = ({ project }: { project: (typeof projects)[0] }) => {
   return (
-    <span className={`relative inline-block ${className}`}>
-      <span className="opacity-0">{text}</span>
-      <span className="absolute inset-0">{displayText}</span>
-    </span>
-  );
-};
+    <div className="w-full h-full bg-[#0a0a0a] relative overflow-hidden">
+      {/* Noise texture */}
+      <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-// --- VISUAL COMPONENT ---
-const ProjectVisual = ({ title }: { title: string }) => {
-  const hash = title
-    .split("")
-    .reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
-  const c1 = `hsl(${Math.abs(hash) % 360}, 60%, 15%)`;
-  const c2 = `hsl(${Math.abs(hash >> 2) % 360}, 60%, 5%)`;
-  return (
-    <div className="absolute inset-0 w-full h-full bg-[#0a0a0a]">
+      {/* Abstract Gradient Orb */}
       <div
-        className="absolute inset-0 w-full h-full opacity-60"
-        style={{ background: `linear-gradient(135deg, ${c1}, ${c2})` }}
+        className="w-[150%] h-[150%] rounded-full blur-[120px] opacity-40 animate-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{ backgroundColor: project.color }}
       />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
+
+      {/* Icon Centerpiece */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <FiLayers className="text-9xl text-white/10 scale-150" />
+      </div>
+
+      {/* Live Preview Badge */}
+      <div className="absolute top-6 left-6 z-20">
+        <div className="px-4 py-2 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full font-mono text-xs text-white shadow-2xl flex items-center gap-2">
+          <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+          LIVE_PREVIEW
+        </div>
+      </div>
     </div>
   );
 };
 
 const ProjectsSection = () => {
-  const [activeId, setActiveId] = useState<string | null>(null);
-  // Default to first project
-  const activeProject = activeId
-    ? projectsData.find((p) => p.title === activeId)
-    : projectsData[0];
+  const [activeProject, setActiveProject] = useState(projects[0]);
+  const [mobileActive, setMobileActive] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const toggleMobileActive = (id: string) => {
+    setMobileActive(mobileActive === id ? null : id);
+  };
 
   return (
     <section
       id="projects"
-      className="relative w-full bg-[#050505] text-white min-h-screen lg:h-screen flex flex-col justify-center py-20 lg:py-0 -mt-2 z-20"
+      ref={sectionRef}
+      className="relative w-full bg-[#050505] text-white py-24 lg:py-0 lg:h-screen flex flex-col justify-center overflow-hidden"
     >
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10" />
-      <div className="w-full max-w-[95rem] mx-auto px-6 md:px-12 lg:pl-32 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-center h-full">
-        {/* LEFT: List */}
-        <div className="w-full lg:w-5/12 flex flex-col justify-center relative z-20">
-          <div className="mb-10 lg:mb-12">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-[1px] bg-cyan-500" />
-              <span className="font-mono text-xs text-cyan-500 tracking-widest uppercase">
-                03 // Case Studies
+      <div className="w-full max-w-[90rem] mx-auto px-6 md:px-12 lg:pl-32 flex flex-col lg:flex-row gap-16 h-full lg:h-[80vh]">
+        {/* LEFT: The List */}
+        <div className="lg:w-5/12 flex flex-col justify-center relative z-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <span className="font-mono text-xs text-cyan-500 tracking-widest uppercase mb-3 block">
+              03 // Case Studies
+            </span>
+            <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tight">
+              Selected{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                Works
               </span>
-            </div>
-            <h2 className="text-5xl lg:text-6xl font-black leading-none tracking-tight text-white uppercase">
-              Selected Works
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col w-full">
-            {projectsData.map((project, index) => {
-              const isActive =
-                activeId === project.title ||
-                (activeProject?.title === project.title &&
-                  activeId === null &&
-                  index === 0);
-              return (
-                <div
-                  key={project.title}
-                  className="relative border-b border-white/10 last:border-none"
+          <div className="flex flex-col border-t border-white/10">
+            {projects.map((p, index) => (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="border-b border-white/10"
+              >
+                {/* Header (Clickable on Mobile) */}
+                <button
+                  className={`group py-6 cursor-pointer relative w-full text-left transition-colors ${
+                    activeProject.id === p.id
+                      ? "bg-white/5 lg:bg-transparent"
+                      : "hover:bg-white/[0.02]"
+                  }`}
+                  onMouseEnter={() => setActiveProject(p)}
+                  onClick={() => toggleMobileActive(p.id)}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeListBg"
-                      className="absolute inset-0 bg-white/5 border-l-4 border-cyan-500 hidden lg:block"
-                      transition={{ duration: 0.2 }}
-                    />
-                  )}
-                  <div
-                    onMouseEnter={() => setActiveId(project.title)}
-                    onClick={() =>
-                      setActiveId(
-                        activeId === project.title ? null : project.title,
-                      )
-                    }
-                    className={`relative z-10 flex items-start lg:items-center justify-between py-5 px-4 cursor-pointer transition-all duration-300 group ${isActive ? "lg:pl-6" : "lg:hover:pl-6"}`}
-                  >
-                    <div className="flex items-start gap-4 w-full pr-4">
+                  <div className="flex items-center justify-between relative z-10 px-2">
+                    <div className="flex items-center gap-6">
                       <span
-                        className={`font-mono text-xs pt-1 shrink-0 transition-colors ${isActive ? "text-cyan-400" : "text-gray-600"}`}
+                        className={`font-mono text-xs transition-colors ${
+                          activeProject.id === p.id
+                            ? "text-cyan-500"
+                            : "text-gray-600 group-hover:text-cyan-500"
+                        }`}
                       >
-                        0{index + 1}
+                        {p.id}
                       </span>
-                      {/* Added whitespace-normal to allow text wrapping on list */}
                       <h3
-                        className={`text-lg lg:text-xl font-bold uppercase tracking-tight leading-tight transition-colors whitespace-normal ${isActive ? "text-white" : "text-gray-400 group-hover:text-gray-200"}`}
+                        className={`text-xl md:text-3xl font-bold uppercase transition-colors ${
+                          activeProject.id === p.id
+                            ? "text-cyan-400"
+                            : "text-white group-hover:text-cyan-400"
+                        }`}
                       >
-                        {project.title}
+                        {p.title}
                       </h3>
                     </div>
-                    <FiArrowUpRight
-                      className={`hidden lg:block text-xl transition-all duration-300 shrink-0 ${isActive ? "opacity-100 translate-x-0 text-cyan-500" : "opacity-0 -translate-x-2"}`}
-                    />
-                    <FiChevronDown
-                      className={`lg:hidden text-lg transition-transform duration-300 shrink-0 ${isActive ? "rotate-180 text-cyan-500" : "text-gray-600"}`}
-                    />
+
+                    <div className="text-gray-500 group-hover:text-white transition-colors flex-shrink-0">
+                      <FiArrowUpRight className="hidden lg:block text-2xl" />
+                      <FiChevronDown
+                        className={`lg:hidden text-xl transition-transform duration-300 ${
+                          mobileActive === p.id ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
                   </div>
 
-                  {/* Mobile Details */}
-                  <AnimatePresence>
-                    {activeId === project.title && (
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: "auto" }}
-                        exit={{ height: 0 }}
-                        className="lg:hidden overflow-hidden bg-white/5"
-                      >
-                        <div className="p-5 border-l-2 border-cyan-500/30 ml-[1px]">
-                          <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                            {project.subtitle}
-                          </p>
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.tags.slice(0, 3).map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-gray-500"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
+                  {/* Active Line (Desktop) */}
+                  {activeProject.id === p.id && (
+                    <motion.div
+                      layoutId="activeProjectLine"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-purple-500 hidden lg:block"
+                    />
+                  )}
+                </button>
+
+                {/* Mobile Accordion Content */}
+                <AnimatePresence>
+                  {mobileActive === p.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="lg:hidden overflow-hidden bg-white/5"
+                    >
+                      <div className="p-6 border-l-2 border-cyan-500 ml-1">
+                        <p className="text-sm text-gray-300 mb-4 leading-relaxed">
+                          {p.desc}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {p.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-1 bg-black border border-white/10 text-[10px] font-mono text-gray-400 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex gap-4">
                           <a
-                            href={project.link}
-                            className="flex items-center gap-2 text-cyan-500 font-mono text-xs uppercase tracking-widest hover:text-white"
+                            href={p.link}
+                            target="_blank"
+                            className="text-xs font-bold text-cyan-400 uppercase flex items-center gap-2"
                           >
-                            View Analysis <FiArrowUpRight />
+                            View Project <FiArrowUpRight />
+                          </a>
+                          <a
+                            href={p.github}
+                            target="_blank"
+                            className="text-xs font-bold text-gray-400 uppercase flex items-center gap-2"
+                          >
+                            Source Code <FiGithub />
                           </a>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-            <div className="mt-8 pl-4">
-              <a
-                href="https://github.com/Ashfinn"
-                target="_blank"
-                className="inline-flex items-center gap-2 text-[10px] font-mono text-gray-500 hover:text-white transition-colors uppercase tracking-widest border-b border-transparent hover:border-cyan-500 pb-1"
-              >
-                [ View All Repositories ]
-              </a>
-            </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-10"
+          >
+            <a
+              href="https://github.com/Ashfinn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-gray-500 hover:text-white transition-colors border-b border-transparent hover:border-cyan-500 pb-1"
+            >
+              [ VIEW FULL ARCHIVE → ]
+            </a>
+          </motion.div>
         </div>
 
-        {/* RIGHT: Preview Card */}
-        <div className="hidden lg:flex w-7/12 h-[65vh] min-h-[550px] items-center justify-center">
-          <div className="relative w-full h-full bg-[#0a0a0a] border border-white/10 rounded-sm overflow-hidden shadow-2xl flex flex-col">
-            <div className="h-8 border-b border-white/10 bg-white/5 flex items-center justify-between px-3 shrink-0">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              </div>
-              <div className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">
-                Model_Preview
+        {/* RIGHT: The Fixed Preview (Desktop Only) */}
+        <div className="hidden lg:flex lg:w-7/12 items-center justify-center pl-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="relative w-full aspect-[4/3] border border-white/20 rounded-xl overflow-hidden bg-[#0a0a0a] shadow-2xl"
+          >
+            {/* Window Chrome */}
+            <div className="absolute top-0 left-0 w-full h-10 bg-black/80 border-b border-white/10 flex items-center px-4 gap-2 z-20 backdrop-blur-md">
+              <div className="w-3 h-3 rounded-full bg-red-500/70" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+              <div className="w-3 h-3 rounded-full bg-green-500/70" />
+              <div className="ml-auto font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                {activeProject.category}
               </div>
             </div>
-            <div className="relative flex-1 p-8 md:p-10 flex flex-col justify-between overflow-hidden">
-              <AnimatePresence mode="wait">
-                {activeProject && (
-                  <motion.div
-                    key={activeProject.title}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 z-0"
-                  >
-                    <ProjectVisual title={activeProject.title} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <AnimatePresence mode="wait">
-                {activeProject && (
-                  <motion.div
-                    key={activeProject.title}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative z-10 h-full flex flex-col"
-                  >
-                    <div className="flex justify-between items-start mb-auto">
-                      <div className="px-3 py-1 bg-black/40 backdrop-blur border border-white/10 rounded-full flex items-center gap-2">
-                        <FiBarChart2 className="text-cyan-400 text-xs" />
-                        <span className="font-mono text-[10px] text-white tracking-widest uppercase">
-                          {activeProject.category}
-                        </span>
-                      </div>
-                      <div className="px-2 py-1 bg-green-500/10 border border-green-500/20 rounded text-[10px] font-mono text-green-400 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                        VALIDATED
-                      </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeProject.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 pt-10"
+              >
+                <ProjectPreview project={activeProject} />
+
+                {/* Floating Info Box */}
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="absolute bottom-8 left-8 right-8 p-6 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl"
+                >
+                  <p className="text-gray-300 font-light text-base mb-4 leading-relaxed">
+                    {activeProject.desc}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {activeProject.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-mono uppercase text-cyan-300 border border-white/10"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-4">
+                    <div className="flex items-center gap-4 text-xs text-gray-500 font-mono">
+                      <span>{activeProject.year}</span>
+                      <span>//</span>
+                      <span>{activeProject.stats.stars} Stars</span>
                     </div>
-                    <div className="my-auto py-8">
-                      {/* ADDED break-words and reduced font size slightly to prevent cut off on huge titles */}
-                      <h3 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight leading-[1] drop-shadow-2xl mb-6 break-words whitespace-normal">
-                        <ScrambleText text={activeProject.title} />
-                      </h3>
-                      <div className="p-5 bg-black/50 backdrop-blur-md border-l-2 border-cyan-500">
-                        <p className="text-gray-200 leading-relaxed font-light text-sm md:text-base">
-                          {activeProject.subtitle}
-                        </p>
-                      </div>
+                    <div className="flex gap-3">
+                      <a
+                        href={activeProject.link}
+                        target="_blank"
+                        className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded text-xs font-bold text-white uppercase tracking-wider transition-colors flex items-center gap-2"
+                      >
+                        View Project <FiExternalLink />
+                      </a>
+                      <a
+                        href={activeProject.github}
+                        target="_blank"
+                        className="px-4 py-2 border border-white/20 hover:bg-white/10 rounded text-xs font-bold text-gray-300 uppercase tracking-wider transition-colors flex items-center gap-2"
+                      >
+                        <FiGithub />
+                      </a>
                     </div>
-                    <div className="flex items-end justify-between mt-auto pt-4 border-t border-white/10">
-                      <div className="flex flex-wrap gap-2">
-                        {activeProject.tags.slice(0, 4).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-black/60 border border-white/10 text-[10px] font-mono text-gray-400 uppercase"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex gap-3 shrink-0">
-                        <a
-                          href="https://github.com/Ashfinn"
-                          className="w-10 h-10 flex items-center justify-center border border-white/20 bg-black/40 hover:bg-white/10 transition-colors text-white"
-                        >
-                          <FiGithub />
-                        </a>
-                        <a
-                          href={activeProject.link}
-                          target="_blank"
-                          className="h-10 px-6 flex items-center justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs font-mono uppercase tracking-widest transition-colors"
-                        >
-                          View Analysis
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </div>
       </div>
     </section>

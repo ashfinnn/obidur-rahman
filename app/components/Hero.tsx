@@ -9,16 +9,15 @@ import {
 } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import {
-  FiArrowDown,
   FiGithub,
   FiLinkedin,
   FiCpu,
   FiCode,
   FiGlobe,
-  FiDatabase,
+  FiArrowDown,
 } from "react-icons/fi";
 
-// --- 1. STABLE "GHOST" SCRAMBLE (Zero Layout Shift) ---
+// --- GHOST SCRAMBLE (Layout Safe) ---
 const ScrambleText = ({
   text,
   className,
@@ -30,7 +29,7 @@ const ScrambleText = ({
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+";
+  const chars = "XYZ0123456789!@#";
 
   useEffect(() => {
     const startScramble = () => {
@@ -60,15 +59,12 @@ const ScrambleText = ({
 
   return (
     <span className={`relative inline-block ${className}`}>
-      {/* The Ghost: Reserves exact space, invisible */}
       <span className="opacity-0">{text}</span>
-      {/* The Animation: Overlays the ghost */}
       <span className="absolute inset-0">{displayText}</span>
     </span>
   );
 };
 
-// --- 2. HERO COMPONENT ---
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -105,11 +101,11 @@ const Hero = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center bg-[#050505] text-white selection:bg-cyan-500 selection:text-black"
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-center bg-[#050505] text-white selection:bg-cyan-500 selection:text-black"
     >
       {/* Background Layers */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
       <motion.div
         className="hidden lg:block absolute inset-0 pointer-events-none z-0"
         style={{ background: backgroundGradient }}
@@ -166,26 +162,21 @@ const Hero = () => {
           <div className="mb-6 flex items-center gap-2">
             <div className="px-2 py-1 bg-cyan-900/20 border border-cyan-500/20 rounded text-[10px] font-mono text-cyan-400 flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />{" "}
-              DATA SCIENTIST
-            </div>
-            <div className="lg:hidden px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-gray-400">
-              CHITTAGONG, BD
+              AVAILABLE FOR HIRE
             </div>
           </div>
 
           <h1 className="flex flex-col font-black leading-[0.9] tracking-tighter uppercase select-none group">
-            {/* NAME ROW 1 */}
             <div className="overflow-hidden">
               <motion.div
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7rem] text-white block"
+                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7.5rem] text-white block"
               >
                 <ScrambleText text="OBIDUR" />
               </motion.div>
             </div>
-            {/* NAME ROW 2 */}
             <div className="flex items-baseline overflow-hidden">
               <motion.div
                 initial={{ y: "100%" }}
@@ -195,7 +186,7 @@ const Hero = () => {
                   delay: 0.1,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7rem] text-gray-600 block group-hover:text-white transition-colors duration-500"
+                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7.5rem] text-gray-600 block group-hover:text-white transition-colors duration-500"
               >
                 <ScrambleText text="RAHMAN" />
               </motion.div>
@@ -203,7 +194,7 @@ const Hero = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.6 }}
-                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7rem] text-cyan-500"
+                className="text-5xl sm:text-7xl lg:text-[6rem] xl:text-[7.5rem] text-cyan-500"
               >
                 .
               </motion.span>
@@ -217,14 +208,14 @@ const Hero = () => {
             className="mt-8 lg:mt-12 max-w-xl"
           >
             <p className="font-mono text-sm md:text-base text-gray-400 leading-relaxed border-l-2 border-white/10 pl-6">
-              Transforming complex data into actionable intelligence.{" "}
+              Architecting scalable intelligence.{" "}
               <br className="hidden md:block" />
-              Specializing in{" "}
+              Focusing on{" "}
               <span className="text-white font-bold">
                 Python, PyTorch
               </span> and{" "}
               <span className="text-cyan-400 font-bold">
-                Scalable ML Models
+                Predictive Modeling
               </span>
               .
             </p>
@@ -236,7 +227,7 @@ const Hero = () => {
               >
                 <div className="absolute inset-0 bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                 <span className="relative group-hover:text-black transition-colors z-10 flex items-center justify-center gap-2 uppercase tracking-wider">
-                  View Models{" "}
+                  View Work{" "}
                   <FiArrowDown className="group-hover:translate-y-1 transition-transform" />
                 </span>
               </a>
@@ -266,10 +257,10 @@ const Hero = () => {
               className="flex justify-between items-start"
             >
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                <FiDatabase className="text-xl text-white" />
+                <FiCpu className="text-xl text-white" />
               </div>
               <div className="px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-[10px] font-mono text-gray-300">
-                ACTIVE
+                v2.0.4
               </div>
             </motion.div>
 
@@ -309,17 +300,6 @@ const Hero = () => {
               </div>
             </motion.div>
           </motion.div>
-        </div>
-      </div>
-
-      {/* Mobile Footer Status */}
-      <div className="lg:hidden absolute bottom-8 left-6 right-6 flex justify-between items-end border-t border-white/10 pt-4">
-        <div>
-          <p className="text-[10px] text-gray-500 font-mono mb-1">STATUS</p>
-          <p className="text-xs text-green-400 font-mono flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>{" "}
-            ONLINE
-          </p>
         </div>
       </div>
     </section>
