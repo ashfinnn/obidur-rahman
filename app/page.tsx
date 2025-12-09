@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import AboutSection from "./components/sections/AboutSection";
 import ContactSection from "./components/sections/ContactSection";
 import ProjectsSection from "./components/sections/ProjectsSection";
-import ExperienceSection from "./components/sections/ExperienceSection";
+// import ExperienceSection from "./components/sections/ExperienceSection";
 
 import SlideSection from "./components/ui/SlideSection";
 // ... imports
