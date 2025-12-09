@@ -27,9 +27,9 @@ export default function Home() {
       </SlideSection>
 
       {/* EXPERIENCE: Index 4 */}
-      <SlideSection index={4} id="experience">
+      {/*<SlideSection index={4} id="experience">
         <ExperienceSection />
-      </SlideSection>
+      </SlideSection>*/}
 
       {/* CONTACT: Index 5 (Final card) */}
       <SlideSection index={5} id="contact">
