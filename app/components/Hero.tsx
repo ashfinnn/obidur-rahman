@@ -30,10 +30,16 @@ export default function Hero() {
   // **FIX: Increased size from 650px to 800px and made it slightly less opaque (0.08)**
   const spotlight = useMotionTemplate`radial-gradient(800px circle at ${smoothX}px ${smoothY}px, rgba(14, 165, 233, 0.08), transparent 85%)`;
 
-  // 4. Parallax Transforms for Text Depth
-  const nameParallaxX = useTransform(smoothX, (x) => -(x / rootRef.current!.offsetWidth - 0.5) * PARALLAX_STRENGTH);
-  const nameParallaxY = useTransform(smoothY, (y) => -(y / rootRef.current!.offsetHeight - 0.5) * PARALLAX_STRENGTH);
-
+// 4. Parallax Transforms for Text Depth
+  const nameParallaxX = useTransform(smoothX, (x) => {
+    if (!rootRef.current) return 0;
+    return -(x / rootRef.current.offsetWidth - 0.5) * PARALLAX_STRENGTH;
+  });
+  const nameParallaxY = useTransform(smoothY, (y) => {
+    if (!rootRef.current) return 0;
+    return -(y / rootRef.current.offsetHeight - 0.5) * PARALLAX_STRENGTH;
+  });
+  // 5. Mouse Move Handler
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
