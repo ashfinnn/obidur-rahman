@@ -96,22 +96,36 @@ const AboutSection = () => {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-semibold text-neutral-900 leading-snug max-w-2xl"
             >
-              I&apos;m a machine learning engineer who cares about
+              I&apos;m a machine learning engineer and I love
               <motion.span
-                className="relative mx-2 cursor-pointer inline-block"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+              className="relative mx-2 cursor-pointer inline-block"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               >
-                <span className="relative z-10">craft</span>
-                <motion.span
-                  className="absolute bottom-1 left-0 w-full h-2 bg-cyan-200"
-                  initial={{ scaleX: 0, originX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                />
+              <span className="relative z-10">Building</span>
+              <motion.span
+                className="absolute bottom-1 left-0 w-full h-2 bg-cyan-200"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+              />
               </motion.span>
-              — building systems that are as elegant as they are effective.
+              systems and doing 
+              <motion.span
+              className="relative mx-2 cursor-pointer inline-block"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              >
+              <span className="relative z-10">Research</span>
+              <motion.span
+                className="absolute bottom-1 left-0 w-full h-2 bg-cyan-200"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+              />
+              </motion.span>.
             </motion.h2>
 
             <motion.p
@@ -119,61 +133,75 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-neutral-500 text-lg leading-relaxed max-w-xl"
+              className="text-neutral-600 text-lg leading-relaxed max-w-xl"
             >
-              Three years of shipping models to production taught me that good
-              ML isn&apos;t about complexity—it&apos;s about{" "}
+              As an Undergraduate Mathematics student who loves ML, I love working and Learning about complex{" "}
               <motion.span
-                className="relative cursor-pointer text-neutral-700 font-medium"
-                whileHover={{ color: "#8B5CF6" }}
+              className="relative cursor-pointer text-neutral-800 font-semibold"
+              whileHover={{ color: "#8B5CF6" }}
+              whileTap={{ scale: 0.98 }}
               >
-                clarity
-                <motion.span
-                  className="absolute -bottom-px left-0 w-full h-px bg-violet-400"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
+              ai systems
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-2 bg-violet-200"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                transition={{ duration: 0.2 }}
+              />
               </motion.span>
-              . I work at the intersection of research and engineering.
+              {" "}and{" "}
+              <motion.span
+              className="relative cursor-pointer text-neutral-800 font-semibold"
+              whileHover={{ color: "#06B6D4" }}
+              whileTap={{ scale: 0.98 }}
+              >
+              new technologies
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-2 bg-cyan-200"
+                initial={{ scaleX: 0, originX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+              </motion.span>
+              . I try to research and find solutions to existing problems.
             </motion.p>
 
-            {/* What I do - Interactive list */}
+             {/* What I do - Enhanced interactive list */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="pt-4 space-y-2"
+              className="pt-6 space-y-3"
             >
               {[
-                "Design and deploy production ML pipelines",
-                "Build full-stack applications with AI capabilities",
-                "Optimize models for scale and efficiency",
+              { text: "Design and deploy production ML pipelines", icon: "🚀" },
+              { text: "Build full-stack applications with AI", icon: "⚙️" },
+              { text: "Optimize models for scale and efficiency", icon: "⚡" },
               ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  className="flex items-start gap-3 py-2 px-3 -mx-3 rounded-lg cursor-default group"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  whileHover={{
-                    backgroundColor: "rgba(0,0,0,0.02)",
-                    x: 4,
-                  }}
+              <motion.div
+                key={i}
+                className="flex items-center gap-4 p-3 rounded-lg border border-transparent hover:border-neutral-200 hover:bg-neutral-50 transition-all cursor-default group"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                whileHover={{ x: 6 }}
+              >
+                <motion.span
+                className="text-xl flex-shrink-0"
+                whileHover={{ scale: 1.3, rotate: 10 }}
+                transition={{ type: "spring", stiffness: 400 }}
                 >
-                  <motion.span
-                    className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"
-                    whileHover={{ scale: 1.5 }}
-                    transition={{ type: "spring", stiffness: 500 }}
-                  />
-                  <span className="text-neutral-600 group-hover:text-neutral-900 transition-colors">
-                    {item}
-                  </span>
-                </motion.div>
+                {item.icon}
+                </motion.span>
+                <span className="text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">
+                {item.text}
+                </span>
+              </motion.div>
               ))}
             </motion.div>
+            
           </div>
 
           {/* Tech stack - Interactive cards */}
@@ -185,69 +213,69 @@ const AboutSection = () => {
             className="lg:col-span-1"
           >
             <div className="sticky top-24">
-              <span className="text-xs font-mono text-neutral-400 tracking-wider mb-6 block">
-                TOOLS I USE
-                {hoveredTech && (
-                  <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="ml-2 text-neutral-600"
-                  >
-                    → {hoveredTech}
-                  </motion.span>
-                )}
+              <span className="text-xs font-mono text-neutral-400 tracking-wider mb-6 block uppercase">
+          Tools I Use
+          {hoveredTech && (
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="ml-2 text-cyan-600 font-semibold"
+            >
+              → {hoveredTech}
+            </motion.span>
+          )}
               </span>
 
               <div className="space-y-3">
-                {techCategories.map((category, catIndex) => (
-                  <motion.div
-                    key={category.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + catIndex * 0.1 }}
-                    className="p-4 bg-white rounded-xl border border-neutral-200 hover:border-neutral-300 transition-colors group"
-                    whileHover={{
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                      y: -2,
-                    }}
-                  >
-                    <span
-                      className="text-[10px] font-mono uppercase tracking-wider"
-                      style={{ color: category.color }}
-                    >
-                      {category.label}
-                    </span>
-                    <div className="flex gap-3 mt-3">
-                      {category.items.map((tech) => (
-                        <motion.div
-                          key={tech.name}
-                          className="relative cursor-pointer"
-                          onHoverStart={() => setHoveredTech(tech.name)}
-                          onHoverEnd={() => setHoveredTech(null)}
-                          whileHover={{ scale: 1.15, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 17,
-                          }}
-                        >
-                          <tech.Icon
-                            className="text-2xl transition-all duration-200"
-                            style={{ color: tech.color }}
-                          />
-                          {/* Glow effect on hover */}
-                          <motion.div
-                            className="absolute inset-0 rounded-full blur-lg opacity-0 -z-10"
-                            style={{ backgroundColor: tech.color }}
-                            whileHover={{ opacity: 0.3, scale: 2 }}
-                          />
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
+          {techCategories.map((category, catIndex) => (
+            <motion.div
+              key={category.label}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 + catIndex * 0.1 }}
+              className="p-4 bg-white rounded-xl border border-neutral-200 hover:border-neutral-300 transition-all group"
+              whileHover={{
+                boxShadow: "0 8px 16px rgba(0,0,0,0.08)",
+                y: -2,
+                borderColor: category.color,
+              }}
+            >
+              <span
+                className="text-[10px] font-mono uppercase tracking-widest font-semibold"
+                style={{ color: category.color }}
+              >
+                {category.label}
+              </span>
+              <div className="flex gap-3 mt-4">
+                {category.items.map((tech) => (
+            <motion.div
+              key={tech.name}
+              className="relative cursor-pointer p-2 rounded-lg hover:bg-neutral-50 transition-colors"
+              onHoverStart={() => setHoveredTech(tech.name)}
+              onHoverEnd={() => setHoveredTech(null)}
+              whileHover={{ scale: 1.15, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 17,
+              }}
+            >
+              <tech.Icon
+                className="text-2xl transition-all duration-200"
+                style={{ color: tech.color }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-lg blur-md opacity-0 -z-10"
+                style={{ backgroundColor: tech.color }}
+                whileHover={{ opacity: 0.2, scale: 1.5 }}
+              />
+            </motion.div>
                 ))}
+              </div>
+            </motion.div>
+          ))}
               </div>
 
               {/* Stats - Animated counters feel */}
