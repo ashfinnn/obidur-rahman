@@ -1,122 +1,127 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Hide scrollbar for Chrome, Safari and Opera */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
 
-/* Hide scrollbar for IE, Edge and Firefox */
-html,
-body,
-.scrollbar-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-/* --- BASE & UNIVERSAL STYLES --- */
-html {
-    scroll-behavior: smooth;
+/* --- LAYER: BASE --- */
+@layer base {
+  /* 1. Global Reset & Typography Polish */
+  html {
+    /* If using Lenis Scroll, change this to 'auto'. If native, keep 'smooth'. */
+    scroll-behavior: smooth; 
     font-size: clamp(0.875rem, 0.778rem + 0.48vw, 1rem);
-}
-@layer utilities {
-  .scrollbar-none::-webkit-scrollbar {
-      display: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .scrollbar-none {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-  }
-}
-body {
-    /* Set a default background. Your first section (Hero) is light, so white is a good choice. */
+
+  body {
     background-color: #ffffff;
-    /* Sections will override their own text color as needed. */
-    color: #1f2937;
+    color: #050505;
     overflow-x: hidden;
+    /* Sets default border-color to a light gray for all borders */
+    border-color: #e5e5e5; 
+  }
+
+  /* 2. Custom Selection Color (The "Highlighter" effect) */
+  ::selection {
+    background-color: #FF4D00; /* Swiss Orange */
+    color: #ffffff;
+  }
 }
 
-/* Sharp corners override - Universal */
-* {
+/* --- LAYER: UTILITIES --- */
+@layer utilities {
+  /* Hide scrollbar but allow scrolling (for carousels/lists) */
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;            /* Chrome, Safari, Opera */
+  }
+
+  /* Force sharp corners only where explicitly needed, 
+     instead of breaking everything with a global wildcard */
+  .sharp-corners {
     border-radius: 0 !important;
+  }
+  
+  /* Text Balance for Headlines */
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
-/* Neutral scrollbar that looks good on both light and dark backgrounds */
+/* --- CUSTOM SCROLLBAR (Desktop) --- */
+/* Keeps it technical and thin */
 ::-webkit-scrollbar {
-    width: 6px;
+  width: 5px;
 }
-
 ::-webkit-scrollbar-track {
-    background: rgba(128, 128, 128, 0.1);
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-    background: rgba(128, 128, 128, 0.4);
+  background: #d4d4d4;
+  border-radius: 0; /* Square edges */
 }
-
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(128, 128, 128, 0.6);
+  background: #FF4D00; /* Highlight on hover */
 }
 
-/* Universal hover effect */
-.hover-lift {
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+/* --- REUSABLE PATTERNS --- */
+
+/* 1. Noise Texture (Film Grain) */
+.bg-noise {
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  background-repeat: repeat;
 }
 
-.hover-lift:hover {
-    transform: translateY(-0.5rem);
+/* 2. Technical Grids */
+.grid-pattern-light {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-
-/* -- Glass Effects -- */
-.glass-sharp.on-light {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+.grid-pattern-dark {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.glass-sharp.on-dark {
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* 3. Marquee Animation (For tickers) */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  animation: marquee 20s linear infinite;
 }
 
-/* -- Grid Patterns -- */
-.grid-pattern.on-light {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-    background-size: 50px 50px;
+/* 4. Scan Line Animation */
+@keyframes scan-line {
+  0% { top: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
 }
 
-.grid-pattern.on-dark {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-    background-size: 50px 50px;
+.scan-line {
+  position: relative;
+  overflow: hidden;
 }
 
-/* -- Scan Line -- */
-.scan-line.on-light::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05), transparent);
-    animation: scan-line 12s linear infinite;
-    z-index: 50;
-    pointer-events: none;
-}
-
-.scan-line.on-dark::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.08), rgba(0, 255, 255, 0.15), rgba(0, 255, 255, 0.08), transparent);
-    animation: scan-line 12s linear infinite;
-    z-index: 50;
-    pointer-events: none;
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(6, 182, 212, 0.5); /* Cyan */
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  animation: scan-line 4s linear infinite;
+  pointer-events: none;
+  z-index: 10;
 }

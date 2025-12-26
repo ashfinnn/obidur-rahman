@@ -3,333 +3,144 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
-  SiPython,
-  SiPytorch,
-  SiDocker,
-  SiNextdotjs,
-  SiTypescript,
-  SiFastapi,
-  SiKubernetes,
-  SiScikitlearn,
+  SiPython, SiPytorch, SiDocker, SiNextdotjs, SiTypescript,
+  SiKubernetes, SiScikitlearn, SiPostgresql, SiFastapi, SiTensorflow
 } from "react-icons/si";
+import { FiCornerDownRight, FiCpu, FiDatabase, FiLayout } from "react-icons/fi";
 
-const AboutSection = () => {
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+const TECH_DATA = [
+  { id: "01", name: "PYTHON", icon: SiPython, cat: "LANG" },
+  { id: "02", name: "PYTORCH", icon: SiPytorch, cat: "ML" },
+  { id: "03", name: "TENSORFLOW", icon: SiTensorflow, cat: "ML" },
+  { id: "04", name: "DOCKER", icon: SiDocker, cat: "OPS" },
+  { id: "05", name: "KUBERNETES", icon: SiKubernetes, cat: "OPS" },
+  { id: "06", name: "NEXT.JS", icon: SiNextdotjs, cat: "WEB" },
+  { id: "07", name: "TYPESCRIPT", icon: SiTypescript, cat: "WEB" },
+  { id: "08", name: "POSTGRES", icon: SiPostgresql, cat: "DB" },
+];
 
-  const techCategories = [
-    {
-      label: "ML",
-      color: "#06B6D4",
-      items: [
-        { Icon: SiPython, name: "Python", color: "#3776AB" },
-        { Icon: SiPytorch, name: "PyTorch", color: "#EE4C2C" },
-        { Icon: SiScikitlearn, name: "Sklearn", color: "#F7931E" },
-      ],
-    },
-    {
-      label: "Infra",
-      color: "#8B5CF6",
-      items: [
-        { Icon: SiDocker, name: "Docker", color: "#2496ED" },
-        { Icon: SiKubernetes, name: "K8s", color: "#326CE5" },
-      ],
-    },
-    {
-      label: "Web",
-      color: "#10B981",
-      items: [
-        { Icon: SiNextdotjs, name: "Next.js", color: "#000000" },
-        { Icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
-        { Icon: SiFastapi, name: "FastAPI", color: "#009688" },
-      ],
-    },
-  ];
-
-  const highlights = [
-    { word: "craft", color: "cyan" },
-    { word: "clarity", color: "violet" },
-  ];
-
+export default function About() {
   return (
-    <section
-      id="about"
-      className="relative w-full min-h-screen bg-neutral-50 overflow-hidden"
-    >
-      {/* Interactive background - responds to scroll subtly */}
-      <motion.div
-        className="absolute top-0 left-12 md:left-24 w-px h-full bg-neutral-200"
-        initial={{ scaleY: 0, originY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      />
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-24 md:py-32">
-        {/* Section indicator - interactive */}
-        <motion.div
-          className="flex items-baseline gap-4 mb-16 cursor-default select-none"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <motion.span
-            className="text-7xl md:text-8xl font-black text-neutral-200"
-            whileHover={{
-              color: "#06B6D4",
-              transition: { duration: 0.2 },
-            }}
-          >
-            01
-          </motion.span>
-          <span className="text-sm font-mono text-neutral-400 tracking-wide">
-            ABOUT
-          </span>
-        </motion.div>
-
-        {/* Main content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
-          {/* Statement */}
-          <div className="lg:col-span-2 space-y-8">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-semibold text-neutral-900 leading-snug max-w-2xl"
-            >
-              I&apos;m a machine learning engineer and I love
-              <motion.span
-              className="relative mx-2 cursor-pointer inline-block"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              >
-              <span className="relative z-10">Building</span>
-              <motion.span
-                className="absolute bottom-1 left-0 w-full h-2 bg-cyan-200"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-              />
-              </motion.span>
-              systems and doing 
-              <motion.span
-              className="relative mx-2 cursor-pointer inline-block"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              >
-              <span className="relative z-10">Research</span>
-              <motion.span
-                className="absolute bottom-1 left-0 w-full h-2 bg-cyan-200"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-              />
-              </motion.span>.
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-neutral-600 text-lg leading-relaxed max-w-xl"
-            >
-              As an Undergraduate Mathematics student who loves ML, I love working and Learning about complex{" "}
-              <motion.span
-              className="relative cursor-pointer text-neutral-800 font-semibold"
-              whileHover={{ color: "#8B5CF6" }}
-              whileTap={{ scale: 0.98 }}
-              >
-              ai systems
-              <motion.span
-                className="absolute -bottom-1 left-0 w-full h-2 bg-violet-200"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-              </motion.span>
-              {" "}and{" "}
-              <motion.span
-              className="relative cursor-pointer text-neutral-800 font-semibold"
-              whileHover={{ color: "#06B6D4" }}
-              whileTap={{ scale: 0.98 }}
-              >
-              new technologies
-              <motion.span
-                className="absolute -bottom-1 left-0 w-full h-2 bg-cyan-200"
-                initial={{ scaleX: 0, originX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-              </motion.span>
-              . I try to research and find solutions to existing problems.
-            </motion.p>
-
-             {/* What I do - Enhanced interactive list */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="pt-6 space-y-3"
-            >
-              {[
-              { text: "Design and deploy production ML pipelines", icon: "🚀" },
-              { text: "Build full-stack applications with AI", icon: "⚙️" },
-              { text: "Optimize models for scale and efficiency", icon: "⚡" },
-              ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="flex items-center gap-4 p-3 rounded-lg border border-transparent hover:border-neutral-200 hover:bg-neutral-50 transition-all cursor-default group"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                whileHover={{ x: 6 }}
-              >
-                <motion.span
-                className="text-xl flex-shrink-0"
-                whileHover={{ scale: 1.3, rotate: 10 }}
-                transition={{ type: "spring", stiffness: 400 }}
-                >
-                {item.icon}
-                </motion.span>
-                <span className="text-neutral-700 group-hover:text-neutral-900 transition-colors font-medium">
-                {item.text}
-                </span>
-              </motion.div>
-              ))}
-            </motion.div>
-            
+    <section id="about" className="bg-[#F4F4F5] text-[#050505] w-full py-24 md:py-32 border-b border-[#E5E5E5]">
+      <div className="container mx-auto px-4 md:px-12 max-w-7xl">
+        
+        {/* SECTION HEADER: Swiss Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-8 mb-20 border-t border-[#050505] pt-8">
+          <div className="md:col-span-3">
+             <span className="font-mono text-xs tracking-widest text-[#FF4D00] uppercase">
+               (002) — Profile
+             </span>
           </div>
-
-          {/* Tech stack - Interactive cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="lg:col-span-1"
-          >
-            <div className="sticky top-24">
-              <span className="text-xs font-mono text-neutral-400 tracking-wider mb-6 block uppercase">
-          Tools I Use
-          {hoveredTech && (
-            <motion.span
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="ml-2 text-cyan-600 font-semibold"
-            >
-              → {hoveredTech}
-            </motion.span>
-          )}
-              </span>
-
-              <div className="space-y-3">
-          {techCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.label}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 + catIndex * 0.1 }}
-              className="p-4 bg-white rounded-xl border border-neutral-200 hover:border-neutral-300 transition-all group"
-              whileHover={{
-                boxShadow: "0 8px 16px rgba(0,0,0,0.08)",
-                y: -2,
-                borderColor: category.color,
-              }}
-            >
-              <span
-                className="text-[10px] font-mono uppercase tracking-widest font-semibold"
-                style={{ color: category.color }}
-              >
-                {category.label}
-              </span>
-              <div className="flex gap-3 mt-4">
-                {category.items.map((tech) => (
-            <motion.div
-              key={tech.name}
-              className="relative cursor-pointer p-2 rounded-lg hover:bg-neutral-50 transition-colors"
-              onHoverStart={() => setHoveredTech(tech.name)}
-              onHoverEnd={() => setHoveredTech(null)}
-              whileHover={{ scale: 1.15, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-              }}
-            >
-              <tech.Icon
-                className="text-2xl transition-all duration-200"
-                style={{ color: tech.color }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-lg blur-md opacity-0 -z-10"
-                style={{ backgroundColor: tech.color }}
-                whileHover={{ opacity: 0.2, scale: 1.5 }}
-              />
-            </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-              </div>
-
-              {/* Stats - Animated counters feel */}
-              <div className="mt-8 pt-6 border-t border-neutral-200">
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { value: "3+", label: "Years", delay: 0 },
-                    { value: "20+", label: "Projects", delay: 0.1 },
-                  ].map((stat) => (
-                    <motion.div
-                      key={stat.label}
-                      className="cursor-default group"
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.4 + stat.delay }}
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <motion.span
-                        className="text-2xl font-semibold text-neutral-900 block"
-                        whileHover={{ color: "#06B6D4" }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {stat.value}
-                      </motion.span>
-                      <span className="text-xs text-neutral-500 group-hover:text-neutral-700 transition-colors">
-                        {stat.label}
-                      </span>
-                    </motion.div>
-                  ))}
+          <div className="md:col-span-9">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-8 leading-[0.9]">
+              Architecting Intelligence <br/>
+              <span className="text-[#999]">From Data to Deployment</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <p className="text-sm md:text-base font-medium leading-relaxed max-w-sm">
+                   I operate at the intersection of applied mathematics and systems engineering. My goal is to demystify black-box models by building robust, observable pipelines.
+                </p>
+                <div className="flex flex-col justify-end">
+                    <a href="#contact" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest border-b border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors">
+                        Download CV <FiCornerDownRight />
+                    </a>
                 </div>
-              </div>
-
-              {/* Subtle CTA */}
-              <motion.a
-                href="#projects"
-                className="mt-8 flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-900 transition-colors group cursor-pointer"
-                whileHover={{ x: 4 }}
-              >
-                <span>See my work</span>
-                <motion.span
-                  initial={{ x: 0 }}
-                  whileHover={{ x: 4 }}
-                  className="group-hover:text-cyan-500"
-                >
-                  →
-                </motion.span>
-              </motion.a>
             </div>
-          </motion.div>
+          </div>
         </div>
+
+        {/* THE "SPEC SHEET" GRID */}
+        <div className="border border-[#050505] bg-white">
+            
+            {/* Row 1: The Narrative Categories */}
+            <div className="grid grid-cols-1 md:grid-cols-3 border-b border-[#050505]">
+                <InfoCard 
+                   icon={<FiCpu size={24} />} 
+                   title="MACHINE LEARNING"
+                   desc="Designing custom architectures using PyTorch and TensorFlow. Focusing on NLP and Computer Vision."
+                />
+                <InfoCard 
+                   icon={<FiDatabase size={24} />} 
+                   title="DATA INFRA"
+                   desc="Building ETL pipelines and vector databases. scalable storage solutions with SQL & NoSQL."
+                   bordered
+                />
+                <InfoCard 
+                   icon={<FiLayout size={24} />} 
+                   title="FULL STACK"
+                   desc="Creating intuitive interfaces for complex models using Next.js, React, and FastAPI."
+                />
+            </div>
+
+            {/* Row 2: The Tech Stack Inventory */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
+                {TECH_DATA.map((tech, i) => (
+                    <TechItem key={tech.id} data={tech} index={i} />
+                ))}
+            </div>
+
+            {/* Row 3: Stats Ticker */}
+            <div className="grid grid-cols-2 md:grid-cols-4 border-t border-[#050505] divide-x divide-[#050505]">
+                <StatItem label="EXP" value="03 YRS" />
+                <StatItem label="PROJECTS" value="24+" />
+                <StatItem label="STACK" value="FULL" />
+                <StatItem label="STATUS" value="OPEN" highlight />
+            </div>
+        </div>
+
       </div>
     </section>
   );
-};
+}
 
-export default AboutSection;
+// --- SUB COMPONENTS ---
+
+const InfoCard = ({ icon, title, desc, bordered }: any) => (
+    <div className={`p-8 md:p-10 flex flex-col justify-between h-64 group hover:bg-[#050505] hover:text-white transition-colors duration-300 ${bordered ? 'md:border-x border-[#050505]' : ''}`}>
+        <div className="text-[#FF4D00] group-hover:text-white transition-colors mb-6">
+            {icon}
+        </div>
+        <div>
+            <h3 className="font-mono text-xs font-bold tracking-widest mb-3 uppercase">{title}</h3>
+            <p className="text-sm font-medium opacity-80 leading-relaxed">{desc}</p>
+        </div>
+    </div>
+)
+
+const TechItem = ({ data, index }: any) => {
+    return (
+        <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.05 }}
+            className="aspect-square border-r border-[#050505] border-b md:border-b-0 last:border-r-0 flex flex-col items-center justify-center relative group cursor-crosshair overflow-hidden"
+        >
+            {/* Background Hover Inversion */}
+            <div className="absolute inset-0 bg-[#050505] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+            
+            <div className="relative z-10 flex flex-col items-center">
+                <data.icon size={28} className="mb-4 text-[#050505] group-hover:text-white transition-colors duration-300" />
+                <span className="font-mono text-[10px] font-bold tracking-widest text-[#050505] group-hover:text-[#FF4D00] transition-colors duration-300 uppercase">
+                    {data.name}
+                </span>
+            </div>
+
+            {/* Tiny ID Number */}
+            <span className="absolute top-2 left-2 font-mono text-[8px] text-gray-400 group-hover:text-[#333]">
+                {data.id}
+            </span>
+        </motion.div>
+    )
+}
+
+const StatItem = ({ label, value, highlight }: any) => (
+    <div className={`p-6 flex flex-col items-center justify-center ${highlight ? 'bg-[#FF4D00] text-white' : 'bg-white text-[#050505]'}`}>
+        <span className={`font-mono text-[10px] tracking-widest mb-1 ${highlight ? 'text-black/60' : 'text-gray-400'}`}>
+            {label}
+        </span>
+        <span className="text-2xl font-bold tracking-tighter">
+            {value}
+        </span>
+    </div>
+)

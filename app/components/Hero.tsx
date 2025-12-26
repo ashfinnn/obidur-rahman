@@ -1,230 +1,177 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useMotionTemplate,
-  useTransform,
-} from "framer-motion";
-import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
-import { ScrambleText } from "./ui/ScrambleText";
-
-// Define Parallax strength for depth effect
-const PARALLAX_STRENGTH = 15; // Increased slightly for more impact
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { FiArrowRight, FiCornerRightDown } from "react-icons/fi";
 
 export default function Hero() {
-  const rootRef = useRef<HTMLElement | null>(null);
+  const containerRef = useRef(null);
+  const { scrollY } = useScroll();
+  
+  // Parallax: Text moves at different speeds for depth
+  const y1 = useTransform(scrollY, [0, 1000], [0, 300]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -200]);
 
-  // 1. Setup Motion Values (Mouse Tracking)
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // 2. Smooth out the mouse movement
-  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-
-  // 3. Spotlight Gradient (Hardware-accelerated)
-  // **FIX: Increased size from 650px to 800px and made it slightly less opaque (0.08)**
-  const spotlight = useMotionTemplate`radial-gradient(800px circle at ${smoothX}px ${smoothY}px, rgba(14, 165, 233, 0.08), transparent 85%)`;
-
-// 4. Parallax Transforms for Text Depth
-  const nameParallaxX = useTransform(smoothX, (x) => {
-    if (!rootRef.current) return 0;
-    return -(x / rootRef.current.offsetWidth - 0.5) * PARALLAX_STRENGTH;
-  });
-  const nameParallaxY = useTransform(smoothY, (y) => {
-    if (!rootRef.current) return 0;
-    return -(y / rootRef.current.offsetHeight - 0.5) * PARALLAX_STRENGTH;
-  });
-  // 5. Mouse Move Handler
+  // Live Time
+  const [time, setTime] = useState("");
   useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (window.innerWidth < 1024) return;
-      
-      const { left, top } = el.getBoundingClientRect();
-      mouseX.set(e.clientX - left);
-      mouseY.set(e.clientY - top);
+    const updateTime = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" }));
     };
-
-    el.addEventListener("mousemove", handleMouseMove);
-    return () => el.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+    const timer = setInterval(updateTime, 1000);
+    updateTime();
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section
-      ref={rootRef}
-      // FIX: Changed min-h-screen to h-screen to ensure a consistent height, and adjusted padding.
-      className="relative h-screen flex flex-col items-center justify-center bg-[#050505] text-white overflow-hidden px-4 sm:px-6 selection:bg-cyan-500/30"
+      ref={containerRef}
+      className="relative h-[110vh] w-full bg-[#FFFFFF] text-[#050505] overflow-hidden flex flex-col pt-24 pb-8"
     >
-      {/* 1. Background Noise Layer */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-      
-      {/* 2. Darker Vignette/Ambient Shadow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_#050505_100%)] z-0 pointer-events-none"/>
+      {/* 1. TEXTURE: Subtle Print Grain Overlay */}
+      <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.06] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
 
-      {/* 3. Spotlight Layer */}
-      <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ background: spotlight }}
-      />
+      {/* 2. GRID SYSTEM */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Vertical Columns */}
+        <div className="container mx-auto h-full border-r border-[#E5E5E5] border-l border-[#E5E5E5] relative">
+          <div className="absolute left-1/3 top-0 bottom-0 w-px bg-[#E5E5E5]" />
+          <div className="absolute left-2/3 top-0 bottom-0 w-px bg-[#E5E5E5]" />
+        </div>
+        {/* Horizontal Rows */}
+        <div className="absolute top-24 left-0 right-0 h-px bg-[#E5E5E5]" />
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-[#E5E5E5]" />
+        <div className="absolute bottom-24 left-0 right-0 h-px bg-[#E5E5E5]" />
+      </div>
 
-      {/* FIX: Increased max-w from 4xl to 5xl to give content more horizontal room */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center gap-10 py-24 sm:py-32"> 
+      {/* 3. HEADER METADATA (Fixed Absolute) */}
+      <div className="absolute top-6 w-full z-50 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] md:text-xs tracking-widest text-[#050505]/60 uppercase">
+        <div className="flex flex-col">
+          <span className="text-[#FF4D00]">● LIVE_FEED</span>
+          <span>{time} UTC+1</span>
+        </div>
+        <div className="text-right hidden md:block">
+          <span>LAT: 51.5074° N</span><br/>
+          <span>LNG: 0.1278° W</span>
+        </div>
+      </div>
+
+      {/* 4. MAIN CONTENT */}
+      <div className="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
         
-        {/* Status Badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-3"
-        >
-          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-cyan-950/40 to-cyan-950/10 border border-cyan-500/20 rounded-full text-xs font-mono text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>
-            AVAILABLE FOR WORK
-          </div>
-        </motion.div>
-
-        {/* Main Heading - With Parallax Depth */}
-        <motion.h1 
-            style={{ x: nameParallaxX, y: nameParallaxY }}
-            // FIX: Increased font size for desktop (lg:text-9xl)
-            className="text-6xl sm:text-8xl lg:text-9xl font-extrabold leading-[0.9] tracking-tight [text-shadow:0_0_20px_rgba(255,255,255,0.05)]"
-        >
-          {/* First Name - Bolder, Brighter */}
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="block overflow-hidden"
+        {/* TYPOGRAPHY COMPOSITION */}
+        <div className="relative mix-blend-darken">
+          {/* Top Label */}
+          <motion.div 
+             initial={{ opacity: 0, x: -20 }}
+             animate={{ opacity: 1, x: 0 }}
+             transition={{ delay: 0.2 }}
+             className="flex items-center gap-3 mb-4 md:mb-8"
           >
-            <ScrambleText text="OBIDUR" className="text-white" />
+            <div className="h-2 w-2 bg-[#FF4D00]" />
+            <span className="font-mono text-xs md:text-sm font-bold tracking-widest text-[#050505]">
+              FULL STACK MACHINE LEARNING
+            </span>
           </motion.div>
 
-          {/* Last Name - Subtler, Depth Effect */}
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="block mt-2 sm:mt-3 overflow-hidden"
-          >
-            <span className="text-gray-500/80">
-              <ScrambleText text="RAHMAN" />
-            </span>
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-              className="inline-block text-cyan-400"
+          {/* Massive First Name */}
+          <div className="overflow-hidden">
+            <motion.h1 
+              style={{ y: y1 }}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[15vw] leading-[0.8] font-bold tracking-tighter text-[#050505]"
             >
-              .
-            </motion.span>
-          </motion.div>
-        </motion.h1>
+              OBIDUR
+            </motion.h1>
+          </div>
 
-        {/* Description - Increased max-w for wider reading space */}
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          // FIX: Increased max-w for description text
-          className="text-gray-400 max-w-2xl font-mono text-sm sm:text-base leading-relaxed mt-4" 
-        >
-          Architecting scalable intelligence — building robust models with{" "}
-          <span className="text-gray-200 font-semibold border-b border-gray-700 pb-0.5">Python</span>,{" "}
-          <span className="text-cyan-400 font-semibold border-b border-cyan-500/30 pb-0.5">PyTorch</span>, 
-          and production-ready pipelines.
-        </motion.p>
+          {/* Indented Last Name + Decorator */}
+          <div className="flex flex-col md:flex-row md:items-start justify-between mt-2 md:mt-0">
+             <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ delay: 0.8 }}
+               className="hidden md:block w-48 mt-8 pl-2 border-l-2 border-[#FF4D00]"
+             >
+                <p className="font-mono text-xs leading-tight text-gray-500">
+                  SPECIALIZED IN:<br/>
+                  NEURAL ARCHITECTURE<br/>
+                  SCALABLE SYSTEMS<br/>
+                  DATA ENGINEERING
+                </p>
+             </motion.div>
 
-        {/* Buttons - Increased top margin */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 mt-8" 
-        >
-          <a
-            href="#projects"
-            className="group relative inline-flex items-center justify-center px-8 py-3.5 bg-gray-100 text-black font-bold font-mono text-xs tracking-wider overflow-hidden shadow-lg hover:shadow-cyan-400/30 transition-shadow"
-          >
-            <span className="relative z-10 flex items-center">
-              VIEW WORK 
-              <motion.span 
-                initial={{ x: -2 }}
-                animate={{ x: 0 }}
-                transition={{ repeat: Infinity, duration: 0.8, repeatType: 'reverse' }}
-                className="ml-2"
-              >
-                &rarr;
-              </motion.span>
-            </span>
-            <div className="absolute inset-0 bg-cyan-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out" />
-          </a>
+             <div className="overflow-hidden relative">
+                <motion.h1 
+                   style={{ y: y2 }}
+                   initial={{ y: "100%" }}
+                   animate={{ y: 0 }}
+                   transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                   className="text-[15vw] leading-[0.8] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#555] to-[#050505] text-right"
+                >
+                  RAHMAN
+                </motion.h1>
+                {/* Decoration: Tiny 'Trade Mark' style text */}
+                <span className="absolute top-4 right-0 md:-right-8 text-xs md:text-lg font-mono text-[#FF4D00] font-bold">
+                  (01)
+                </span>
+             </div>
+          </div>
+        </div>
 
-          <a
-            href="#contact"
-            className="group border border-white/10 px-8 py-3.5 text-xs font-mono text-white hover:bg-white/5 transition-colors shadow-lg hover:border-cyan-400/40"
-          >
-            <span className="flex items-center">
-              CONTACT ME
-              <FiMail className="ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-            </span>
-          </a>
-        </motion.div>
-
-        {/* Socials - Increased top margin */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
-          className="flex items-center gap-8 mt-16" 
-        >
-          <SocialLink href="#" icon={<FiGithub size={24} />} label="GitHub" />
-          <SocialLink href="#" icon={<FiLinkedin size={24} />} label="LinkedIn" />
-        </motion.div>
-
-        {/* Separator Line */}
-        <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: '100px' }} // Slightly wider line
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="h-px bg-cyan-400/50 mt-10" // Increased top margin
-        />
+        {/* CTA AREA */}
+        <div className="absolute bottom-32 md:bottom-48 left-6 md:left-12 z-20">
+          <MagneticButton>
+             <span className="flex items-center gap-4">
+                INDEX <FiArrowRight />
+             </span>
+          </MagneticButton>
+        </div>
 
       </div>
-      {/* Scroll Indicator at the bottom */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-6 z-10 text-gray-500 animate-bounce"
-      >
-        <FiArrowDown size={20} />
-      </motion.div>
+
+      {/* 5. MARQUEE FOOTER (Infinite Scroll) */}
+      <div className="absolute bottom-0 w-full border-t border-[#050505] bg-[#050505] text-white overflow-hidden py-3">
+        <motion.div 
+          className="flex whitespace-nowrap font-mono text-sm tracking-[0.2em]"
+          animate={{ x: [0, -1000] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+        >
+          {Array(8).fill(" • AVAILABLE FOR COMMISSIONS • SYSTEM OPTIMIZATION • MODEL DEPLOYMENT").map((t, i) => (
+             <span key={i} className="mx-4">{t}</span>
+          ))}
+        </motion.div>
+      </div>
+      
+      {/* Decorative Crosshairs in corners */}
+      <Crosshair position="top-24 left-1/3" />
+      <Crosshair position="top-24 left-2/3" />
+      <Crosshair position="bottom-24 left-1/3" />
+      <Crosshair position="bottom-24 left-2/3" />
+
     </section>
   );
 }
 
-// Helper component for cleaner JSX and consistent styling
-const SocialLink = ({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label={label}
-    className="text-gray-500 hover:text-cyan-400 hover:scale-110 transition-all duration-300"
-  >
-    {icon}
-  </a>
+// --- MICRO COMPONENTS ---
+
+const Crosshair = ({ position }: { position: string }) => (
+  <div className={`absolute ${position} -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none`}>
+    <div className="relative h-4 w-4">
+      <div className="absolute top-1/2 left-0 w-full h-px bg-[#FF4D00]" />
+      <div className="absolute left-1/2 top-0 h-full w-px bg-[#FF4D00]" />
+    </div>
+  </div>
 );
 
-// We need to re-import FiArrowDown at the top since it was used in the previous version
-import { FiArrowDown } from "react-icons/fi";
+const MagneticButton = ({ children }: { children: React.ReactNode }) => {
+    // Basic magnetic implementation could be added here
+    return (
+        <button className="group relative px-8 py-4 bg-[#050505] text-white font-bold tracking-widest text-xs uppercase overflow-hidden hover:bg-[#FF4D00] transition-colors duration-300">
+            <span className="relative z-10">{children}</span>
+        </button>
+    )
+}
