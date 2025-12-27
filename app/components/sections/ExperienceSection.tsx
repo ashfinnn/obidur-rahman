@@ -8,7 +8,7 @@ const TIMELINE = [
   {
     type: "work",
     id: "northaxis",
-    role: "PRODUCT RESEARCH LEAD",
+    role: "RESEARCH AND DEVELOPMENT ENGINEER",
     company: "NorthAxis",
     date: "Dec 2024 - Present",
     location: "Chattogram",
@@ -22,33 +22,20 @@ const TIMELINE = [
     type: "award",
     id: "award",
     role: "BEST PRESENTER",
-    company: "Intl. Math Conference",
+    company: "24th International Math Conference",
     date: "Dec 2024",
-    location: "Dhaka",
+    location: "University of Chittagong",
     desc: [
         "Awarded 1st Place for paper presentation on CPU-Constrained Deep Learning.",
-        "Demonstrated hybrid CNN architectures to a panel of international mathematicians."
+        "Demonstrated hybrid CNN architectures on CPU to a panel of international mathematicians."
     ]
   },
   {
-    type: "work",
-    id: "headstarter",
-    role: "SOFTWARE FELLOW",
-    company: "Headstarter AI",
-    date: "July 2024 - Aug 2024",
-    location: "Remote",
-    desc: [
-        "Architected high-performance web apps using Next.js & TypeScript.",
-        "Led a 4-person engineering squad, managing sprint velocities.",
-        "Shipped 5+ production-grade features in an 8-week cycle."
-    ]
-  },
-  {
-    type: "edu",
+    type: "education",
     id: "uni",
     role: "B.S. MATHEMATICS",
-    company: "Univ. of Chittagong",
-    date: "2022 - 2026",
+    company: "University of Chittagong",
+    date: "2022 - Present",
     location: "Chattogram",
     desc: [
         "Specialization in Abstract Algebra & Linear Optimization.",
@@ -68,7 +55,7 @@ export default function ExperienceSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-l-2 border-[#FF4D00] pl-6">
             <div>
                 <span className="font-mono text-[10px] md:text-xs tracking-widest uppercase text-gray-500 mb-2 block">
-                    (002) — Professional History
+                    Professional History
                 </span>
                 <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.85]">
                     Timeline &<br/>Milestones
