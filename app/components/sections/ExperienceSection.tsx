@@ -1,159 +1,208 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { FiArrowUpRight, FiAward, FiBriefcase, FiMapPin } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiArrowUpRight, FiAward, FiMapPin, FiCalendar } from "react-icons/fi";
 
 const TIMELINE = [
   {
     type: "work",
-    id: "northaxis",
-    role: "RESEARCH AND DEVELOPMENT ENGINEER",
+    id: "01",
+    role: "R&D ENGINEER",
     company: "NorthAxis",
-    date: "Dec 2024 - Present",
+    date: "2024 — Present",
     location: "Chattogram",
-    desc: [
-        "Bridging the gap between market requirements and engineering feasibility.",
-        "Driving feature development through rigorous competitive analysis.",
-        "Optimizing internal research workflows to reduce dev lead time."
-    ]
+    tags: ["Product Strategy", "Python", "Market Analysis"],
+    desc: "Bridging the gap between market requirements and engineering feasibility. Driving feature development through rigorous competitive analysis and optimizing internal research workflows."
   },
   {
     type: "award",
-    id: "award",
+    id: "02",
     role: "BEST PRESENTER",
-    company: "24th International Math Conference",
-    date: "Dec 2024",
+    company: "Intl. Math Conference",
+    date: "DEC 2024",
     location: "University of Chittagong",
-    desc: [
-        "Awarded 1st Place for paper presentation on CPU-Constrained Deep Learning.",
-        "Demonstrated hybrid CNN architectures on CPU to a panel of international mathematicians."
-    ]
+    tags: ["Deep Learning", "CNN", "Optimization"],
+    desc: "Awarded 1st Place for paper presentation on CPU-Constrained Deep Learning. Demonstrated hybrid CNN architectures on CPU to a panel of international mathematicians."
   },
   {
     type: "education",
-    id: "uni",
+    id: "03",
     role: "B.S. MATHEMATICS",
     company: "University of Chittagong",
-    date: "2022 - Present",
+    date: "2022 — Present",
     location: "Chattogram",
-    desc: [
-        "Specialization in Abstract Algebra & Linear Optimization.",
-        "Applying pure math theories to algorithmic problem solving."
-    ]
+    tags: ["Abstract Algebra", "Linear Optimization"],
+    desc: "Specialization in Abstract Algebra & Linear Optimization. Applying pure math theories to algorithmic problem solving and computational logic."
   }
 ];
 
 export default function ExperienceSection() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-24 md:py-32">
-      <div className="container mx-auto px-4 md:px-12 max-w-7xl">
+    <section id="experience" className="bg-white text-[#050505] w-full py-24 md:py-32 relative">
+      
+      {/* --- BACKGROUND GRID (Fixed) --- */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+         <div className="container mx-auto h-full border-l border-r border-[#E5E5E5] relative">
+            <div className="absolute top-0 bottom-0 left-[20%] w-px bg-[#E5E5E5] hidden md:block" />
+            <div className="absolute top-0 bottom-0 right-[20%] w-px bg-[#E5E5E5] hidden md:block" />
+         </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-0 max-w-7xl relative z-10">
         
-        {/* Header with detailed meta */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-l-2 border-[#FF4D00] pl-6">
+        {/* --- SECTION HEADER --- */}
+        <div className="flex flex-col md:flex-row items-end justify-between px-6 md:px-12 mb-20">
             <div>
-                <span className="font-mono text-[10px] md:text-xs tracking-widest uppercase text-gray-500 mb-2 block">
-                    Professional History
-                </span>
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.85]">
-                    Timeline &<br/>Milestones
-                </h2>
-            </div>
-            <div className="hidden md:block font-mono text-[10px] text-gray-400 text-right">
-                SCROLL TO INSPECT <br/> HOVER FOR DETAILS
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-3 mb-4"
+                >
+                    <span className="w-1.5 h-1.5 bg-[#FF4D00]" />
+                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-gray-500">
+                        Section_03 / History
+                    </span>
+                </motion.div>
+                <motion.h2 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.85]"
+                >
+                    Career<br/>Log
+                </motion.h2>
             </div>
         </div>
 
-        {/* The List Layout with Focus Effect */}
-        <div 
-            className="border-t border-[#050505] group/list"
-            onMouseLeave={() => setHoveredId(null)}
-        >
+        {/* --- THE BLUEPRINT LIST --- */}
+        <div className="border-t border-[#050505]">
             {TIMELINE.map((item, i) => (
-                <TimelineRow 
+                <ExperienceRow 
                     key={i} 
                     data={item} 
-                    index={i} 
-                    hoveredId={hoveredId}
-                    setHoveredId={setHoveredId}
+                    isHovered={hovered === item.id}
+                    setHovered={setHovered}
                 />
             ))}
         </div>
+
       </div>
     </section>
   );
 }
 
-const TimelineRow = ({ data, index, hoveredId, setHoveredId }: any) => {
-    const isAward = data.type === 'award';
-    const isHovered = hoveredId === data.id;
-    const isDimmed = hoveredId !== null && hoveredId !== data.id;
+const ExperienceRow = ({ data, isHovered, setHovered }: any) => {
+    const isAward = data.type === "award";
 
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            onMouseEnter={() => setHoveredId(data.id)}
+            onMouseEnter={() => setHovered(data.id)}
+            onMouseLeave={() => setHovered(null)}
             className={`
-                relative border-b border-[#050505] transition-all duration-500 ease-out
-                ${isDimmed ? 'opacity-30 blur-[1px]' : 'opacity-100 blur-0'}
-                ${isAward ? 'bg-[#050505] text-white my-6 md:-mx-6 md:px-6 border-none shadow-2xl scale-[1.01] z-10 rounded-sm' : 'bg-white hover:bg-gray-50'}
+                relative group border-b border-[#050505] transition-all duration-300 overflow-hidden
+                ${isAward ? 'bg-[#050505] text-white hover:bg-[#0a0a0a]' : 'bg-white hover:bg-gray-50'}
             `}
         >
-            {/* Matte Grain Texture for Award Card */}
+            {/* CROSSHAIR DECORATION (Top Left) */}
+            <div className="absolute top-[-5px] left-[-5px] w-3 h-3 border-r border-b border-[#050505] z-20" />
+            
+            {/* AWARD BACKGROUND TEXTURE */}
             {isAward && (
-                <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+                <div className="absolute inset-0 opacity-[0.1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none" />
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-12 min-h-[220px]">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 md:gap-y-0 min-h-[200px]">
                 
-                {/* Column 1: Meta Data */}
-                <div className={`md:col-span-3 p-6 md:p-10 flex flex-col justify-between border-b md:border-b-0 ${!isAward && 'md:border-r border-[#050505]'}`}>
-                     <div className={`font-mono text-[10px] uppercase tracking-widest flex items-center gap-2 ${isAward ? 'text-[#FF4D00]' : 'text-gray-400'}`}>
-                        {isAward ? <FiAward size={14}/> : <span>0{index + 1}</span>}
-                        <span>— {data.type}</span>
-                     </div>
-                     <div className={`font-mono text-[10px] uppercase tracking-widest flex flex-col gap-1.5 ${isAward ? 'text-gray-400' : 'text-gray-500'}`}>
-                        <span className="flex items-center gap-2"><FiBriefcase size={12}/> {data.date}</span>
-                        <span className="flex items-center gap-2"><FiMapPin size={12}/> {data.location}</span>
+                {/* COL 1: ID & TYPE (Width: 20%) */}
+                <div className={`md:col-span-3 p-6 md:p-10 flex flex-col justify-between md:border-r ${isAward ? 'border-gray-800' : 'border-[#E5E5E5]'}`}>
+                    <div className="flex items-center gap-2">
+                        <span className={`font-mono text-xs tracking-widest ${isAward ? 'text-[#FF4D00]' : 'text-gray-400'}`}>
+                            {data.id}
+                        </span>
+                        {isAward && <FiAward className="text-[#FF4D00]" />}
+                    </div>
+                    
+                    <div className="mt-4 md:mt-0">
+                         {/* Pill Badge for Dates */}
+                         <div className={`inline-flex items-center gap-2 px-3 py-1 border rounded-full text-[10px] font-mono tracking-wide uppercase
+                            ${isAward ? 'border-gray-700 text-gray-300' : 'border-gray-200 text-gray-500'}
+                         `}>
+                             <div className={`w-1 h-1 rounded-full ${isAward ? 'bg-[#FF4D00] animate-pulse' : 'bg-green-500'}`} />
+                             {data.date}
+                         </div>
                     </div>
                 </div>
 
-                {/* Column 2: Role & Company */}
-                <div className={`md:col-span-4 p-6 md:p-10 flex flex-col justify-center border-b md:border-b-0 ${!isAward && 'md:border-r border-[#050505]'}`}>
-                    <h3 className={`text-3xl md:text-4xl font-black uppercase tracking-tighter leading-[0.9] mb-3 ${isHovered && !isAward ? 'text-[#FF4D00]' : ''} transition-colors duration-300`}>
+                {/* COL 2: MAIN INFO (Width: 50%) */}
+                <div className="md:col-span-6 p-6 md:p-10 flex flex-col justify-center relative">
+                    
+                    {/* Role */}
+                    <h3 className={`text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-2 transition-colors duration-300 ${!isAward && isHovered ? 'text-[#FF4D00]' : ''}`}>
                         {data.role}
                     </h3>
-                    <span className={`font-mono text-xs uppercase tracking-widest ${isAward ? 'text-gray-400' : 'text-gray-500'}`}>
-                        at {data.company}
-                    </span>
-                </div>
+                    
+                    {/* Company & Location */}
+                    <div className={`flex flex-wrap items-center gap-4 font-mono text-[10px] uppercase tracking-[0.15em] ${isAward ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <span>@ {data.company}</span>
+                        <span className="hidden md:inline text-gray-300">|</span>
+                        <span className="flex items-center gap-1">
+                            <FiMapPin /> {data.location}
+                        </span>
+                    </div>
 
-                {/* Column 3: Description */}
-                <div className="md:col-span-5 p-6 md:p-10 flex flex-col justify-center relative">
-                    <ul className="space-y-3">
-                        {data.desc.map((line: string, l: number) => (
-                            <li key={l} className="flex items-start gap-3">
-                                <span className={`mt-2 h-1 w-1 rounded-full flex-shrink-0 ${isAward ? 'bg-[#FF4D00]' : 'bg-[#050505]'}`} />
-                                <span className={`text-sm md:text-[15px] font-medium leading-relaxed ${isAward ? 'text-gray-300' : 'text-gray-600'}`}>
-                                    {line}
-                                </span>
-                            </li>
+                    {/* Tech Stack (Visible on Hover for Desktop, always on mobile) */}
+                    <div className="mt-6 flex flex-wrap gap-2">
+                        {data.tags.map((tag: string, i: number) => (
+                            <span 
+                                key={i}
+                                className={`text-[9px] uppercase font-bold px-1.5 py-0.5 border ${isAward ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-400'}`}
+                            >
+                                {tag}
+                            </span>
                         ))}
-                    </ul>
-
-                    {/* Arrow Interaction */}
-                    {!isAward && (
-                        <div className={`absolute top-6 right-6 transition-transform duration-500 ${isHovered ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}>
-                            <FiArrowUpRight className="text-3xl text-[#FF4D00]" />
-                        </div>
-                    )}
+                    </div>
                 </div>
+
+                {/* COL 3: DESCRIPTION & ACTION (Width: 30%) */}
+                <div className={`md:col-span-3 p-6 md:p-10 flex flex-col justify-between md:border-l ${isAward ? 'border-gray-800' : 'border-[#E5E5E5]'}`}>
+                    <p className={`text-xs md:text-sm leading-relaxed ${isAward ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {data.desc}
+                    </p>
+
+                    <div className="flex justify-end mt-6 md:mt-0">
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={`w-10 h-10 flex items-center justify-center border transition-colors duration-300
+                                ${isAward 
+                                    ? 'border-gray-700 text-[#FF4D00] hover:bg-[#FF4D00] hover:text-white hover:border-[#FF4D00]' 
+                                    : 'border-gray-200 text-gray-400 hover:border-[#050505] hover:text-[#050505]'}
+                            `}
+                        >
+                            <FiArrowUpRight size={18} />
+                        </motion.button>
+                    </div>
+                </div>
+
             </div>
+
+            {/* --- HOVER BORDER EFFECT (Animated Bracket) --- */}
+            {/* Left Bracket */}
+            <motion.div 
+                className="absolute top-0 bottom-0 left-0 w-1 bg-[#FF4D00]"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: isHovered && !isAward ? 1 : 0 }}
+                transition={{ duration: 0.2 }}
+            />
+            
         </motion.div>
     )
 }
