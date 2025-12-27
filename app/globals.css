@@ -4,55 +4,54 @@
 
 /* --- LAYER: BASE --- */
 @layer base {
-  /* 1. Global Reset & Typography Polish */
   html {
-    /* If using Lenis Scroll, change this to 'auto'. If native, keep 'smooth'. */
-    scroll-behavior: smooth; 
+    /* CRITICAL FIX: Set to 'auto' when using Lenis. 
+       If you leave this as 'smooth', anchor links will stutter. */
+    scroll-behavior: auto; 
+    
+    /* Responsive font scaling */
     font-size: clamp(0.875rem, 0.778rem + 0.48vw, 1rem);
+    
+    /* Font rendering polish */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: #ffffff;
     color: #050505;
     overflow-x: hidden;
-    /* Sets default border-color to a light gray for all borders */
     border-color: #e5e5e5; 
   }
 
-  /* 2. Custom Selection Color (The "Highlighter" effect) */
+  /* 2. Custom Selection Color */
   ::selection {
-    background-color: #FF4D00; /* Swiss Orange */
+    background-color: #FF4D00;
     color: #ffffff;
   }
 }
 
 /* --- LAYER: UTILITIES --- */
 @layer utilities {
-  /* Hide scrollbar but allow scrolling (for carousels/lists) */
   .scrollbar-none {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none;    /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .scrollbar-none::-webkit-scrollbar {
-    display: none;            /* Chrome, Safari, Opera */
+    display: none;
   }
 
-  /* Force sharp corners only where explicitly needed, 
-     instead of breaking everything with a global wildcard */
   .sharp-corners {
     border-radius: 0 !important;
   }
   
-  /* Text Balance for Headlines */
   .text-balance {
     text-wrap: balance;
   }
 }
 
-/* --- CUSTOM SCROLLBAR (Desktop) --- */
-/* Keeps it technical and thin */
+/* --- CUSTOM SCROLLBAR (For Browsers that ignore Lenis or on Mobile) --- */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -61,16 +60,17 @@
 }
 ::-webkit-scrollbar-thumb {
   background: #d4d4d4;
-  border-radius: 0; /* Square edges */
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF4D00; /* Highlight on hover */
+  background: #FF4D00;
 }
 
 /* --- REUSABLE PATTERNS --- */
 
-/* 1. Noise Texture (Film Grain) */
+/* 1. Noise Texture */
 .bg-noise {
+  /* It is safer to download this SVG and put it in your /public folder as /noise.svg */
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   background-repeat: repeat;
 }
@@ -83,14 +83,7 @@
   background-size: 40px 40px;
 }
 
-.grid-pattern-dark {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* 3. Marquee Animation (For tickers) */
+/* 3. Marquee Animation */
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); }
@@ -99,7 +92,7 @@
   animation: marquee 20s linear infinite;
 }
 
-/* 4. Scan Line Animation */
+/* 4. Scan Line (Optional - Keep if you use it in the Loader) */
 @keyframes scan-line {
   0% { top: -10%; opacity: 0; }
   10% { opacity: 1; }
@@ -119,7 +112,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: rgba(6, 182, 212, 0.5); /* Cyan */
+  background: rgba(6, 182, 212, 0.5);
   box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
   animation: scan-line 4s linear infinite;
   pointer-events: none;

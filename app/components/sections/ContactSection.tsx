@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCopy, FiCheck, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiCheck, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
 
-export default function Contact() {
+export default function ContactSection() {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
@@ -13,9 +13,7 @@ export default function Contact() {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    // Inside ContactSection.tsx
     return (
-        // Removed min-h-screen, added h-full
         <section id="contact" className="relative w-full bg-[#0a0a0a] text-white h-full flex flex-col justify-between pt-32 pb-10 border-t border-white/5">
             {/* Background Grid */}
             <div className="absolute inset-0 pointer-events-none opacity-10">
@@ -26,9 +24,9 @@ export default function Contact() {
             </div>
 
             <div className="container mx-auto px-6 md:px-12 relative z-10 flex-1 flex flex-col justify-center">
-
+                
                 <span className="font-mono text-xs text-[#FF4D00] tracking-widest uppercase mb-8">
-                    (004) — Communication Protocol
+                    Communication Protocol
                 </span>
 
                 {/* Giant Actionable Area */}
@@ -36,7 +34,6 @@ export default function Contact() {
                     onClick={handleCopy}
                     className="group relative w-full border border-white/20 bg-[#0a0a0a] hover:bg-[#111] transition-all duration-500 cursor-pointer overflow-hidden py-12 md:py-24"
                 >
-                    {/* Hover Reveal Pattern */}
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
 
                     <div className="relative z-10 flex flex-col items-center justify-center text-center">
@@ -75,17 +72,19 @@ export default function Contact() {
                     </div>
                 </div>
 
-                {/* Footer Links */}
+                {/* Footer Links - Updated to your links */}
                 <div className="mt-12 flex justify-center gap-8">
                     <SocialLink href="https://github.com/Ashfinn" icon={FiGithub} />
-                    <SocialLink href="https://linkedin.com" icon={FiLinkedin} />
-                    <SocialLink href="https://twitter.com" icon={FiTwitter} />
+                    <SocialLink href="https://linkedin.com/in/obidur-rahman-shawal" icon={FiLinkedin} />
+                    {/* If you don't have Twitter, you can remove this line */}
+                    <SocialLink href="#" icon={FiTwitter} />
                 </div>
             </div>
 
             {/* Bottom Bar */}
             <div className="container mx-auto px-6 md:px-12 py-6 border-t border-white/10 flex justify-between items-center text-[10px] md:text-xs font-mono text-gray-600 uppercase">
                 <span>© {new Date().getFullYear()} Obidur Rahman</span>
+                <span className="hidden md:inline">Languages: EN / BN / UR / JP</span>
                 <span>System Status: Online</span>
             </div>
         </section>
