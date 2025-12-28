@@ -25,6 +25,7 @@ export default function Home() {
       <div id="about" className="relative z-30 bg-[#050505]">
         <AboutSection />
       </div>
+      <SectionDivider text="INITIALIZING CORE MODULES" />
 
       {/* 2. EXPERIENCE: Employment & Education Log (No Awards) */}
       <div id="experience" className="relative z-30 bg-[#050505]">
@@ -37,6 +38,7 @@ export default function Home() {
       <div id="research" className="relative z-30 bg-[#F4F4F5]">
         <ResearchSection />
       </div>
+      <SectionDivider text="INITIALIZING CORE MODULES" />
 
       {/* 4. PROJECTS: Engineering & Systems */}
       <div id="projects" className="relative z-30 bg-[#050505] mb-[100vh] md:mb-[80vh] shadow-[0_50px_100px_rgba(0,0,0,0.5)]">

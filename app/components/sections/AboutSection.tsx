@@ -20,7 +20,7 @@ const TECH_DATA = [
 
 export default function AboutSection() {
     return (
-        <section id="about" className="bg-[#F4F4F5] text-[#050505] w-full pt-24 md:pt-40 pb-0 border-b border-[#E5E5E5]">
+        <section id="about" className="bg-[#F4F4F5] text-[#050505] w-full pt-24 md:pt-40 pb-20 border-b border-[#E5E5E5]">
             <div className="container mx-auto px-4 md:px-12 max-w-7xl">
 
                 {/* HEADLINE */}
@@ -115,7 +115,7 @@ export default function AboutSection() {
                     </div>
 
                     {/* ROW 3: Tech Stack */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
+                    <div className="grid grid-cols-2  md:grid-cols-4 lg:grid-cols-8">
                         {TECH_DATA.map((tech, i) => (
                             <TechItem key={tech.id} data={tech} index={i} />
                         ))}
