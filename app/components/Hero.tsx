@@ -1,24 +1,42 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
 
 export default function Hero() {
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
+  const [isMounted, setIsMounted] = useState(false);
   
-  // Keep the scroll parallax effect, but remove load animations
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Keep the scroll parallax effect
   const y1 = useTransform(scrollY, [0, 500], [0, 100]);
   const y2 = useTransform(scrollY, [0, 500], [0, -100]);
+
+  // Only apply parallax on desktop (performance optimization)
+  const getY1 = () => {
+    if (!isMounted) return 0;
+    return typeof window !== 'undefined' && window.innerWidth > 768 ? y1 : 0;
+  };
+
+  const getY2 = () => {
+    if (!isMounted) return 0;
+    return typeof window !== 'undefined' && window.innerWidth > 768 ? y2 : 0;
+  };
 
   return (
     <section
       ref={containerRef}
       className="relative min-h-[100dvh] w-full bg-[#FFFFFF] text-[#050505] overflow-hidden flex flex-col justify-center pt-12 pb-12"
     >
-      {/* Texture & Grid */}
-      <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.06] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
+      {/* Texture & Grid - Hidden on mobile for performance */}
+      <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.06] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply hidden md:block" />
+      
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="container mx-auto h-full border-r border-l border-[#E5E5E5] relative">
           <div className="absolute left-1/2 md:left-1/3 top-0 bottom-0 w-px bg-[#E5E5E5]" />
@@ -30,7 +48,7 @@ export default function Hero() {
 
       <div className="relative z-10 container mx-auto px-6 md:px-12 flex flex-col justify-center h-full">
         
-        {/* JOB TITLE - Static */}
+        {/* JOB TITLE */}
         <div className="flex items-center gap-3 mb-4 md:mb-8">
           <div className="h-1.5 w-1.5 bg-[#FF4D00]" />
           <span className="font-mono text-[10px] md:text-sm font-bold tracking-widest text-[#050505] uppercase">
@@ -38,41 +56,41 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* NAME BLOCK 1 - Scroll Parallax Only */}
+        {/* NAME BLOCK 1 - Parallax on desktop only */}
         <div className="overflow-hidden">
           <motion.h1 
-            style={{ y: typeof window !== 'undefined' && window.innerWidth > 768 ? y1 : 0 }}
+            style={{ y: getY1() }}
             className="text-[16vw] md:text-[14vw] leading-[0.85] font-bold tracking-tighter text-[#050505]"
           >
             OBIDUR
           </motion.h1>
         </div>
 
-        {/* DETAILS BLOCK - Static */}
+        {/* DETAILS BLOCK */}
         <div className="w-full pl-4 border-l-2 border-[#FF4D00] my-6 md:my-8 md:ml-2 md:w-64">
-            <p className="font-mono text-[10px] md:text-xs leading-relaxed text-gray-500 uppercase">
-              Deep Learning<br/>
-              Pure Mathematics Bg.<br/>
-              Computer Vision
-            </p>
+          <p className="font-mono text-[10px] md:text-xs leading-relaxed text-gray-500 uppercase">
+            Deep Learning<br/>
+            Pure Mathematics Bg.<br/>
+            Computer Vision
+          </p>
         </div>
 
-        {/* NAME BLOCK 2 - Scroll Parallax Only */}
+        {/* NAME BLOCK 2 - Parallax on desktop only */}
         <div className="overflow-hidden text-right md:text-left">
-           <motion.h1 
-              style={{ y: typeof window !== 'undefined' && window.innerWidth > 768 ? y2 : 0 }}
-              className="text-[16vw] md:text-[14vw] leading-[0.85] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#555] to-[#050505]"
-           >
-             RAHMAN
-           </motion.h1>
+          <motion.h1 
+            style={{ y: getY2() }}
+            className="text-[16vw] md:text-[14vw] leading-[0.85] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#555] to-[#050505]"
+          >
+            RAHMAN
+          </motion.h1>
         </div>
 
         {/* CTA */}
         <div className="mt-12 md:mt-16 md:absolute md:bottom-32 md:right-12 z-20">
           <MagneticButton>
-             <span className="flex items-center gap-4">
-                VIEW ARCHIVE <FiArrowRight />
-             </span>
+            <span className="flex items-center gap-4">
+              VIEW ARCHIVE <FiArrowRight />
+            </span>
           </MagneticButton>
         </div>
       </div>
@@ -80,11 +98,12 @@ export default function Hero() {
       {/* FOOTER DECOR */}
       <div className="absolute bottom-0 w-full border-t border-[#050505] bg-[#050505] text-white overflow-hidden py-2 md:py-3 z-30">
         <div className="flex justify-between px-6 md:px-12 font-mono text-[10px] md:text-xs tracking-widest uppercase">
-           <span>Sys. Optimized</span>
-           <span className="hidden md:inline">Scroll Down</span>
+          <span>Sys. Optimized</span>
+          <span className="hidden md:inline">Scroll Down</span>
         </div>
       </div>
 
+      {/* Crosshairs - Desktop only */}
       <div className="hidden md:block">
         <Crosshair position="top-24 left-1/3" />
         <Crosshair position="top-24 left-2/3" />
@@ -95,7 +114,6 @@ export default function Hero() {
   );
 }
 
-// Components
 const Crosshair = ({ position }: { position: string }) => (
   <div className={`absolute ${position} -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none`}>
     <div className="relative h-4 w-4">
@@ -106,9 +124,9 @@ const Crosshair = ({ position }: { position: string }) => (
 );
 
 const MagneticButton = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <a href="#research" className="group inline-block relative px-8 py-4 bg-[#050505] text-white font-bold tracking-widest text-[10px] md:text-xs uppercase overflow-hidden hover:bg-[#FF4D00] transition-colors duration-300 w-full md:w-auto text-center">
-            <span className="relative z-10">{children}</span>
-        </a>
-    )
-}
+  return (
+    <a href="#research" className="group inline-block relative px-8 py-4 bg-[#050505] text-white font-bold tracking-widest text-[10px] md:text-xs uppercase overflow-hidden hover:bg-[#FF4D00] transition-colors duration-300 w-full md:w-auto text-center">
+      <span className="relative z-10">{children}</span>
+    </a>
+  );
+};

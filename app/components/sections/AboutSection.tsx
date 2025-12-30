@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
     SiPython, SiPytorch, SiDocker, SiNextdotjs, SiTypescript,
     SiCplusplus, SiFlask, SiNumpy
 } from "react-icons/si";
-import { FiCpu, FiActivity, FiLayout, FiCornerDownRight, FiUser } from "react-icons/fi";
+import { FiCpu, FiActivity, FiLayout, FiCornerDownRight } from "react-icons/fi";
 
 const TECH_DATA = [
     { id: "01", name: "PYTHON", icon: SiPython },
@@ -31,23 +32,25 @@ export default function AboutSection() {
                     </h2>
                 </div>
 
-                {/* --- THE HYBRID GRID SYSTEM --- */}
                 <div className="border border-[#050505] bg-white shadow-xl">
 
                     {/* ROW 1: The Human Element */}
                     <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
 
-                        {/* 1. PHOTO MODULE (Cinematic Reveal) */}
+                        {/* 1. PHOTO MODULE - Now using Next.js Image for optimization */}
                         <div className="md:col-span-4 aspect-[4/5] md:aspect-auto border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group">
-                            {/* The Image */}
-                            {/* Replace src with your actual photo */}
-                            <img
-                                src="\me.png"
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                            {/* Optimized Image with lazy loading */}
+                            <Image
+                                src="/me.png"
                                 alt="Obidur Rahman"
+                                fill
+                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                                priority // Load immediately since it's above fold
+                                quality={90}
+                                sizes="(max-width: 768px) 100vw, 33vw"
                             />
 
-                            {/* The "Shutter" Curtain Animation */}
+                            {/* The "Shutter" Curtain Animation - Same as original */}
                             <motion.div
                                 initial={{ height: "100%" }}
                                 whileInView={{ height: "0%" }}
@@ -66,11 +69,10 @@ export default function AboutSection() {
                             </div>
                         </div>
 
-                        {/* 2. BIOGRAPHY MODULE */}
+                        {/* 2. BIOGRAPHY MODULE - Unchanged */}
                         <div className="md:col-span-8 p-8 md:p-16 flex flex-col justify-center">
-                            {/* Editorial "Drop Cap" Effect */}
                             <div className="relative">
-                                <span className="absolute -left-6 -top-6 text-6xl text-gray-200 font-serif">“</span>
+                                <span className="absolute -left-6 -top-6 text-6xl text-gray-200 font-serif hidden md:inline">"</span>
                                 <p className="text-xl md:text-3xl font-serif leading-relaxed mb-8 text-[#050505]">
                                     I am a mathematician turned engineer. While many focus on just making models work, I focus on making them <span className="italic text-[#FF4D00] font-medium">efficient</span>.
                                 </p>
@@ -93,7 +95,7 @@ export default function AboutSection() {
                         </div>
                     </div>
 
-                    {/* ROW 2: Focus Areas */}
+                    {/* ROW 2: Focus Areas - Unchanged */}
                     <div className="grid grid-cols-1 md:grid-cols-3 border-b border-[#050505]">
                         <InfoCard
                             icon={<FiCpu size={24} />}
@@ -114,8 +116,8 @@ export default function AboutSection() {
                         />
                     </div>
 
-                    {/* ROW 3: Tech Stack */}
-                    <div className="grid grid-cols-2  md:grid-cols-4 lg:grid-cols-8">
+                    {/* ROW 3: Tech Stack - Unchanged (keeps all animations) */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
                         {TECH_DATA.map((tech, i) => (
                             <TechItem key={tech.id} data={tech} index={i} />
                         ))}
@@ -127,8 +129,6 @@ export default function AboutSection() {
     );
 }
 
-// --- SUB-COMPONENTS (Polished) ---
-
 const InfoCard = ({ icon, title, desc, className = "" }: any) => (
     <div className={`p-8 md:p-10 flex flex-col justify-between h-56 md:h-64 group hover:bg-[#050505] hover:text-white transition-colors duration-500 ease-out ${className}`}>
         <div className="text-[#FF4D00] group-hover:text-white transition-colors mb-6 transform group-hover:scale-110 duration-500 origin-left">
@@ -139,18 +139,18 @@ const InfoCard = ({ icon, title, desc, className = "" }: any) => (
             <p className="text-xs md:text-sm font-medium opacity-80 leading-relaxed">{desc}</p>
         </div>
     </div>
-)
+);
 
 const TechItem = ({ data, index }: any) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }} // Trigger animation earlier
             transition={{ delay: index * 0.05 }}
             className="aspect-square border-r border-b border-[#050505] md:border-b-0 flex flex-col items-center justify-center relative group cursor-crosshair overflow-hidden"
         >
-            {/* The "Curtain" Effect on Hover */}
+            {/* The "Curtain" Effect on Hover - UNCHANGED */}
             <div className="absolute inset-0 bg-[#050505] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
 
             <div className="relative z-10 flex flex-col items-center">
@@ -160,5 +160,5 @@ const TechItem = ({ data, index }: any) => {
                 </span>
             </div>
         </motion.div>
-    )
-}
+    );
+};
