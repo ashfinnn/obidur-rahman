@@ -1,138 +1,343 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { FiArrowUpRight, FiAward, FiActivity, FiCpu } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiArrowUpRight, FiAward, FiChevronDown, FiExternalLink, FiClock, FiFileText } from "react-icons/fi";
+
+const UNDER_REVIEW = [
+  {
+    id: "cpu-vision",
+    title: "CPU-Constrained Deep Learning for Tomato Disease Detection",
+    authors: ["Obidur Rahman", "et al."],
+    venue: "International Mathematics Conference 2024",
+    status: "Under Review",
+    award: "Best Presenter Award",
+    abstract: "Benchmarking ResNet-50, ConvNeXt-Tiny, and FastViT-T8 under CPU constraints. FastViT achieved 99.66% accuracy with 0.022s inference—ideal for edge deployment in resource-limited agricultural settings.",
+    metrics: [
+      { label: "Accuracy", value: "99.66%" },
+      { label: "Latency", value: "0.022s" },
+      { label: "Parameters", value: "4.03M" }
+    ],
+    tags: ["PyTorch", "FastViT", "Quantization", "Agriculture"],
+    link: "/research/cpu-constrained-vision",
+  }
+];
+
+const ONGOING_RESEARCH = [
+  {
+    id: "geometric-dilution",
+    title: "Geometric Dilution of SMOTE in High-Dimensional Feature Spaces",
+    status: "In Progress",
+    timeline: "Q1 2025",
+    desc: "A mathematical investigation into the failure of SMOTE in high-dimensional spaces (>10D). Proving that synthetic point coverage approaches zero as dimensionality increases.",
+    tags: ["Mathematics", "SMOTE", "High-Dimensional"],
+    link: "https://ashfinnn.github.io/geometric-dilution/",
+  },
+  {
+    id: "efficient-vit",
+    title: "Efficient Vision Transformers for Mobile Deployment",
+    status: "Early Stage",
+    timeline: "Q2 2025",
+    desc: "Investigating knowledge distillation and structured pruning for compressing ViT models to sub-5M parameters while maintaining accuracy.",
+    tags: ["Vision Transformers", "Pruning", "Mobile AI"],
+  },
+  {
+    id: "math-sparsity",
+    title: "Mathematical Foundations of Neural Network Sparsity",
+    status: "Exploration",
+    timeline: "2025",
+    desc: "Applying concepts from abstract algebra to understand and predict weight importance in deep networks.",
+    tags: ["Mathematics", "Pruning", "Theory"],
+  }
+];
 
 export default function ResearchSection() {
-    return (
-        <section className="bg-[#F4F4F5] text-[#050505] w-full py-24 border-t border-[#E5E5E5]">
+  const [expandedPaper, setExpandedPaper] = useState<string | null>("cpu-vision");
 
-            <div className="container mx-auto px-4 md:px-12 max-w-7xl">
+  return (
+    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
-                {/* HEADER */}
-                <div className="mb-12">
-                    <span className="font-mono text-xs font-bold tracking-widest text-[#FF4D00] uppercase mb-4 block">
-                        Scientific Output
-                    </span>
-                    <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8] mb-8">
-                        Research <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-500 to-gray-200">Archive</span>
-                    </h2>
-                    <div className="w-full h-[2px] bg-[#050505]" />
-                </div>
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-10 sm:mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
+            Publications &<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-500 to-gray-200">Ongoing Work</span>
+          </h2>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full h-[2px] bg-[#050505] origin-left" 
+          />
+        </motion.div>
 
-                {/* --- RESEARCH DOSSIER (Text Only Variant) --- */}
-                <div className="border-x border-b border-[#050505] bg-white">
-
-                    {/* ITEM 1: THE AWARD PAPER (Internal Link) */}
-                    <Link
-                        href="/research/cpu-constrained-vision"
-                        className="block group border-b border-[#050505] hover:bg-[#050505] transition-colors duration-500"
-                    >
-                        <div className="grid grid-cols-1 lg:grid-cols-12">
-
-                            {/* META COLUMN (Left) */}
-                            <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#050505] flex flex-col justify-between group-hover:border-gray-800 transition-colors">
-                                <div>
-                                    <div className="inline-flex items-center gap-2 bg-[#FF4D00] text-white px-3 py-1 mb-6">
-                                        <FiAward />
-                                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest">
-                                            Best Presenter Award
-                                        </span>
-                                    </div>
-                                    <div className="font-mono text-xs uppercase tracking-widest text-gray-500 group-hover:text-gray-400 mb-2">
-                                        Venue: Intl. Math Conference '24
-                                    </div>
-                                    <div className="font-mono text-xs uppercase tracking-widest text-gray-500 group-hover:text-gray-400">
-                                        ID: RES_01
-                                    </div>
-                                </div>
-
-                                <div className="mt-8 lg:mt-0 flex items-center gap-2 text-[#FF4D00] opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-widest">Read Case Study</span>
-                                    <FiArrowUpRight />
-                                </div>
-                            </div>
-
-                            {/* CONTENT COLUMN (Right) */}
-                            <div className="lg:col-span-8 p-8 md:p-12 flex flex-col justify-center">
-                                <div className="flex justify-between items-start mb-4">
-                                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.95] group-hover:text-white transition-colors">
-                                        CPU-Constrained<br />Vision
-                                    </h3>
-                                    <FiArrowUpRight className="text-2xl opacity-0 group-hover:opacity-100 group-hover:text-white transition-all duration-300 -translate-y-2 group-hover:translate-y-0" />
-                                </div>
-
-                                <p className="text-base md:text-lg leading-relaxed text-gray-700 font-medium mb-8 border-l-2 border-[#050505] group-hover:border-[#FF4D00] pl-6 group-hover:text-gray-300 transition-colors">
-                                    "Benchmarking deep learning architectures on edge hardware. Validated that ConvNeXt achieves &gt;99% accuracy while FastViT offers viable inference speeds for real-time agricultural disease detection."
-                                </p>
-
-                                <div className="flex gap-2">
-                                    {["PyTorch", "FastViT", "Quantization"].map(t => (
-                                        <span key={t} className="px-2 py-1 bg-gray-100 border border-gray-200 group-hover:bg-gray-800 group-hover:border-gray-700 group-hover:text-gray-300 text-[10px] font-mono font-bold uppercase text-gray-500 transition-colors">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* ITEM 2: GEOMETRIC DILUTION (External Link) */}
-                    <a
-                        href="https://ashfinnn.github.io/geometric-dilution/"
-                        target="_blank"
-                        className="block group hover:bg-[#050505] transition-colors duration-500"
-                    >
-                        <div className="grid grid-cols-1 lg:grid-cols-12">
-
-                            {/* META COLUMN */}
-                            <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#050505] flex flex-col justify-between group-hover:border-gray-800 transition-colors">
-                                <div>
-                                    <div className="flex items-center gap-2 text-[#FF4D00] mb-6">
-                                        <FiActivity size={20} />
-                                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest">
-                                            Independent Framework
-                                        </span>
-                                    </div>
-                                    <div className="font-mono text-xs uppercase tracking-widest text-gray-500 group-hover:text-gray-400">
-                                        ID: RES_02
-                                    </div>
-                                </div>
-
-                                <div className="mt-8 lg:mt-0 flex items-center gap-2 text-[#FF4D00] opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-widest">View Proof</span>
-                                    <FiArrowUpRight />
-                                </div>
-                            </div>
-
-                            {/* CONTENT COLUMN */}
-                            <div className="lg:col-span-8 p-8 md:p-12 flex flex-col justify-center">
-                                <div className="flex justify-between items-start mb-4">
-                                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.95] group-hover:text-white transition-colors">
-                                        Geometric Dilution
-                                    </h3>
-                                    <FiArrowUpRight className="text-2xl opacity-0 group-hover:opacity-100 group-hover:text-white transition-all duration-300 -translate-y-2 group-hover:translate-y-0" />
-                                </div>
-
-                                <p className="text-base md:text-lg leading-relaxed text-gray-700 font-medium mb-8 border-l-2 border-[#050505] group-hover:border-[#FF4D00] pl-6 group-hover:text-gray-300 transition-colors">
-                                    A mathematical proof demonstrating the failure of SMOTE in high-dimensional spaces (&gt;10D). Analysis across Wine Quality and Breast Cancer datasets reveals synthetic point coverage drops to near-zero.
-                                </p>
-
-                                <div className="flex gap-2">
-                                    {["Math", "Python", "NumPy"].map(t => (
-                                        <span key={t} className="px-2 py-1 bg-gray-100 border border-gray-200 group-hover:bg-gray-800 group-hover:border-gray-700 group-hover:text-gray-300 text-[10px] font-mono font-bold uppercase text-gray-500 transition-colors">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
+        {/* Under Review Section */}
+        <div className="mb-12 sm:mb-16">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-6 sm:mb-8"
+          >
+            <div className="p-2 bg-amber-100 border border-amber-300">
+              <FiFileText className="text-amber-600" size={14} />
             </div>
-        </section>
-    );
+            <h3 className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
+              Under Review
+            </h3>
+          </motion.div>
+
+          <div className="space-y-4">
+            {UNDER_REVIEW.map((paper, index) => (
+              <motion.div
+                key={paper.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white border border-[#E5E5E5] hover:border-[#050505] transition-colors"
+              >
+                {/* Paper Header */}
+                <button
+                  onClick={() => setExpandedPaper(expandedPaper === paper.id ? null : paper.id)}
+                  className="w-full text-left p-4 sm:p-6 md:p-8"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                    <div className="flex-1">
+                      {/* Badges */}
+                      <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
+                        {paper.award && (
+                          <motion.div 
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                            className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-[#FF4D00] text-white"
+                          >
+                            <FiAward size={12} />
+                            <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">
+                              {paper.award}
+                            </span>
+                          </motion.div>
+                        )}
+                        <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-amber-100 border border-amber-300">
+                          <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-amber-700">
+                            {paper.status}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Title */}
+                      <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight mb-2 sm:mb-3">
+                        {paper.title}
+                      </h4>
+
+                      {/* Authors & Venue */}
+                      <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
+                        {paper.authors.join(", ")}
+                      </p>
+                      <p className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">
+                        {paper.venue}
+                      </p>
+                    </div>
+
+                    {/* Expand Icon */}
+                    <motion.div
+                      animate={{ rotate: expandedPaper === paper.id ? 180 : 0 }}
+                      className="text-gray-400 p-1 sm:p-2"
+                    >
+                      <FiChevronDown size={20} />
+                    </motion.div>
+                  </div>
+
+                  {/* Metrics Preview */}
+                  <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-[#E5E5E5]">
+                    {paper.metrics.map((metric, i) => (
+                      <motion.div 
+                        key={metric.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 + i * 0.1 }}
+                      >
+                        <div className="text-xl sm:text-2xl md:text-3xl font-black text-[#FF4D00]">{metric.value}</div>
+                        <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mt-1">{metric.label}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </button>
+
+                {/* Expanded Content */}
+                <AnimatePresence>
+                  {expandedPaper === paper.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8 border-t border-[#E5E5E5]">
+                        <div className="pt-4 sm:pt-6">
+                          {/* Abstract */}
+                          <div className="mb-4 sm:mb-6">
+                            <h5 className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Abstract</h5>
+                            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed border-l-2 border-[#FF4D00] pl-3 sm:pl-4">
+                              {paper.abstract}
+                            </p>
+                          </div>
+
+                          {/* Tags */}
+                          <div className="mb-4 sm:mb-6">
+                            <h5 className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Keywords</h5>
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                              {paper.tags.map((tag) => (
+                                <span 
+                                  key={tag}
+                                  className="px-2 py-1 bg-[#F4F4F5] border border-[#E5E5E5] font-mono text-[9px] sm:text-[10px] text-gray-600 uppercase tracking-wider"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* CTA */}
+                          <Link
+                            href={paper.link}
+                            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#050505] text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#FF4D00] transition-colors"
+                          >
+                            Read Full Paper
+                            <FiArrowUpRight size={14} />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Ongoing Research */}
+        <div>
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-6 sm:mb-8"
+          >
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500" />
+            </span>
+            <h3 className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
+              Ongoing Research
+            </h3>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {ONGOING_RESEARCH.map((research, index) => (
+              <motion.div 
+                key={research.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-white border border-[#E5E5E5] p-4 sm:p-6 hover:border-[#050505] transition-all group flex flex-col"
+              >
+                {/* Status Row */}
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                    </span>
+                    <span className="font-mono text-[9px] sm:text-[10px] text-green-600 uppercase tracking-widest font-bold">
+                      {research.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 text-gray-400">
+                    <FiClock size={10} />
+                    <span className="font-mono text-[9px] sm:text-[10px] uppercase">{research.timeline}</span>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h4 className="text-sm sm:text-base md:text-lg font-bold mb-2 sm:mb-3 group-hover:text-[#FF4D00] transition-colors leading-tight">
+                  {research.title}
+                </h4>
+
+                {/* Description */}
+                <p className="text-[11px] sm:text-xs text-gray-600 leading-relaxed mb-3 sm:mb-4 flex-1">
+                  {research.desc}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
+                  {research.tags.slice(0, 3).map((tag) => (
+                    <span 
+                      key={tag}
+                      className="px-1.5 sm:px-2 py-0.5 bg-[#F4F4F5] font-mono text-[8px] sm:text-[9px] text-gray-500 uppercase"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Link */}
+                {research.link && (
+                  <a
+                    href={research.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 text-[#FF4D00] font-mono text-[9px] sm:text-[10px] uppercase tracking-widest hover:underline"
+                  >
+                    View Progress <FiExternalLink size={10} />
+                  </a>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Research Interests */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-[#050505]"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest shrink-0">Research Interests:</span>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {["Computer Vision", "Model Compression", "Edge AI", "Mathematical ML", "Efficient Architectures"].map((interest, i) => (
+                <motion.span 
+                  key={interest}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#050505] transition-colors cursor-default"
+                >
+                  {interest}
+                </motion.span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }

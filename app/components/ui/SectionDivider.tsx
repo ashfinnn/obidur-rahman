@@ -1,20 +1,19 @@
 "use client";
+
 import { motion } from "framer-motion";
 
-export default function SectionDivider({ text = "SYSTEM CHECK" }: { text?: string }) {
+export default function SectionDivider() {
   return (
-    <div className="relative z-30 w-full overflow-hidden bg-[#06b6d4] text-black py-2 border-y border-black/20">
-      <motion.div 
-        className="flex whitespace-nowrap font-mono text-[10px] md:text-xs font-bold tracking-widest uppercase"
-        animate={{ x: [0, -1000] }}
-        transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-      >
-        {Array(20).fill(text).map((t, i) => (
-           <span key={i} className="mx-8 flex items-center gap-4">
-              {t} <span className="w-1.5 h-1.5 bg-black rounded-full" />
-           </span>
-        ))}
-      </motion.div>
+    <div className="relative z-20 w-full py-4 sm:py-6 bg-[#050505]">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
+        <motion.div 
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="h-px bg-gradient-to-r from-[#FF4D00] via-white/20 to-transparent origin-left"
+        />
+      </div>
     </div>
   );
 }

@@ -1,125 +1,222 @@
 "use client";
 
-import { FiArrowUpRight, FiMapPin, FiCpu, FiBookOpen } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { FiMapPin, FiCalendar, FiBriefcase, FiBook, FiAward, FiArrowRight } from "react-icons/fi";
 
-// RIGHT COLUMN: WORK ONLY
-const EXPERIENCE_DATA = [
-    {
-        role: "R&D ENGINEER",
-        company: "NorthAxis",
-        date: "2024 — PRESENT",
-        location: "Chattogram",
-        desc: "Bridging the gap between market requirements and engineering feasibility. Driving feature development through rigorous competitive analysis."
-    }
-];
-
-// LEFT COLUMN: EDUCATION ONLY
-const EDUCATION_DATA = {
-    degree: "B.S. MATHEMATICS",
-    school: "University of Chittagong",
-    date: "2022 — 2026",
-    desc: "Specialization in Abstract Algebra & Linear Optimization. Applying pure math theories to algorithmic problem solving."
+const WORK = {
+  role: "R&D Engineer",
+  company: "NorthAxis",
+  location: "Chattogram, Bangladesh",
+  period: "2024 — Present",
+  desc: "Bridging the gap between market requirements and engineering feasibility. Leading product research and feature development through competitive analysis.",
+  responsibilities: [
+    "Market research for AI-powered product features",
+    "Prototyping ML-powered capabilities",
+    "Cross-functional collaboration with engineering teams",
+    "Technical feasibility assessments"
+  ]
 };
 
+const EDUCATION = {
+  degree: "B.S. in Mathematics",
+  institution: "University of Chittagong",
+  location: "Chittagong, Bangladesh",
+  period: "2022 — 2026",
+  focus: "Abstract Algebra & Linear Optimization",
+  desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
+  highlights: [
+    { text: "Best Presenter Award - IMC 2024", isAward: true },
+    { text: "Research in linear algebra for neural networks", isAward: false },
+    { text: "Self-directed study in deep learning", isAward: false }
+  ]
+};
+
+const fast = { duration: 0.3, ease: "easeOut" };
+
 export default function ExperienceSection() {
-    return (
-        <section className="bg-white text-[#050505] w-full py-24 border-t border-[#050505]">
+  return (
+    <section className="bg-white text-[#050505] w-full py-16 sm:py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
-            <div className="container mx-auto px-4 md:px-12 max-w-7xl">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={fast}
+          className="mb-10 sm:mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
+            Experience &<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Education</span>
+          </h2>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-[2px] bg-[#050505] origin-left" 
+          />
+        </motion.div>
 
-                {/* HEADER */}
-                <div className="mb-16 border-b border-[#050505] pb-6">
-                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.8]">
-                        Career <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-500 to-gray-200">History</span>
-                    </h2>
+        {/* Cards */}
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
+          
+          {/* Work */}
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={fast}
+            className="bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#050505] transition-colors duration-200 group"
+          >
+            <div className="p-4 sm:p-6 border-b border-[#E5E5E5] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-[#FF4D00]">
+                  <FiBriefcase className="text-white" size={16} />
                 </div>
-
-                {/* --- GRID SYSTEM --- */}
-                <div className="border border-[#050505] bg-white shadow-xl">
-                    <div className="grid grid-cols-1 md:grid-cols-12">
-
-                        {/* COL 1: EDUCATION / FOUNDATION (Left Side) */}
-                        <div className="md:col-span-4 border-b md:border-b-0 md:border-r border-[#050505] p-8 md:p-12 bg-[#F4F4F5] relative overflow-hidden group">
-                            
-                            {/* Curtain Reveal: BLACK */}
-                            <div className="absolute inset-0 bg-[#050505] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0" />
-
-                            <div className="relative z-10 flex flex-col h-full justify-between">
-                                <div>
-                                    <div className="flex items-center gap-2 mb-6">
-                                        <span className="relative flex h-3 w-3">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-500 group-hover:bg-white transition-colors"></span>
-                                        </span>
-                                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
-                                            Academic Foundation
-                                        </span>
-                                    </div>
-
-                                    <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none mb-2 group-hover:text-white transition-colors">
-                                        {EDUCATION_DATA.degree}
-                                    </h3>
-                                    <p className="font-mono text-xs uppercase tracking-widest text-gray-500 group-hover:text-white/80 transition-colors">
-                                        @ {EDUCATION_DATA.school}
-                                    </p>
-                                </div>
-
-                                <div className="mt-12 pt-8 border-t border-[#050505]/10 group-hover:border-white/20">
-                                    <div className="flex items-center gap-3 mb-4 text-[#050505] group-hover:text-white transition-colors">
-                                        <FiBookOpen size={24} />
-                                        <span className="font-mono text-xs font-bold uppercase">{EDUCATION_DATA.date}</span>
-                                    </div>
-                                    <p className="text-sm font-medium leading-relaxed group-hover:text-white transition-colors">
-                                        "{EDUCATION_DATA.desc}"
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* COL 2: PROFESSIONAL LOG (Right Side) */}
-                        <div className="md:col-span-8 flex flex-col justify-center">
-                            {EXPERIENCE_DATA.map((item, i) => (
-                                <div
-                                    key={i}
-                                    // Hover effect changed to BLACK background
-                                    className="group/item p-8 md:p-12 flex flex-col justify-center relative transition-all duration-300 h-full hover:bg-[#050505] hover:text-white"
-                                >
-                                    <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            {/* Icon box turns White on hover for contrast */}
-                                            <div className="p-2 border border-[#050505] group-hover/item:border-white group-hover/item:bg-white group-hover/item:text-[#050505] transition-colors rounded-none">
-                                                <FiCpu size={20} />
-                                            </div>
-                                            <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tight">
-                                                {item.role}
-                                            </h3>
-                                        </div>
-                                        <span className="font-mono text-xs font-bold uppercase tracking-widest opacity-50 group-hover/item:opacity-100 mt-2 md:mt-0">
-                                            {item.date}
-                                        </span>
-                                    </div>
-
-                                    <div className="mb-8 font-mono text-xs uppercase tracking-widest opacity-60 flex items-center gap-4 pl-14">
-                                        <span className="font-bold">{item.company}</span>
-                                        <span className="hidden md:inline">|</span>
-                                        <span className="flex items-center gap-1"><FiMapPin /> {item.location}</span>
-                                    </div>
-
-                                    <p className="text-base leading-relaxed max-w-2xl opacity-80 group-hover/item:opacity-100 pl-0 md:pl-14 font-medium">
-                                        {item.desc}
-                                    </p>
-
-                                    {/* Arrow turns Orange on hover for a subtle pop against the black */}
-                                    <div className="absolute top-8 right-8 opacity-0 group-hover/item:opacity-100 transition-all duration-300 transform translate-x-4 group-hover/item:translate-x-0 text-[#FF4D00]">
-                                        <FiArrowUpRight size={32} />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
+                  Work Experience
+                </span>
+              </div>
+              <FiArrowRight className="text-gray-300 group-hover:text-[#FF4D00] group-hover:translate-x-1 transition-all duration-200" size={18} />
             </div>
-        </section>
-    );
+
+            <div className="p-4 sm:p-6 md:p-8">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1">
+                {WORK.role}
+              </h3>
+              <p className="text-base sm:text-lg text-[#FF4D00] font-semibold mb-3 sm:mb-4">
+                @ {WORK.company}
+              </p>
+              
+              <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
+                <span className="flex items-center gap-1 sm:gap-2">
+                  <FiCalendar size={12} />
+                  {WORK.period}
+                </span>
+                <span className="flex items-center gap-1 sm:gap-2">
+                  <FiMapPin size={12} />
+                  <span className="hidden sm:inline">{WORK.location}</span>
+                  <span className="sm:hidden">Chattogram</span>
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
+                {WORK.desc}
+              </p>
+
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Key Responsibilities</span>
+                <ul className="space-y-1.5 sm:space-y-2">
+                  {WORK.responsibilities.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 sm:gap-3">
+                      <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#FF4D00] mt-1.5 sm:mt-2 flex-shrink-0" />
+                      <span className="text-[11px] sm:text-sm text-gray-600">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Education */}
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ ...fast, delay: 0.1 }}
+            className="bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#050505] transition-colors duration-200 group"
+          >
+            <div className="p-4 sm:p-6 border-b border-[#E5E5E5] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-[#050505]">
+                  <FiBook className="text-white" size={16} />
+                </div>
+                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
+                  Education
+                </span>
+              </div>
+              <FiArrowRight className="text-gray-300 group-hover:text-[#FF4D00] group-hover:translate-x-1 transition-all duration-200" size={18} />
+            </div>
+
+            <div className="p-4 sm:p-6 md:p-8">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1">
+                {EDUCATION.degree}
+              </h3>
+              <p className="text-base sm:text-lg text-gray-700 font-semibold mb-1">
+                @ {EDUCATION.institution}
+              </p>
+              <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4">
+                Focus: {EDUCATION.focus}
+              </p>
+              
+              <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
+                <span className="flex items-center gap-1 sm:gap-2">
+                  <FiCalendar size={12} />
+                  {EDUCATION.period}
+                </span>
+                <span className="flex items-center gap-1 sm:gap-2">
+                  <FiMapPin size={12} />
+                  <span className="hidden sm:inline">{EDUCATION.location}</span>
+                  <span className="sm:hidden">Chittagong</span>
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
+                {EDUCATION.desc}
+              </p>
+
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Highlights</span>
+                <ul className="space-y-1.5 sm:space-y-2">
+                  {EDUCATION.highlights.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 sm:gap-3">
+                      {item.isAward ? (
+                        <FiAward className="text-[#FF4D00] mt-0.5 flex-shrink-0" size={14} />
+                      ) : (
+                        <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-300 mt-1.5 sm:mt-2 flex-shrink-0" />
+                      )}
+                      <span className={`text-[11px] sm:text-sm ${item.isAward ? 'text-[#FF4D00] font-semibold' : 'text-gray-600'}`}>
+                        {item.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Stats */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+          className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
+        >
+          <StatBox label="Experience" value="1+ Year" />
+          <StatBox label="Graduation" value="2026" />
+          <StatBox label="Focus" value="ML Research" />
+          <StatBox label="Status" value="Active" isActive />
+        </motion.div>
+      </div>
+    </section>
+  );
 }
+
+const StatBox = ({ label, value, isActive = false }: { label: string; value: string; isActive?: boolean }) => (
+  <div className="p-3 sm:p-4 md:p-6 bg-[#FAFAFA] border border-[#E5E5E5] text-center hover:border-[#050505] transition-colors duration-200">
+    <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mb-1">{label}</div>
+    <div className={`text-sm sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 ${isActive ? 'text-green-600' : 'text-[#050505]'}`}>
+      {isActive && (
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+        </span>
+      )}
+      {value}
+    </div>
+  </div>
+);

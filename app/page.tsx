@@ -11,44 +11,42 @@ import DynamicNav from "./components/ui/DynamicNav";
 
 export default function Home() {
   return (
-    <main className="bg-[#050505] relative w-full">
-
+    <main className="bg-[#050505] relative w-full overflow-x-hidden">
       <DynamicNav />
 
-      <div id="hero" className="relative z-30 bg-[#050505]">
+      <section id="hero">
         <Hero />
-      </div>
+      </section>
 
-      <SectionDivider text="INITIALIZING CORE MODULES" />
+      <SectionDivider />
 
-      {/* 1. ABOUT: Intro + Skills Grid */}
-      <div id="about" className="relative z-30 bg-[#050505]">
+      <section id="about">
         <AboutSection />
-      </div>
-      <SectionDivider text="INITIALIZING CORE MODULES" />
+      </section>
 
-      {/* 2. EXPERIENCE: Employment & Education Log (No Awards) */}
-      <div id="experience" className="relative z-30 bg-[#050505]">
+      <SectionDivider />
+
+      <section id="experience">
         <ExperienceSection />
-      </div>
+      </section>
 
-      <SectionDivider text="ACCESSING RESEARCH ARCHIVE" />
+      <SectionDivider />
 
-      {/* 3. RESEARCH: Papers, Math Frameworks & Awards */}
-      <div id="research" className="relative z-30 bg-[#F4F4F5]">
+      <section id="research">
         <ResearchSection />
-      </div>
-      <SectionDivider text="INITIALIZING CORE MODULES" />
+      </section>
 
-      {/* 4. PROJECTS: Engineering & Systems */}
-      <div id="projects" className="relative z-30 bg-[#050505] mb-[100vh] md:mb-[80vh] shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+      <SectionDivider />
+
+      <section id="projects">
         <ProjectsSection />
-      </div>
+      </section>
 
-      <div id="contact" className="fixed bottom-0 left-0 right-0 z-0 h-[100vh] md:h-[80vh]">
+      <SectionDivider />
+
+      <section id="contact">
         <ContactSection />
-      </div>
-
+      </section>
     </main>
   );
 }

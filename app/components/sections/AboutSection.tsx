@@ -1,164 +1,242 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
-    SiPython, SiPytorch, SiDocker, SiNextdotjs, SiTypescript,
-    SiCplusplus, SiFlask, SiNumpy
+  SiPython, SiPytorch, SiTensorflow, SiDocker, SiNextdotjs, SiTypescript,
+  SiCplusplus, SiFlask, SiNumpy, SiPandas, SiScikitlearn, SiGit
 } from "react-icons/si";
-import { FiCpu, FiActivity, FiLayout, FiCornerDownRight } from "react-icons/fi";
+import { FiCpu, FiActivity, FiLayout, FiCornerDownRight, FiBook } from "react-icons/fi";
 
 const TECH_DATA = [
-    { id: "01", name: "PYTHON", icon: SiPython },
-    { id: "02", name: "PYTORCH", icon: SiPytorch },
-    { id: "03", name: "C++", icon: SiCplusplus },
-    { id: "04", name: "DOCKER", icon: SiDocker },
-    { id: "05", name: "NUMPY", icon: SiNumpy },
-    { id: "06", name: "NEXT.JS", icon: SiNextdotjs },
-    { id: "07", name: "TYPESCRIPT", icon: SiTypescript },
-    { id: "08", name: "FLASK", icon: SiFlask },
+  { id: "01", name: "Python", icon: SiPython },
+  { id: "02", name: "PyTorch", icon: SiPytorch },
+  { id: "03", name: "C++", icon: SiCplusplus },
+  { id: "04", name: "TensorFlow", icon: SiTensorflow },
+  { id: "05", name: "NumPy", icon: SiNumpy },
+  { id: "06", name: "Docker", icon: SiDocker },
+  { id: "07", name: "Next.js", icon: SiNextdotjs },
+  { id: "08", name: "TypeScript", icon: SiTypescript },
+  { id: "09", name: "Flask", icon: SiFlask },
+  { id: "10", name: "Pandas", icon: SiPandas },
+  { id: "11", name: "Sklearn", icon: SiScikitlearn },
+  { id: "12", name: "Git", icon: SiGit },
 ];
 
+// Fast animation config
+const fast = { duration: 0.3, ease: "easeOut" };
+const stagger = { staggerChildren: 0.03 };
+
 export default function AboutSection() {
-    return (
-        <section id="about" className="bg-[#F4F4F5] text-[#050505] w-full pt-24 md:pt-40 pb-20 border-b border-[#E5E5E5]">
-            <div className="container mx-auto px-4 md:px-12 max-w-7xl">
+  const [isMobile, setIsMobile] = useState(false);
 
-                {/* HEADLINE */}
-                <div className="mb-16 border-t border-[#050505] pt-8">
-                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.8]">
-                        Architecting <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Intelligence</span>
-                    </h2>
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
+
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={fast}
+          className="mb-10 sm:mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
+            Architecting<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Intelligence</span>
+          </h2>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="w-full h-[2px] bg-[#050505] origin-left" 
+          />
+        </motion.div>
+
+        {/* Main Grid */}
+        <div className="border border-[#050505] bg-white shadow-xl">
+
+          {/* Row 1: Photo + Bio */}
+          <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
+
+            {/* Photo */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={fast}
+              className="md:col-span-4 aspect-[4/5] md:aspect-auto md:min-h-[400px] lg:min-h-[500px] border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group"
+            >
+              <Image
+                src="/me.png"
+                alt="Obidur Rahman"
+                fill
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
+                priority
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              
+              {/* Shutter */}
+              <motion.div
+                initial={{ height: "100%" }}
+                whileInView={{ height: "0%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
+                className="absolute bottom-0 left-0 right-0 bg-[#050505] z-10"
+              />
+
+              {/* Status */}
+              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                </span>
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold text-white bg-black/60 px-1.5 sm:px-2 py-0.5 sm:py-1 backdrop-blur-sm uppercase tracking-wider">
+                  Available
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Bio */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ ...fast, delay: 0.1 }}
+              className="md:col-span-8 p-5 sm:p-6 md:p-10 lg:p-16 flex flex-col justify-center"
+            >
+              <div className="relative mb-4 sm:mb-6">
+                <span className="absolute -left-2 sm:-left-4 md:-left-6 -top-2 sm:-top-4 text-4xl sm:text-5xl md:text-6xl text-gray-200 font-serif hidden sm:inline">&ldquo;</span>
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif leading-relaxed text-[#050505] relative z-10">
+                  I am a mathematician turned engineer. While many focus on just making models work, 
+                  I focus on making them <span className="italic text-[#FF4D00] font-medium">efficient</span>.
+                </p>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-12 border-t border-gray-100 pt-4 sm:pt-6">
+                <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed lg:max-w-sm">
+                  My background in <strong className="text-[#050505]">pure mathematics</strong> gives me a different lens on AI. 
+                  I don&apos;t just import libraries; I understand the linear algebra underneath.
+                </p>
+                <div className="flex flex-col justify-between">
+                  <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed lg:max-w-sm mb-4">
+                    Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
+                  </p>
+                  <a 
+                    href="/resume.pdf"
+                    target="_blank"
+                    className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
+                  >
+                    Download CV
+                    <FiCornerDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-200" />
+                  </a>
                 </div>
+              </div>
+            </motion.div>
+          </div>
 
-                <div className="border border-[#050505] bg-white shadow-xl">
+          {/* Row 2: Focus Areas */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-b border-[#050505]">
+            <InfoCard
+              icon={<FiCpu size={20} />}
+              title="Deep Learning"
+              desc="Custom architectures for computer vision using CNNs and Vision Transformers."
+              className="border-b sm:border-b md:border-b-0 sm:border-r border-[#050505]"
+            />
+            <InfoCard
+              icon={<FiActivity size={20} />}
+              title="Optimization"
+              desc="Quantization, pruning, and distillation for efficient CPU inference."
+              className="border-b md:border-b-0 md:border-r border-[#050505]"
+            />
+            <InfoCard
+              icon={<FiBook size={20} />}
+              title="Math ML"
+              desc="Applying linear algebra and abstract algebra to neural network theory."
+              className="border-b sm:border-b-0 sm:border-r border-[#050505]"
+            />
+            <InfoCard
+              icon={<FiLayout size={20} />}
+              title="Engineering"
+              desc="End-to-end ML systems with Flask, Docker, and modern web tech."
+            />
+          </div>
 
-                    {/* ROW 1: The Human Element */}
-                    <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
-
-                        {/* 1. PHOTO MODULE - Now using Next.js Image for optimization */}
-                        <div className="md:col-span-4 aspect-[4/5] md:aspect-auto border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group">
-                            {/* Optimized Image with lazy loading */}
-                            <Image
-                                src="/me.png"
-                                alt="Obidur Rahman"
-                                fill
-                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-                                priority // Load immediately since it's above fold
-                                quality={90}
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                            />
-
-                            {/* The "Shutter" Curtain Animation - Same as original */}
-                            <motion.div
-                                initial={{ height: "100%" }}
-                                whileInView={{ height: "0%" }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, ease: [0.85, 0, 0.15, 1], delay: 0.2 }}
-                                className="absolute bottom-0 left-0 right-0 bg-[#050505] z-10"
-                            />
-
-                            {/* Status Indicator */}
-                            <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                </span>
-                                <span className="font-mono text-[9px] font-bold text-white bg-black/50 px-1 py-0.5 backdrop-blur-sm uppercase">Available for Research</span>
-                            </div>
-                        </div>
-
-                        {/* 2. BIOGRAPHY MODULE - Unchanged */}
-                        <div className="md:col-span-8 p-8 md:p-16 flex flex-col justify-center">
-                            <div className="relative">
-                                <span className="absolute -left-6 -top-6 text-6xl text-gray-200 font-serif hidden md:inline">"</span>
-                                <p className="text-xl md:text-3xl font-serif leading-relaxed mb-8 text-[#050505]">
-                                    I am a mathematician turned engineer. While many focus on just making models work, I focus on making them <span className="italic text-[#FF4D00] font-medium">efficient</span>.
-                                </p>
-                            </div>
-
-                            <div className="flex flex-col md:flex-row gap-8 md:gap-16 border-t border-gray-100 pt-8">
-                                <p className="text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed max-w-sm">
-                                    My background in pure mathematics gives me a different lens on AI. I don't just import libraries; I understand the linear algebra underneath.
-                                </p>
-                                <div className="flex flex-col justify-between">
-                                    <p className="text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed max-w-sm mb-4">
-                                        Currently researching product capabilities at NorthAxis and building deep learning architectures for constrained hardware.
-                                    </p>
-                                    <a href="#contact" className="group inline-flex items-center gap-2 font-mono text-[10px] md:text-xs uppercase tracking-widest border-b border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors">
-                                        Download CV
-                                        <FiCornerDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* ROW 2: Focus Areas - Unchanged */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 border-b border-[#050505]">
-                        <InfoCard
-                            icon={<FiCpu size={24} />}
-                            title="MACHINE LEARNING"
-                            desc="Designing custom architectures using PyTorch and C++. Focusing on NLP and Computer Vision."
-                            className="border-b md:border-b-0 md:border-r border-[#050505]"
-                        />
-                        <InfoCard
-                            icon={<FiActivity size={24} />}
-                            title="MODEL OPTIMIZATION"
-                            desc="Ensuring reliable inference on limited hardware (CPU-constrained). Quantization & latency reduction."
-                            className="border-b md:border-b-0 md:border-r border-[#050505]"
-                        />
-                        <InfoCard
-                            icon={<FiLayout size={24} />}
-                            title="FULL STACK"
-                            desc="Creating intuitive interfaces for complex models using Next.js and Flask."
-                        />
-                    </div>
-
-                    {/* ROW 3: Tech Stack - Unchanged (keeps all animations) */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
-                        {TECH_DATA.map((tech, i) => (
-                            <TechItem key={tech.id} data={tech} index={i} />
-                        ))}
-                    </div>
-                </div>
-
-            </div>
-        </section>
-    );
+          {/* Row 3: Tech Stack */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={stagger}
+            className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12"
+          >
+            {TECH_DATA.map((tech, i) => (
+              <TechItem key={tech.id} data={tech} index={i} isMobile={isMobile} />
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-const InfoCard = ({ icon, title, desc, className = "" }: any) => (
-    <div className={`p-8 md:p-10 flex flex-col justify-between h-56 md:h-64 group hover:bg-[#050505] hover:text-white transition-colors duration-500 ease-out ${className}`}>
-        <div className="text-[#FF4D00] group-hover:text-white transition-colors mb-6 transform group-hover:scale-110 duration-500 origin-left">
-            {icon}
-        </div>
-        <div>
-            <h3 className="font-mono text-[10px] md:text-xs font-bold tracking-widest mb-3 uppercase group-hover:text-[#FF4D00] transition-colors">{title}</h3>
-            <p className="text-xs md:text-sm font-medium opacity-80 leading-relaxed">{desc}</p>
-        </div>
+const InfoCard = ({ icon, title, desc, className = "" }: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  className?: string;
+}) => (
+  <motion.div 
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={fast}
+    className={`p-4 sm:p-6 md:p-8 flex flex-col justify-between min-h-[160px] sm:min-h-[180px] md:min-h-[220px] group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default ${className}`}
+  >
+    <div className="text-[#FF4D00] group-hover:text-white transition-colors duration-200 mb-3 sm:mb-4">
+      {icon}
     </div>
+    <div>
+      <h3 className="font-mono text-[10px] sm:text-xs font-bold tracking-widest mb-2 uppercase group-hover:text-[#FF4D00] transition-colors duration-200">
+        {title}
+      </h3>
+      <p className="text-[10px] sm:text-xs font-medium opacity-70 leading-relaxed">{desc}</p>
+    </div>
+  </motion.div>
 );
 
-const TechItem = ({ data, index }: any) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }} // Trigger animation earlier
-            transition={{ delay: index * 0.05 }}
-            className="aspect-square border-r border-b border-[#050505] md:border-b-0 flex flex-col items-center justify-center relative group cursor-crosshair overflow-hidden"
-        >
-            {/* The "Curtain" Effect on Hover - UNCHANGED */}
-            <div className="absolute inset-0 bg-[#050505] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-
-            <div className="relative z-10 flex flex-col items-center">
-                <data.icon size={28} className="mb-4 text-[#050505] group-hover:text-white transition-colors duration-300" />
-                <span className="font-mono text-[9px] font-bold tracking-widest text-[#050505] group-hover:text-[#FF4D00] transition-colors duration-300 uppercase">
-                    {data.name}
-                </span>
-            </div>
-        </motion.div>
-    );
+const TechItem = ({ data, index, isMobile }: {
+  data: { id: string; name: string; icon: React.ComponentType<{ size?: number; className?: string }> };
+  index: number;
+  isMobile: boolean;
+}) => {
+  const Icon = data.icon;
+  
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } }
+      }}
+      className="aspect-square border-r border-b border-[#E5E5E5] flex flex-col items-center justify-center relative group cursor-crosshair hover:bg-[#050505] transition-colors duration-200"
+    >
+      <Icon 
+        size={isMobile ? 18 : 24} 
+        className="mb-1 sm:mb-2 text-[#050505] group-hover:text-white transition-colors duration-200" 
+      />
+      <span className="font-mono text-[6px] sm:text-[8px] font-bold tracking-widest text-gray-500 group-hover:text-[#FF4D00] transition-colors duration-200 uppercase text-center px-1">
+        {data.name}
+      </span>
+    </motion.div>
+  );
 };

@@ -1,140 +1,178 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FiGithub, FiLayout, FiArrowUpRight, FiCpu } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiZap, FiCode, FiLayers, FiSmartphone } from "react-icons/fi";
 
-const PROJECTS = [
-  {
-    id: "01",
-    title: "Portfolio Architecture",
-    subtitle: "Web Engineering",
-    year: "2024",
-    tech: ["Next.js 14", "TypeScript", "Motion"],
-    desc: "A high-performance brutalist design system. Features momentum scrolling (Lenis), strict TypeScript typing, and a component-driven architecture scoring 100/100 on Lighthouse performance metrics.",
-    link: "https://obidur.vercel.app",
-    github: "https://github.com/ashfinnn/obidur-rahman",
-    src: "/port.png",       // Static Image
-    gif: "/port-demo.gif",  // YOUR GIF HERE
-  },
-];
+const PROJECT = {
+  title: "This Portfolio",
+  subtitle: "The site you're viewing right now",
+  year: "2024",
+  desc: "A brutalist, high-performance portfolio built to showcase ML research and engineering work. Clean typography, smooth interactions, and optimal performance across all devices.",
+  link: "https://obidur.vercel.app",
+  github: "https://github.com/ashfinnn/obidur-rahman",
+  features: [
+    { icon: FiZap, title: "100 Lighthouse", desc: "Perfect score" },
+    { icon: FiCode, title: "TypeScript", desc: "Type-safe" },
+    { icon: FiLayers, title: "Framer Motion", desc: "Animations" },
+    { icon: FiSmartphone, title: "Responsive", desc: "All devices" },
+  ],
+  tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+};
 
 export default function ProjectsSection() {
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-24 border-t border-[#E5E5E5] mb-24">
+    <section className="bg-white text-[#050505] w-full py-16 sm:py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
-      <div className="container mx-auto px-4 md:px-12 max-w-7xl">
-
-        {/* HEADER (Standardized) */}
-        <div className="mb-12">
-          <span className="font-mono text-xs font-bold tracking-widest text-[#FF4D00] uppercase mb-4 block">
-            System Builds
-          </span>
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8] mb-8">
-            Selected <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-500 to-gray-200">Works</span>
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-10 sm:mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
+            Selected<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Work</span>
           </h2>
-          {/* The Line Under Headline */}
-          <div className="w-full h-[2px] bg-[#050505]" />
-        </div>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full h-[2px] bg-[#050505] origin-left" 
+          />
+        </motion.div>
 
-        {/* --- THE MASTER GRID (Matches Research/About) --- */}
-        <div className="border-x border-b border-[#050505] bg-white shadow-xl">
-
-          {PROJECTS.map((project, index) => (
-            <div key={index} className="grid grid-cols-1 lg:grid-cols-12 group border-b border-[#050505] last:border-b-0">
-
-              {/* COL 1: CONTENT (Left - 5 Cols) */}
-              <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#050505] relative bg-white z-10">
-
-                <div>
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="h-2 w-2 bg-[#FF4D00]" />
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-gray-400 group-hover:text-[#FF4D00] transition-colors">
-                      Index 0{index + 1}
-                    </span>
-                  </div>
-
-                  <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[0.95] mb-6">
-                    {project.title}
-                  </h3>
-
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tech.map((t) => (
-                      <span key={t} className="px-1.5 py-0.5 border border-[#E5E5E5] text-[10px] font-mono font-bold uppercase text-gray-500 bg-gray-50">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="text-sm md:text-base leading-relaxed text-gray-600 font-medium border-l-2 border-[#050505] pl-4">
-                    {project.desc}
-                  </p>
-                </div>
-
-                <div className="flex gap-4 mt-12">
-                  <a href={project.link} target="_blank" className="flex-1 bg-[#050505] text-white py-4 font-mono text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF4D00] transition-colors text-center flex items-center justify-center gap-2">
-                    Live System <FiArrowUpRight size={14} />
-                  </a>
-                  <a href={project.github} target="_blank" className="w-16 flex items-center justify-center border border-[#050505] text-[#050505] hover:bg-[#050505] hover:text-white transition-colors">
-                    <FiGithub size={18} />
-                  </a>
-                </div>
-              </div>
-
-              {/* COL 2: VISUAL (Right - 7 Cols) */}
-              <div className="lg:col-span-7 bg-[#EBEBEB] relative min-h-[300px] lg:min-h-[500px] overflow-hidden">
-
-                {/* 1. Static Image (Base Layer) */}
-                <img
-                  src={project.src}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover grayscale contrast-125 group-hover:opacity-0 transition-opacity duration-300"
+        {/* Project Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="border border-[#050505] bg-[#FAFAFA]"
+        >
+          
+          {/* Project Header */}
+          <div className="p-4 sm:p-6 md:p-8 border-b border-[#050505] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <motion.div 
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="h-2 w-2 bg-[#FF4D00]" 
                 />
-
-                {/* 2. GIF (Hover Layer) */}
-                <img
-                  src={project.gif}
-                  alt="Project Demo"
-                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                />
-
-                {/* Overlays / Decorations */}
-                <div className="absolute top-0 left-0 p-6 pointer-events-none">
-                  <FiLayout className="text-3xl text-white drop-shadow-md" />
-                </div>
-
-                {/* Bottom Bar inside Image */}
-                <div className="absolute bottom-0 right-0 bg-white border-t border-l border-[#050505] px-4 py-2 z-20 pointer-events-none">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#050505]">
-                    {project.subtitle}
-                  </span>
-                </div>
+                <span className="font-mono text-[10px] text-gray-400 uppercase tracking-widest">
+                  {PROJECT.year}
+                </span>
               </div>
-
+              <h3 className="text-xl sm:text-2xl md:text-4xl font-black uppercase tracking-tight">
+                {PROJECT.title}
+              </h3>
+              <p className="text-sm sm:text-base text-gray-500 mt-1">{PROJECT.subtitle}</p>
             </div>
-          ))}
-
-          {/* OPTIONAL: ENGINEERING METRICS ROW (To match Research/About layout completely) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 border-t border-[#050505]">
-            <MetricBox label="Lighthouse" value="100" />
-            <MetricBox label="Framework" value="Next.14" />
-            <MetricBox label="Type Safety" value="Strict" />
-            <MetricBox label="Scroll" value="Lenis" />
+            
+            {/* Links */}
+            <div className="flex gap-2 sm:gap-3">
+              <motion.a 
+                href={PROJECT.link} 
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-3 bg-[#050505] text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#FF4D00] transition-colors"
+              >
+                <FiExternalLink size={14} />
+                <span className="hidden sm:inline">Live Site</span>
+              </motion.a>
+              <motion.a 
+                href={PROJECT.github} 
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center w-10 sm:w-12 border border-[#050505] hover:bg-[#050505] hover:text-white transition-colors"
+              >
+                <FiGithub size={18} />
+              </motion.a>
+            </div>
           </div>
 
-        </div>
+          {/* Description */}
+          <div className="p-4 sm:p-6 md:p-8 border-b border-[#E5E5E5]">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-3xl">
+              {PROJECT.desc}
+            </p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 border-b border-[#E5E5E5]">
+            {PROJECT.features.map((feature, i) => (
+              <motion.div 
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ backgroundColor: "#ffffff" }}
+                className={`p-4 sm:p-6 flex flex-col items-center text-center transition-colors group ${
+                  i < PROJECT.features.length - 1 ? 'border-r border-[#E5E5E5]' : ''
+                }`}
+              >
+                <motion.div 
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="p-2 sm:p-3 bg-white border border-[#E5E5E5] mb-2 sm:mb-3 group-hover:border-[#050505] group-hover:bg-[#050505] transition-colors"
+                >
+                  <feature.icon className="text-[#FF4D00] group-hover:text-white transition-colors" size={18} />
+                </motion.div>
+                <h4 className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">{feature.title}</h4>
+                <p className="text-[10px] sm:text-xs text-gray-400">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Tech Stack */}
+          <div className="p-4 sm:p-6 md:p-8 flex flex-wrap items-center gap-2 sm:gap-3">
+            <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mr-1 sm:mr-2">Built with:</span>
+            {PROJECT.tech.map((tech, i) => (
+              <motion.span 
+                key={tech}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 + i * 0.05 }}
+                whileHover={{ scale: 1.05 }}
+                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#050505] transition-colors cursor-default"
+              >
+                {tech}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* More Projects Note */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-6 sm:mt-8 text-center"
+        >
+          <p className="text-xs sm:text-sm text-gray-400">
+            More projects coming soon. Check my{" "}
+            <a 
+              href="https://github.com/Ashfinn" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF4D00] hover:underline"
+            >
+              GitHub
+            </a>
+            {" "}for other work.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
 }
-
-const MetricBox = ({ label, value }: { label: string, value: string }) => (
-  <div className="p-6 md:p-8 flex flex-col items-center justify-center border-r border-[#050505] last:border-r-0 hover:bg-[#050505] hover:text-white transition-colors duration-300 group cursor-crosshair">
-    <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-1 group-hover:text-[#FF4D00]">
-      {label}
-    </span>
-    <span className="text-xl md:text-2xl font-black uppercase tracking-tighter">
-      {value}
-    </span>
-  </div>
-)

@@ -1,142 +1,100 @@
-// app/components/Loader.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Loader({ onLoaded }: { onLoaded: () => void }) {
+interface LoaderProps {
+  onLoaded: () => void;
+}
+
+export default function Loader({ onLoaded }: LoaderProps) {
+  const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
     document.body.style.overflow = "hidden";
+    
+    // Fast loading - 1.2 seconds total
+    const duration = 1200;
+    const interval = 16; // 60fps
+    const steps = duration / interval;
+    let current = 0;
 
-    // Mobile: 1.2s load, Desktop: 2s load
-    const loadTime = window.innerWidth < 768 ? 1200 : 2000;
-    const exitDelay = window.innerWidth < 768 ? 400 : 1000;
+    const timer = setInterval(() => {
+      current += 1;
+      const easedProgress = 1 - Math.pow(1 - current / steps, 2);
+      setProgress(Math.min(easedProgress * 100, 100));
 
-    const timer = setTimeout(() => {
-      setIsComplete(true);
-      setTimeout(() => {
-        onLoaded();
-      }, exitDelay);
-    }, loadTime);
+      if (current >= steps) {
+        clearInterval(timer);
+        setIsComplete(true);
+        setTimeout(() => {
+          document.body.style.overflow = "";
+          onLoaded();
+        }, 200);
+      }
+    }, interval);
 
     return () => {
-      clearTimeout(timer);
+      clearInterval(timer);
       document.body.style.overflow = "";
     };
   }, [onLoaded]);
 
-  const panelEase = [0.76, 0, 0.24, 1] as const;
-  const snapEase = [0.68, -0.6, 0.32, 1.6] as const;
-
   return (
     <AnimatePresence>
       {!isComplete && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
-          
-          {/* SHUTTERS - Only on desktop */}
-          {!isMobile && (
-            <>
-              <motion.div
-                initial={{ height: "50vh" }}
-                exit={{ height: "0vh" }}
-                transition={{ duration: 0.8, ease: panelEase }}
-                className="absolute top-0 left-0 right-0 bg-white border-b border-[#E5E5E5] z-10"
-              >
-                <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
-              </motion.div>
-
-              <motion.div
-                initial={{ height: "50vh" }}
-                exit={{ height: "0vh" }}
-                transition={{ duration: 0.8, ease: panelEase }}
-                className="absolute bottom-0 left-0 right-0 bg-white border-t border-[#E5E5E5] z-10"
-              >
-                <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
-              </motion.div>
-            </>
-          )}
-
-          {/* LOGO */}
-          <div className="relative z-50 flex items-center justify-center">
+        <motion.div
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
+        >
+          <div className="flex flex-col items-center">
+            {/* Logo */}
             <motion.div
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: isMobile ? 0.8 : 0.5 }}
-              transition={{ duration: isMobile ? 0.2 : 0.3 }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="mb-8"
             >
-              <svg 
-                width={isMobile ? "80" : "120"}
-                height={isMobile ? "80" : "120"}
-                viewBox="0 0 100 100" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                className="overflow-visible"
-              >
-                {/* Desktop: Full 3-stage animation */}
-                {/* Mobile: Simple draw + color */}
-                {!isMobile && (
-                  <motion.path
-                    d="M50 15L85 80H15L50 15Z"
-                    stroke="#E5E5E5"
-                    strokeWidth="1"
-                    strokeLinejoin="round"
-                    initial={{ pathLength: 0, rotate: 0 }}
-                    animate={{ pathLength: 1, rotate: 180 }}
-                    transition={{ 
-                      pathLength: { duration: 0.8, ease: "easeInOut" },
-                      rotate: { duration: 0.8, ease: snapEase, delay: 0.8 } 
-                    }}
-                  />
-                )}
-
+              <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
                 <motion.path
-                  d="M50 15L85 80H15L50 15Z"
+                  d="M50 10L90 85H10L50 10Z"
+                  stroke="#050505"
+                  strokeWidth="4"
                   strokeLinejoin="round"
-                  strokeWidth="3"
-                  initial={{ 
-                    pathLength: 0, 
-                    stroke: "#050505",
-                    rotate: 0 
-                  }}
-                  animate={isMobile ? {
-                    // Mobile: Simple draw
-                    pathLength: 1,
-                    stroke: "#FF4D00",
-                  } : {
-                    // Desktop: Full sequence
-                    pathLength: [0, 1, 1],
-                    rotate: [0, 0, 180],
-                    stroke: ["#050505", "#050505", "#FF4D00"],
-                  }}
-                  transition={isMobile ? {
-                    duration: 0.8,
-                  } : {
-                    duration: 1.8,
-                    times: [0, 0.4, 1],
-                    rotate: { duration: 0.8, ease: snapEase, delay: 0.8 },
-                    stroke: { delay: 1.5, duration: 0.1 }
-                  }}
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 />
-                
-                {/* Fill - Desktop only */}
-                {!isMobile && (
-                  <motion.path
-                    d="M50 15L85 80H15L50 15Z"
-                    fill="#FF4D00"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: [0, 1], scale: [0.9, 1] }}
-                    transition={{ delay: 1.6, duration: 0.2 }}
-                    style={{ transformOrigin: "center" }}
-                  />
-                )}
+                <motion.path
+                  d="M50 10L90 85H10L50 10Z"
+                  fill="#FF4D00"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: progress > 80 ? 1 : 0 }}
+                  transition={{ duration: 0.15 }}
+                />
               </svg>
             </motion.div>
-          </div>
 
-        </div>
+            {/* Progress Bar */}
+            <div className="w-32 sm:w-40">
+              <div className="h-[2px] bg-gray-200 overflow-hidden">
+                <motion.div
+                  className="h-full bg-[#FF4D00]"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.05 }}
+                />
+              </div>
+              <div className="flex justify-between mt-2">
+                <span className="font-mono text-[9px] text-gray-400 uppercase tracking-widest">Loading</span>
+                <span className="font-mono text-[9px] text-gray-600">{Math.round(progress)}%</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
