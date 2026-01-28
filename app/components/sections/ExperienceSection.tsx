@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { easeInOut } from "framer-motion";
 import { FiMapPin, FiCalendar, FiBriefcase, FiBook, FiAward, FiArrowRight } from "react-icons/fi";
 
 const WORK = {
@@ -31,7 +32,7 @@ const EDUCATION = {
   ]
 };
 
-const fast = { duration: 0.3, ease: "easeOut" };
+const fast = { duration: 0.3, ease: easeInOut };
 
 export default function ExperienceSection() {
   return (

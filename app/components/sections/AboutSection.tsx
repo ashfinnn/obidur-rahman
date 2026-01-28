@@ -25,8 +25,13 @@ const TECH_DATA = [
 ];
 
 // Fast animation config
-const fast = { duration: 0.3, ease: "easeOut" };
-const stagger = { staggerChildren: 0.03 };
+import { easeInOut } from "framer-motion"; // Import the easing function
+
+const fast = { duration: 0.3, ease: easeInOut }; // Use the imported easing function
+const stagger = {
+  visible: { staggerChildren: 0.03 },
+  hidden: { staggerChildren: 0 }
+};
 
 export default function AboutSection() {
   const [isMobile, setIsMobile] = useState(false);
