@@ -8,11 +8,13 @@
   }
   
   html {
-    /* Removed scroll-behavior: smooth to prevent conflicts with JS scroll */
-    scroll-behavior: auto;
+    /* Force auto scroll behavior - let JS handle smoothness */
+    scroll-behavior: auto !important;
     font-size: clamp(0.875rem, 0.778rem + 0.48vw, 1rem);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Fix for Chromium scroll snap issues */
+    scroll-snap-type: none;
   }
 
   html.lenis {
@@ -23,6 +25,15 @@
     background-color: #050505;
     color: #ffffff;
     overflow-x: hidden;
+    /* Ensure body doesn't interfere with scroll */
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Ensure sections are properly positioned for scroll detection */
+  section {
+    position: relative;
+    scroll-margin-top: 80px; /* Accounts for fixed nav */
   }
 
   ::selection {
@@ -58,6 +69,7 @@
 
 ::-webkit-scrollbar-thumb {
   background: #333;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -70,6 +82,7 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -77,5 +90,13 @@
 @supports (height: 100dvh) {
   .min-h-screen {
     min-height: 100dvh;
+  }
+}
+
+/* Chromium-specific fixes */
+@supports (-webkit-appearance: none) {
+  html {
+    /* Prevent rubber banding on Chromium */
+    overscroll-behavior-y: none;
   }
 }
