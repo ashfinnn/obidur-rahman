@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  // Add scroll restoration for better navigation behavior
+  experimental: {
+    scrollRestoration: true,
+  },
 };
 
 export default nextConfig;

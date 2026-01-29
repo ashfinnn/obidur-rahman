@@ -8,7 +8,8 @@
   }
   
   html {
-    scroll-behavior: smooth;
+    /* Removed scroll-behavior: smooth to prevent conflicts with JS scroll */
+    scroll-behavior: auto;
     font-size: clamp(0.875rem, 0.778rem + 0.48vw, 1rem);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -35,6 +36,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -49,12 +51,15 @@
 ::-webkit-scrollbar {
   width: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: #050505;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #333;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #FF4D00;
 }

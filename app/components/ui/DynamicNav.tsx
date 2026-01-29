@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiHome, FiUser, FiBriefcase, FiGrid, FiMail, FiBookOpen } from "react-icons/fi";
@@ -22,11 +21,15 @@ export default function DynamicNav() {
 
     const handleScroll = () => {
       const sections = navItems.map(item => item.id);
+      const scrollPosition = window.scrollY + 200; // Offset for better detection
+      
       for (const section of [...sections].reverse()) {
         const element = document.getElementById(section);
         if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
           }
@@ -36,13 +39,21 @@ export default function DynamicNav() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const navHeight = 100; // Adjust based on your layout
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
   };
 
