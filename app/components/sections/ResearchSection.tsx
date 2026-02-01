@@ -365,28 +365,6 @@ export default function ResearchSection() {
             </div>
           </div>
         </div>
-
-        {/* Bottom Stats */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-6 sm:mt-8 grid grid-cols-3 border border-[#050505] bg-white"
-        >
-          <div className="p-3 sm:p-4 md:p-6 text-center border-r border-[#050505] hover:bg-[#050505] group transition-colors duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black text-[#050505] group-hover:text-white transition-colors duration-300">1</div>
-            <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mt-1">Publication</div>
-          </div>
-          <div className="p-3 sm:p-4 md:p-6 text-center border-r border-[#050505] hover:bg-[#050505] group transition-colors duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black text-[#050505] group-hover:text-white transition-colors duration-300">3</div>
-            <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mt-1">Ongoing</div>
-          </div>
-          <div className="p-3 sm:p-4 md:p-6 text-center hover:bg-[#050505] group transition-colors duration-300">
-            <div className="text-xl sm:text-2xl md:text-3xl font-black text-[#050505] group-hover:text-white transition-colors duration-300">1</div>
-            <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mt-1">Award</div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

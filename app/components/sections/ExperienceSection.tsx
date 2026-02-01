@@ -217,43 +217,8 @@ export default function ExperienceSection() {
               </div>
             </motion.div>
           </div>
-
-          {/* Row 2: Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 border-t border-[#050505]">
-            <StatBox label="Experience" value="1+ Year" />
-            <StatBox label="Graduation" value="2026" />
-            <StatBox label="Focus" value="ML Research" />
-            <StatBox label="Status" value="Active" isActive />
-          </div>
         </div>
       </div>
     </section>
   );
 }
-
-const StatBox = ({ label, value, isActive = false }: { label: string; value: string; isActive?: boolean }) => (
-  <motion.div 
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
-    transition={fast}
-    className="p-3 sm:p-4 md:p-6 text-center border-r border-[#050505] last:border-r-0 hover:bg-[#050505] group transition-colors duration-300 cursor-default"
-  >
-    <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mb-1 group-hover:text-gray-500 transition-colors duration-300">
-      {label}
-    </div>
-    <div className={`text-sm sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 transition-colors duration-300 ${
-      isActive 
-        ? 'text-green-600' 
-        : 'text-[#050505] group-hover:text-white'
-    }`}>
-      {isActive && (
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-        </span>
-      )}
-      {value}
-    </div>
-  </motion.div>
-);

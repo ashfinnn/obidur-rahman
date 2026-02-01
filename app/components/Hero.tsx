@@ -171,7 +171,7 @@ export default function Hero() {
         className="absolute bottom-0 w-full border-t border-[#050505] bg-[#050505] text-white py-2 md:py-3 z-30"
       >
         <div className="flex justify-between px-4 sm:px-6 md:px-12 font-mono text-[9px] sm:text-[10px] md:text-xs tracking-widest uppercase">
-          <span>Sys. Optimized</span>
+          <span>+</span>
           <span className="hidden sm:inline">University of Chittagong</span>
           <span className="sm:hidden">UCG</span>
         </div>

@@ -1,33 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
 import Image from "next/image";
 import {
-  SiPython, SiPytorch, SiTensorflow, SiDocker, SiNextdotjs, SiTypescript,
-  SiCplusplus, SiFlask, SiNumpy, SiPandas, SiScikitlearn, SiGit
+  SiPython, SiPytorch, SiTensorflow, SiNextdotjs, SiTypescript,
+  SiNumpy, SiPandas, SiScikitlearn, SiGit, SiFastapi, SiOpencv, SiScipy
 } from "react-icons/si";
 import { FiCpu, FiActivity, FiLayout, FiCornerDownRight, FiBook } from "react-icons/fi";
 
 const TECH_DATA = [
   { id: "01", name: "Python", icon: SiPython },
   { id: "02", name: "PyTorch", icon: SiPytorch },
-  { id: "03", name: "C++", icon: SiCplusplus },
+  { id: "03", name: "OpenCV", icon: SiOpencv },
   { id: "04", name: "TensorFlow", icon: SiTensorflow },
   { id: "05", name: "NumPy", icon: SiNumpy },
-  { id: "06", name: "Docker", icon: SiDocker },
+  { id: "06", name: "SciPy", icon: SiScipy },
   { id: "07", name: "Next.js", icon: SiNextdotjs },
   { id: "08", name: "TypeScript", icon: SiTypescript },
-  { id: "09", name: "Flask", icon: SiFlask },
+  { id: "09", name: "FastAPI", icon: SiFastapi },
   { id: "10", name: "Pandas", icon: SiPandas },
   { id: "11", name: "Sklearn", icon: SiScikitlearn },
   { id: "12", name: "Git", icon: SiGit },
 ];
 
-// Fast animation config
-import { easeInOut } from "framer-motion"; // Import the easing function
-
-const fast = { duration: 0.3, ease: easeInOut }; // Use the imported easing function
+const fast = { duration: 0.3, ease: easeInOut };
 const stagger = {
   visible: { staggerChildren: 0.03 },
   hidden: { staggerChildren: 0 }
@@ -68,13 +65,11 @@ export default function AboutSection() {
           />
         </motion.div>
 
-        {/* Main Grid */}
+        {/* Main Grid Container */}
         <div className="border border-[#050505] bg-white shadow-xl">
 
           {/* Row 1: Photo + Bio */}
           <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
-
-            {/* Photo */}
             <motion.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -90,8 +85,6 @@ export default function AboutSection() {
                 priority
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              
-              {/* Shutter */}
               <motion.div
                 initial={{ height: "100%" }}
                 whileInView={{ height: "0%" }}
@@ -99,8 +92,6 @@ export default function AboutSection() {
                 transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
                 className="absolute bottom-0 left-0 right-0 bg-[#050505] z-10"
               />
-
-              {/* Status */}
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -112,7 +103,6 @@ export default function AboutSection() {
               </div>
             </motion.div>
 
-            {/* Bio */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -127,7 +117,6 @@ export default function AboutSection() {
                   I focus on making them <span className="italic text-[#FF4D00] font-medium">efficient</span>.
                 </p>
               </div>
-
               <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-12 border-t border-gray-100 pt-4 sm:pt-6">
                 <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed lg:max-w-sm">
                   My background in <strong className="text-[#050505]">pure mathematics</strong> gives me a different lens on AI. 
@@ -173,22 +162,42 @@ export default function AboutSection() {
             <InfoCard
               icon={<FiLayout size={20} />}
               title="Engineering"
-              desc="End-to-end ML systems with Flask, Docker, and modern web tech."
+              desc="High-performance inference APIs with FastAPI and modern web tech."
             />
           </div>
 
-          {/* Row 3: Tech Stack */}
+          {/* Row 3: Tech Stack - DESKTOP VIEW (Grid) */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={stagger}
-            className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12"
+            className="hidden md:grid grid-cols-12"
           >
             {TECH_DATA.map((tech, i) => (
               <TechItem key={tech.id} data={tech} index={i} isMobile={isMobile} />
             ))}
           </motion.div>
+
+          {/* Row 3: Tech Stack - MOBILE VIEW (Infinite Marquee) */}
+          <div className="md:hidden overflow-hidden relative w-full h-[80px] bg-white">
+            <motion.div 
+              className="flex absolute left-0"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
+            >
+              {/* Duplicate the array twice to create a seamless loop */}
+              {[...TECH_DATA, ...TECH_DATA].map((tech, i) => (
+                <div key={`${tech.id}-${i}`} className="w-[80px] h-[80px] border-r border-[#E5E5E5] flex flex-col items-center justify-center shrink-0">
+                  <tech.icon size={20} className="mb-2 text-[#050505]" />
+                  <span className="font-mono text-[8px] font-bold tracking-widest text-gray-500 uppercase">
+                    {tech.name}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -233,13 +242,13 @@ const TechItem = ({ data, index, isMobile }: {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { duration: 0.2 } }
       }}
-      className="aspect-square border-r border-b border-[#E5E5E5] flex flex-col items-center justify-center relative group cursor-crosshair hover:bg-[#050505] transition-colors duration-200"
+      className="aspect-square border-r last:border-r-0 border-[#E5E5E5] flex flex-col items-center justify-center relative group cursor-crosshair hover:bg-[#050505] transition-colors duration-200"
     >
       <Icon 
-        size={isMobile ? 18 : 24} 
-        className="mb-1 sm:mb-2 text-[#050505] group-hover:text-white transition-colors duration-200" 
+        size={24} 
+        className="mb-2 text-[#050505] group-hover:text-white transition-colors duration-200" 
       />
-      <span className="font-mono text-[6px] sm:text-[8px] font-bold tracking-widest text-gray-500 group-hover:text-[#FF4D00] transition-colors duration-200 uppercase text-center px-1">
+      <span className="font-mono text-[8px] font-bold tracking-widest text-gray-500 group-hover:text-[#FF4D00] transition-colors duration-200 uppercase text-center px-1">
         {data.name}
       </span>
     </motion.div>

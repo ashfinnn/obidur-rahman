@@ -1,6 +1,16 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
-import { FiCheck, FiMail, FiGithub, FiLinkedin, FiMapPin, FiClock, FiArrowUpRight, FiCopy, FiArrowRight } from "react-icons/fi";
+import { 
+  FiCheck, 
+  FiMail, 
+  FiGithub, 
+  FiLinkedin, 
+  FiArrowUpRight, 
+  FiCopy, 
+  FiArrowRight 
+} from "react-icons/fi";
 import { SiX } from "react-icons/si";
 
 const fast = { duration: 0.3, ease: easeInOut };
@@ -156,7 +166,7 @@ export default function ContactSection() {
           </div>
 
           {/* Row 2: Social Links */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 border-b border-[#050505]">
+          <div className="grid grid-cols-1 sm:grid-cols-3">
             {SOCIAL_LINKS.map((social, index) => {
               const Icon = social.icon;
               return (
@@ -169,7 +179,6 @@ export default function ContactSection() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  /* hover handled by CSS */
                   className={`p-5 sm:p-6 md:p-8 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group hover:bg-[#050505] transition-colors duration-300 ${
                     index < 2 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''
                   }`}
@@ -195,68 +204,6 @@ export default function ContactSection() {
                 </motion.a>
               );
             })}
-          </div>
-
-          {/* Row 3: Info Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={fast}
-              className="p-4 sm:p-6 md:p-8 border-b md:border-b-0 border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
-            >
-              <FiMapPin className="mb-3 text-[#050505] group-hover:text-white transition-colors duration-300" size={20} />
-              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Location</div>
-              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">Chittagong</div>
-              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Bangladesh</div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...fast, delay: 0.05 }}
-              className="p-4 sm:p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
-            >
-              <FiClock className="mb-3 text-[#050505] group-hover:text-white transition-colors duration-300" size={20} />
-              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Response</div>
-              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">24-48h</div>
-              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Usually faster</div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...fast, delay: 0.1 }}
-              className="p-4 sm:p-6 md:p-8 border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 bg-green-500" />
-                </span>
-              </div>
-              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Availability</div>
-              <div className="text-sm sm:text-base md:text-lg font-bold text-green-600 group-hover:text-green-400 transition-colors duration-300">Open</div>
-              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">To opportunities</div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...fast, delay: 0.15 }}
-              className="p-4 sm:p-6 md:p-8 group hover:bg-[#050505] transition-colors duration-300"
-            >
-              <div className="w-5 h-5 mb-3 border-2 border-[#050505] group-hover:border-white transition-colors duration-300 flex items-center justify-center">
-                <FiCheck className="text-[#050505] group-hover:text-white transition-colors duration-300" size={12} />
-              </div>
-              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Work Mode</div>
-              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">Remote</div>
-              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Preferred</div>
-            </motion.div>
           </div>
         </div>
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { easeInOut } from "framer-motion";
 import {
@@ -25,24 +27,6 @@ const PROJECT = {
   ],
   tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
 };
-
-const COMING_SOON = [
-  {
-    title: "ML Model Playground",
-    desc: "Interactive demos of computer vision models",
-    status: "In Development",
-  },
-  {
-    title: "Research Paper Viewer",
-    desc: "Clean reading experience for academic papers",
-    status: "Planned",
-  },
-  {
-    title: "Algorithm Visualizer",
-    desc: "Step-by-step neural network visualizations",
-    status: "Planned",
-  },
-];
 
 const fast = { duration: 0.3, ease: easeInOut };
 
@@ -215,44 +199,6 @@ export default function ProjectsSection() {
             </div>
           </motion.div>
 
-          {/* Coming Soon Section */}
-          <div className="p-5 sm:p-6 md:p-8 border-b border-[#050505]">
-            <div className="flex items-center gap-3 mb-4 sm:mb-6">
-              <span className="h-2 w-2 bg-gray-300" />
-              <span className="font-mono text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">
-                Coming Soon
-              </span>
-            </div>
-            <div className="grid sm:grid-cols-3 gap-3 sm:gap-4">
-              {COMING_SOON.map((project, i) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ ...fast, delay: i * 0.05 }}
-                  className="p-4 sm:p-5 border border-[#E5E5E5] hover:border-[#050505] transition-colors group"
-                >
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <span className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest">
-                      {project.status}
-                    </span>
-                    <FiArrowUpRight
-                      size={12}
-                      className="text-gray-300 group-hover:text-[#050505] transition-colors"
-                    />
-                  </div>
-                  <h4 className="font-bold text-sm sm:text-base mb-1">
-                    {project.title}
-                  </h4>
-                  <p className="text-[10px] sm:text-xs text-gray-500">
-                    {project.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
           {/* GitHub CTA Row */}
           <motion.a
             href="https://github.com/Ashfinn"
@@ -281,38 +227,6 @@ export default function ProjectsSection() {
             />
           </motion.a>
         </div>
-
-        {/* Stats Row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-6 sm:mt-8 grid grid-cols-3 border border-[#050505] bg-white"
-        >
-          {[
-            { label: "Projects", value: "10+", suffix: "Built" },
-            { label: "Commits", value: "500+", suffix: "This Year" },
-            { label: "Focus", value: "ML", suffix: "& Web" },
-          ].map((stat, i) => (
-            <div
-              key={stat.label}
-              className={`p-4 sm:p-6 text-center hover:bg-[#050505] hover:text-white transition-colors duration-300 group ${
-                i < 2 ? "border-r border-[#050505]" : ""
-              }`}
-            >
-              <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mb-1 group-hover:text-gray-400">
-                {stat.label}
-              </div>
-              <div className="text-lg sm:text-xl md:text-2xl font-black">
-                {stat.value}
-              </div>
-              <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 group-hover:text-gray-400">
-                {stat.suffix}
-              </div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
