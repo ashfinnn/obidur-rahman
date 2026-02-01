@@ -8,92 +8,83 @@ interface LoaderProps {
 }
 
 export default function Loader({ onLoaded }: LoaderProps) {
-  const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
     
-    // Fast loading - 1.2 seconds total
-    const duration = 1200;
-    const interval = 16; // 60fps
-    const steps = duration / interval;
-    let current = 0;
-
-    const timer = setInterval(() => {
-      current += 1;
-      const easedProgress = 1 - Math.pow(1 - current / steps, 2);
-      setProgress(Math.min(easedProgress * 100, 100));
-
-      if (current >= steps) {
-        clearInterval(timer);
-        setIsComplete(true);
-        setTimeout(() => {
-          document.body.style.overflow = "";
-          onLoaded();
-        }, 200);
-      }
-    }, interval);
+    // 1.8s total load time for the "computation" to feel finished
+    const timer = setTimeout(() => {
+      setIsComplete(true);
+      setTimeout(() => {
+        document.body.style.overflow = "";
+        onLoaded();
+      }, 500); 
+    }, 1800);
 
     return () => {
-      clearInterval(timer);
+      clearTimeout(timer);
       document.body.style.overflow = "";
     };
   }, [onLoaded]);
+
+  // The grid indices for a 3x3 matrix
+  // 0 1 2
+  // 3 4 5
+  // 6 7 8
+  const squares = Array.from({ length: 9 });
 
   return (
     <AnimatePresence>
       {!isComplete && (
         <motion.div
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-[#F4F4F5] flex items-center justify-center"
+          exit={{ 
+            opacity: 0,
+            transition: { duration: 0.4, ease: "easeInOut" } 
+          }}
         >
-          <div className="flex flex-col items-center">
-            {/* Logo */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="mb-8"
-            >
-              <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
-                <motion.path
-                  d="M50 10L90 85H10L50 10Z"
-                  stroke="#050505"
-                  strokeWidth="4"
-                  strokeLinejoin="round"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                />
-                <motion.path
-                  d="M50 10L90 85H10L50 10Z"
-                  fill="#FF4D00"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: progress > 80 ? 1 : 0 }}
-                  transition={{ duration: 0.15 }}
-                />
-              </svg>
-            </motion.div>
+          {/* Container for the Matrix */}
+          <motion.div 
+            className="grid grid-cols-3 gap-1"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ scale: 0, transition: { duration: 0.3, ease: "backIn" } }}
+            transition={{ duration: 0.3 }}
+          >
+            {squares.map((_, i) => {
+              // Calculate diagonal index (x + y) to create a wave effect
+              // Row 0: 0, 1, 2
+              // Row 1: 1, 2, 3
+              // Row 2: 2, 3, 4
+              const row = Math.floor(i / 3);
+              const col = i % 3;
+              const diagonalIndex = row + col;
+              
+              const isCenter = i === 4;
 
-            {/* Progress Bar */}
-            <div className="w-32 sm:w-40">
-              <div className="h-[2px] bg-gray-200 overflow-hidden">
+              return (
                 <motion.div
-                  className="h-full bg-[#FF4D00]"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.05 }}
+                  key={i}
+                  className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 ${
+                    isCenter ? "bg-[#FF4D00]" : "bg-[#050505]"
+                  }`}
+                  // The Computation Animation
+                  animate={{
+                    opacity: [0.2, 1, 0.2],
+                    scale: [0.85, 1, 0.85],
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    // Stagger based on diagonal index for "Wave" effect
+                    delay: diagonalIndex * 0.15, 
+                  }}
                 />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="font-mono text-[9px] text-gray-400 uppercase tracking-widest">Loading</span>
-                <span className="font-mono text-[9px] text-gray-600">{Math.round(progress)}%</span>
-              </div>
-            </div>
-          </div>
+              );
+            })}
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
