@@ -1,4 +1,4 @@
-# Obidur Rahman - Personal Portfolio v3.0
+# Obidur Rahman
 
 This repository contains the source code for my personal portfolio, a futuristic and interactive web experience designed with a Heads-Up Display (HUD) aesthetic. Built from the ground up with a focus on performance, responsiveness, and clean, maintainable code.
 
