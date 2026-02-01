@@ -2,7 +2,14 @@
 
 import { motion } from "framer-motion";
 import { easeInOut } from "framer-motion";
-import { FiMapPin, FiCalendar, FiBriefcase, FiBook, FiAward, FiArrowRight } from "react-icons/fi";
+import { 
+  FiMapPin, 
+  FiCalendar, 
+  FiBriefcase, 
+  FiBook, 
+  FiAward, 
+  FiArrowUpRight
+} from "react-icons/fi";
 
 const WORK = {
   role: "R&D Engineer",
@@ -36,7 +43,7 @@ const fast = { duration: 0.3, ease: easeInOut };
 
 export default function ExperienceSection() {
   return (
-    <section className="bg-white text-[#050505] w-full py-16 sm:py-20 md:py-32">
+    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
         {/* Header */}
@@ -55,162 +62,191 @@ export default function ExperienceSection() {
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="w-full h-[2px] bg-[#050505] origin-left" 
           />
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
-          
-          {/* Work */}
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={fast}
-            className="bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#050505] transition-colors duration-200 group"
-          >
-            <div className="p-4 sm:p-6 border-b border-[#E5E5E5] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-[#FF4D00]">
-                  <FiBriefcase className="text-white" size={16} />
+        {/* Main Grid */}
+        <div className="border border-[#050505] bg-white shadow-xl">
+
+          {/* Row 1: Work & Education Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            
+            {/* Work Card */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={fast}
+              className="border-b lg:border-b-0 lg:border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
+            >
+              {/* Card Header */}
+              <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-[#050505] group-hover:bg-white transition-colors duration-300">
+                    <FiBriefcase className="text-white group-hover:text-[#050505] transition-colors duration-300" size={16} />
+                  </div>
+                  <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                    Work Experience
+                  </span>
                 </div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
-                  Work Experience
-                </span>
-              </div>
-              <FiArrowRight className="text-gray-300 group-hover:text-[#FF4D00] group-hover:translate-x-1 transition-all duration-200" size={18} />
-            </div>
-
-            <div className="p-4 sm:p-6 md:p-8">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1">
-                {WORK.role}
-              </h3>
-              <p className="text-base sm:text-lg text-[#FF4D00] font-semibold mb-3 sm:mb-4">
-                @ {WORK.company}
-              </p>
-              
-              <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
-                <span className="flex items-center gap-1 sm:gap-2">
-                  <FiCalendar size={12} />
-                  {WORK.period}
-                </span>
-                <span className="flex items-center gap-1 sm:gap-2">
-                  <FiMapPin size={12} />
-                  <span className="hidden sm:inline">{WORK.location}</span>
-                  <span className="sm:hidden">Chattogram</span>
-                </span>
-              </div>
-
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                {WORK.desc}
-              </p>
-
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Key Responsibilities</span>
-                <ul className="space-y-1.5 sm:space-y-2">
-                  {WORK.responsibilities.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#FF4D00] mt-1.5 sm:mt-2 flex-shrink-0" />
-                      <span className="text-[11px] sm:text-sm text-gray-600">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Education */}
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ ...fast, delay: 0.1 }}
-            className="bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#050505] transition-colors duration-200 group"
-          >
-            <div className="p-4 sm:p-6 border-b border-[#E5E5E5] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-[#050505]">
-                  <FiBook className="text-white" size={16} />
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                    </span>
+                    <span className="font-mono text-[8px] sm:text-[9px] font-bold text-green-600 uppercase tracking-wider hidden sm:inline">
+                      Active
+                    </span>
+                  </div>
+                  <FiArrowUpRight className="text-gray-300 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-200" size={18} />
                 </div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
-                  Education
-                </span>
-              </div>
-              <FiArrowRight className="text-gray-300 group-hover:text-[#FF4D00] group-hover:translate-x-1 transition-all duration-200" size={18} />
-            </div>
-
-            <div className="p-4 sm:p-6 md:p-8">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1">
-                {EDUCATION.degree}
-              </h3>
-              <p className="text-base sm:text-lg text-gray-700 font-semibold mb-1">
-                @ {EDUCATION.institution}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4">
-                Focus: {EDUCATION.focus}
-              </p>
-              
-              <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
-                <span className="flex items-center gap-1 sm:gap-2">
-                  <FiCalendar size={12} />
-                  {EDUCATION.period}
-                </span>
-                <span className="flex items-center gap-1 sm:gap-2">
-                  <FiMapPin size={12} />
-                  <span className="hidden sm:inline">{EDUCATION.location}</span>
-                  <span className="sm:hidden">Chittagong</span>
-                </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                {EDUCATION.desc}
-              </p>
+              {/* Card Content */}
+              <div className="p-4 sm:p-6 md:p-8">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1 group-hover:text-white transition-colors duration-300">
+                  {WORK.role}
+                </h3>
+                <p className="text-base sm:text-lg text-[#050505] font-semibold mb-3 sm:mb-4 group-hover:text-[#FF4D00] transition-colors duration-300">
+                  @ {WORK.company}
+                </p>
+                
+                <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 group-hover:text-gray-400 transition-colors duration-300">
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <FiCalendar size={12} />
+                    {WORK.period}
+                  </span>
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <FiMapPin size={12} />
+                    <span className="hidden sm:inline">{WORK.location}</span>
+                    <span className="sm:hidden">Chattogram</span>
+                  </span>
+                </div>
 
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Highlights</span>
-                <ul className="space-y-1.5 sm:space-y-2">
-                  {EDUCATION.highlights.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 sm:gap-3">
-                      {item.isAward ? (
-                        <FiAward className="text-[#FF4D00] mt-0.5 flex-shrink-0" size={14} />
-                      ) : (
-                        <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-300 mt-1.5 sm:mt-2 flex-shrink-0" />
-                      )}
-                      <span className={`text-[11px] sm:text-sm ${item.isAward ? 'text-[#FF4D00] font-semibold' : 'text-gray-600'}`}>
-                        {item.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6 group-hover:text-gray-300 transition-colors duration-300">
+                  {WORK.desc}
+                </p>
+
+                <div className="space-y-2">
+                  <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Key Responsibilities</span>
+                  <ul className="space-y-1.5 sm:space-y-2">
+                    {WORK.responsibilities.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 sm:gap-3">
+                        <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#050505] mt-1.5 sm:mt-2 flex-shrink-0 group-hover:bg-[#FF4D00] transition-colors duration-300" />
+                        <span className="text-[11px] sm:text-sm text-gray-600 group-hover:text-gray-300 transition-colors duration-300">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Education Card */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ ...fast, delay: 0.1 }}
+              className="group hover:bg-[#050505] transition-colors duration-300"
+            >
+              {/* Card Header */}
+              <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-[#050505] group-hover:bg-white transition-colors duration-300">
+                    <FiBook className="text-white group-hover:text-[#050505] transition-colors duration-300" size={16} />
+                  </div>
+                  <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                    Education
+                  </span>
+                </div>
+                <FiArrowUpRight className="text-gray-300 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-200" size={18} />
+              </div>
+
+              {/* Card Content */}
+              <div className="p-4 sm:p-6 md:p-8">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mb-1 group-hover:text-white transition-colors duration-300">
+                  {EDUCATION.degree}
+                </h3>
+                <p className="text-base sm:text-lg text-[#050505] font-semibold mb-1 group-hover:text-white transition-colors duration-300">
+                  @ {EDUCATION.institution}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4 group-hover:text-gray-400 transition-colors duration-300">
+                  Focus: {EDUCATION.focus}
+                </p>
+                
+                <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 group-hover:text-gray-400 transition-colors duration-300">
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <FiCalendar size={12} />
+                    {EDUCATION.period}
+                  </span>
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <FiMapPin size={12} />
+                    <span className="hidden sm:inline">{EDUCATION.location}</span>
+                    <span className="sm:hidden">Chittagong</span>
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 sm:mb-6 group-hover:text-gray-300 transition-colors duration-300">
+                  {EDUCATION.desc}
+                </p>
+
+                <div className="space-y-2">
+                  <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Highlights</span>
+                  <ul className="space-y-1.5 sm:space-y-2">
+                    {EDUCATION.highlights.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 sm:gap-3">
+                        {item.isAward ? (
+                          <FiAward className="text-[#FF4D00] mt-0.5 flex-shrink-0" size={14} />
+                        ) : (
+                          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-gray-300 mt-1.5 sm:mt-2 flex-shrink-0 group-hover:bg-gray-500 transition-colors duration-300" />
+                        )}
+                        <span className={`text-[11px] sm:text-sm transition-colors duration-300 ${
+                          item.isAward 
+                            ? 'text-[#FF4D00] font-semibold' 
+                            : 'text-gray-600 group-hover:text-gray-300'
+                        }`}>
+                          {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Row 2: Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 border-t border-[#050505]">
+            <StatBox label="Experience" value="1+ Year" />
+            <StatBox label="Graduation" value="2026" />
+            <StatBox label="Focus" value="ML Research" />
+            <StatBox label="Status" value="Active" isActive />
+          </div>
         </div>
-
-        {/* Stats */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-          className="mt-8 sm:mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
-        >
-          <StatBox label="Experience" value="1+ Year" />
-          <StatBox label="Graduation" value="2026" />
-          <StatBox label="Focus" value="ML Research" />
-          <StatBox label="Status" value="Active" isActive />
-        </motion.div>
       </div>
     </section>
   );
 }
 
 const StatBox = ({ label, value, isActive = false }: { label: string; value: string; isActive?: boolean }) => (
-  <div className="p-3 sm:p-4 md:p-6 bg-[#FAFAFA] border border-[#E5E5E5] text-center hover:border-[#050505] transition-colors duration-200">
-    <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mb-1">{label}</div>
-    <div className={`text-sm sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 ${isActive ? 'text-green-600' : 'text-[#050505]'}`}>
+  <motion.div 
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true }}
+    transition={fast}
+    className="p-3 sm:p-4 md:p-6 text-center border-r border-[#050505] last:border-r-0 hover:bg-[#050505] group transition-colors duration-300 cursor-default"
+  >
+    <div className="font-mono text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-widest mb-1 group-hover:text-gray-500 transition-colors duration-300">
+      {label}
+    </div>
+    <div className={`text-sm sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 transition-colors duration-300 ${
+      isActive 
+        ? 'text-green-600' 
+        : 'text-[#050505] group-hover:text-white'
+    }`}>
       {isActive && (
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -219,5 +255,5 @@ const StatBox = ({ label, value, isActive = false }: { label: string; value: str
       )}
       {value}
     </div>
-  </div>
+  </motion.div>
 );

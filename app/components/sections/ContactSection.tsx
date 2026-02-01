@@ -1,8 +1,33 @@
-"use client";
-
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiCheck, FiMail, FiGithub, FiLinkedin, FiMapPin, FiClock, FiSend, FiCopy } from "react-icons/fi";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { FiCheck, FiMail, FiGithub, FiLinkedin, FiMapPin, FiClock, FiArrowUpRight, FiCopy, FiArrowRight } from "react-icons/fi";
+import { SiX } from "react-icons/si";
+
+const fast = { duration: 0.3, ease: easeInOut };
+
+const SOCIAL_LINKS = [
+  { 
+    name: "GitHub", 
+    handle: "@Ashfinn",
+    url: "https://github.com/Ashfinn", 
+    icon: FiGithub,
+    desc: "Open source projects"
+  },
+  { 
+    name: "LinkedIn", 
+    handle: "/in/obidur-rahman-shawal",
+    url: "https://linkedin.com/in/obidur-rahman-shawal", 
+    icon: FiLinkedin,
+    desc: "Professional network"
+  },
+  { 
+    name: "X (Twitter)", 
+    handle: "@ashaboredaf",
+    url: "https://x.com/ashaboredaf", 
+    icon: SiX,
+    desc: "Thoughts & updates"
+  },
+];
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
@@ -24,135 +49,215 @@ export default function ContactSection() {
 
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10 sm:mb-12 md:mb-16"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={fast}
+          className="mb-10 sm:mb-12 md:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
-            Let&apos;s<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Connect</span>
+            Get In<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Touch</span>
           </h2>
           <motion.div 
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-md mx-auto h-[2px] bg-[#050505] origin-center" 
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="w-full h-[2px] bg-[#050505] origin-left" 
           />
         </motion.div>
 
-        {/* Main Content */}
-        <div className="max-w-2xl mx-auto">
+        {/* Main Grid Container */}
+        <div className="border border-[#050505] bg-white shadow-xl">
           
-          {/* Email Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            onClick={handleCopy}
-            className="bg-white border border-[#E5E5E5] hover:border-[#050505] p-6 sm:p-8 md:p-10 cursor-pointer group transition-all mb-4 sm:mb-6"
-          >
-            <div className="flex items-center justify-between mb-3 sm:mb-4">
-              <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">Email Address</span>
-              <AnimatePresence mode="wait">
-                {copied ? (
-                  <motion.span
-                    key="copied"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    className="flex items-center gap-1 text-green-600 font-mono text-[9px] sm:text-[10px] uppercase"
-                  >
-                    <FiCheck size={12} /> Copied!
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="copy"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    className="flex items-center gap-1 text-gray-400 group-hover:text-[#FF4D00] font-mono text-[9px] sm:text-[10px] uppercase transition-colors"
-                  >
-                    <FiCopy size={12} /> Click to copy
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </div>
-            <motion.p 
-              className="text-xl sm:text-2xl md:text-3xl font-bold group-hover:text-[#FF4D00] transition-colors break-all"
-              whileHover={{ x: 5 }}
+          {/* Row 1: Email Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#050505]">
+            
+            {/* Email Display */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={fast}
+              onClick={handleCopy}
+              className="lg:col-span-8 p-6 sm:p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#050505] cursor-pointer group hover:bg-[#050505] transition-colors duration-300"
             >
-              {email}
-            </motion.p>
-          </motion.div>
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-[#050505] group-hover:bg-white transition-colors duration-300">
+                    <FiMail className="text-white group-hover:text-[#050505] transition-colors duration-300" size={16} />
+                  </div>
+                  <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                    Email Address
+                  </span>
+                </div>
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="flex items-center gap-1.5 text-green-500 font-mono text-[10px] sm:text-xs uppercase tracking-widest"
+                    >
+                      <FiCheck size={14} /> Copied
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="copy"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="flex items-center gap-1.5 text-gray-400 group-hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-colors duration-300"
+                    >
+                      <FiCopy size={12} /> Copy
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black tracking-tight group-hover:text-white transition-colors duration-300 break-all leading-tight">
+                {email}
+              </p>
+              
+              <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                Click to copy or use the button to open your email client
+              </p>
+            </motion.div>
 
-          {/* Direct Email Button */}
-          <motion.a 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            href={`mailto:${email}`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex items-center justify-center gap-2 sm:gap-3 w-full px-6 sm:px-8 py-3 sm:py-4 bg-[#050505] text-white font-mono text-xs sm:text-sm uppercase tracking-widest hover:bg-[#FF4D00] transition-colors mb-6 sm:mb-8"
-          >
-            <FiSend size={16} />
-            Send Email Directly
-          </motion.a>
-
-          {/* Social Links */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="grid grid-cols-2 gap-3 sm:gap-4 mb-8 sm:mb-10"
-          >
-            <motion.a
-              href="https://github.com/Ashfinn"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ y: -3 }}
-              className="flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border border-[#E5E5E5] hover:border-[#050505] transition-all group"
+            {/* Send Email CTA */}
+            <motion.a 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ ...fast, delay: 0.1 }}
+              href={`mailto:${email}`}
+              className="lg:col-span-4 p-6 sm:p-8 md:p-12 flex flex-col justify-between min-h-[200px] lg:min-h-0 group hover:bg-[#050505] transition-colors duration-300"
             >
-              <FiGithub size={18} className="group-hover:text-[#FF4D00] transition-colors" />
-              <span className="font-mono text-xs sm:text-sm uppercase tracking-widest">GitHub</span>
+              <div>
+                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
+                  Preferred Method
+                </span>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mt-2 group-hover:text-white transition-colors duration-300">
+                  Send Email
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 mt-2 transition-colors duration-300">
+                  Opens your default email client
+                </p>
+              </div>
+              <div className="flex items-center gap-2 mt-4">
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors duration-300">
+                  Compose
+                </span>
+                <FiArrowUpRight className="text-gray-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" size={16} />
+              </div>
             </motion.a>
-            <motion.a
-              href="https://linkedin.com/in/obidur-rahman-shawal"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ y: -3 }}
-              className="flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border border-[#E5E5E5] hover:border-[#050505] transition-all group"
-            >
-              <FiLinkedin size={18} className="group-hover:text-[#FF4D00] transition-colors" />
-              <span className="font-mono text-xs sm:text-sm uppercase tracking-widest">LinkedIn</span>
-            </motion.a>
-          </motion.div>
+          </div>
 
-          {/* Info Grid */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="grid grid-cols-2 gap-3 sm:gap-4"
-          >
-            <div className="bg-white border border-[#E5E5E5] p-4 sm:p-5 text-center">
-              <FiMapPin className="mx-auto mb-2 text-[#FF4D00]" size={18} />
-              <p className="text-sm sm:text-base font-medium">Chittagong, BD</p>
-              <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Remote Available</p>
-            </div>
-            <div className="bg-white border border-[#E5E5E5] p-4 sm:p-5 text-center">
-              <FiClock className="mx-auto mb-2 text-[#FF4D00]" size={18} />
-              <p className="text-sm sm:text-base font-medium">24-48 Hours</p>
-              <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Response Time</p>
-            </div>
-          </motion.div>
+          {/* Row 2: Social Links */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 border-b border-[#050505]">
+            {SOCIAL_LINKS.map((social, index) => {
+              const Icon = social.icon;
+              return (
+                <motion.a
+                  key={social.name}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ ...fast, delay: index * 0.05 }}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  /* hover handled by CSS */
+                  className={`p-5 sm:p-6 md:p-8 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group hover:bg-[#050505] transition-colors duration-300 ${
+                    index < 2 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <Icon 
+                      size={24} 
+                      className="text-[#050505] group-hover:text-white transition-colors duration-300" 
+                    />
+                    <FiArrowUpRight 
+                      className="text-gray-300 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" 
+                      size={18} 
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-mono text-xs sm:text-sm font-bold uppercase tracking-widest group-hover:text-white transition-colors duration-300">
+                      {social.name}
+                    </h4>
+                    <p className="text-[10px] sm:text-xs text-gray-400 mt-1 group-hover:text-gray-400 transition-colors duration-300">
+                      {social.desc}
+                    </p>
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+
+          {/* Row 3: Info Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={fast}
+              className="p-4 sm:p-6 md:p-8 border-b md:border-b-0 border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
+            >
+              <FiMapPin className="mb-3 text-[#050505] group-hover:text-white transition-colors duration-300" size={20} />
+              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Location</div>
+              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">Chittagong</div>
+              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Bangladesh</div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ ...fast, delay: 0.05 }}
+              className="p-4 sm:p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
+            >
+              <FiClock className="mb-3 text-[#050505] group-hover:text-white transition-colors duration-300" size={20} />
+              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Response</div>
+              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">24-48h</div>
+              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Usually faster</div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ ...fast, delay: 0.1 }}
+              className="p-4 sm:p-6 md:p-8 border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 bg-green-500" />
+                </span>
+              </div>
+              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Availability</div>
+              <div className="text-sm sm:text-base md:text-lg font-bold text-green-600 group-hover:text-green-400 transition-colors duration-300">Open</div>
+              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">To opportunities</div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ ...fast, delay: 0.15 }}
+              className="p-4 sm:p-6 md:p-8 group hover:bg-[#050505] transition-colors duration-300"
+            >
+              <div className="w-5 h-5 mb-3 border-2 border-[#050505] group-hover:border-white transition-colors duration-300 flex items-center justify-center">
+                <FiCheck className="text-[#050505] group-hover:text-white transition-colors duration-300" size={12} />
+              </div>
+              <div className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-1">Work Mode</div>
+              <div className="text-sm sm:text-base md:text-lg font-bold group-hover:text-white transition-colors duration-300">Remote</div>
+              <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Preferred</div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Footer */}
@@ -160,14 +265,25 @@ export default function ContactSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 sm:mt-20 md:mt-24 pt-6 sm:pt-8 border-t border-[#050505] flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[10px] sm:text-xs font-mono text-gray-500"
+          transition={{ delay: 0.2 }}
+          className="mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 border-t border-[#050505] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
         >
-          <span>© {new Date().getFullYear()} Obidur Rahman</span>
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            Open to Opportunities
-          </span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+            <span className="font-mono text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest">
+              © {new Date().getFullYear()} Obidur Rahman
+            </span>
+            <span className="hidden sm:block w-px h-4 bg-gray-300" />
+            <span className="font-mono text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest">
+              Designed with precision
+            </span>
+          </div>
+          <motion.a
+            href="#top"
+            className="group flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 hover:text-[#050505] transition-colors"
+          >
+            Back to top
+            <FiArrowRight className="rotate-[-90deg] group-hover:-translate-y-1 transition-transform duration-300" size={12} />
+          </motion.a>
         </motion.div>
       </div>
     </section>
