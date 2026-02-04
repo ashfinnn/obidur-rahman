@@ -18,8 +18,8 @@ const fast = { duration: 0.3, ease: easeInOut };
 const SOCIAL_LINKS = [
   { 
     name: "GitHub", 
-    handle: "@Ashfinn",
-    url: "https://github.com/Ashfinn", 
+    handle: "@Ashfinnn",
+    url: "https://github.com/Ashfinnn", 
     icon: FiGithub,
     desc: "Open source projects"
   },
@@ -31,11 +31,11 @@ const SOCIAL_LINKS = [
     desc: "Professional network"
   },
   { 
-    name: "X (Twitter)", 
-    handle: "@ashaboredaf",
-    url: "https://x.com/ashaboredaf", 
-    icon: SiX,
-    desc: "Thoughts & updates"
+    name: "ResearchGate", 
+    handle: "/profile/Obidur-Rahman-3",
+    url: "https://www.researchgate.net/profile/Obidur-Rahman-3", 
+    icon: FiArrowUpRight,
+    desc: "Research & publications"
   },
 ];
 

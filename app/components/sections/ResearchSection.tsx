@@ -17,7 +17,14 @@ const UNDER_REVIEW = [
   {
     id: "cpu-vision",
     title: "CPU-Constrained Deep Learning for Tomato Disease Detection",
-    authors: ["Obidur Rahman", "et al."],
+    authors: [
+      "Obidur Rahman",
+      "Lipon Chandra Das",
+      "Arnab Aich",
+      "Abu Saiman Md Taiham",
+      "Atif Ibna Latif"
+    ],
+    orcid: ["0009-0007-7960-9423", "0000-0001-8150-8057", "0009-0008-5111-6990", "0009-0002-3503-6276", "0009-0001-4785-9782"],
     venue: "International Mathematics Conference 2024",
     status: "Under Review",
     award: "Best Presenter Award",

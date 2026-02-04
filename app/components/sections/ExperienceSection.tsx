@@ -14,14 +14,14 @@ import {
 const WORK = {
   role: "R&D Engineer",
   company: "NorthAxis",
-  location: "Chattogram, Bangladesh",
-  period: "2024 — Present",
-  desc: "Bridging the gap between market requirements and engineering feasibility. Leading product research and feature development through competitive analysis.",
+  location: "Dhaka, Bangladesh",
+  period: "Dec 2024 — Present",
+  desc: "Leading research and development for product launches and client projects. Designing and prototyping innovative solutions tailored to client requirements and market needs.",
   responsibilities: [
-    "Market research for AI-powered product features",
-    "Prototyping ML-powered capabilities",
-    "Cross-functional collaboration with engineering teams",
-    "Technical feasibility assessments"
+    "Lead research and development for product launches and client projects",
+    "Design and prototype innovative solutions for client requirements",
+    "Collaborate with teams to integrate R&D outcomes into production",
+    "Technical feasibility assessments and market analysis"
   ]
 };
 
@@ -30,12 +30,12 @@ const EDUCATION = {
   institution: "University of Chittagong",
   location: "Chittagong, Bangladesh",
   period: "2022 — 2026",
-  focus: "Abstract Algebra & Linear Optimization",
-  desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
+  // focus: "Abstract Algebra, Linear Optimization & Neural Network Theory",
+  desc: "Specializing in pure mathematics with applications to machine learning and neural network.",
   highlights: [
     { text: "Best Presenter Award - IMC 2024", isAward: true },
-    { text: "Research in linear algebra for neural networks", isAward: false },
-    { text: "Self-directed study in deep learning", isAward: false }
+    // { text: "Research in linear algebra for neural networks", isAward: false },
+    // { text: "Self-directed study in deep learning", isAward: false }
   ]
 };
 
@@ -173,9 +173,9 @@ export default function ExperienceSection() {
                 <p className="text-base sm:text-lg text-[#050505] font-semibold mb-1 group-hover:text-white transition-colors duration-300">
                   @ {EDUCATION.institution}
                 </p>
-                <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4 group-hover:text-gray-400 transition-colors duration-300">
+                {/* <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4 group-hover:text-gray-400 transition-colors duration-300">
                   Focus: {EDUCATION.focus}
-                </p>
+                </p> */}
                 
                 <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 group-hover:text-gray-400 transition-colors duration-300">
                   <span className="flex items-center gap-1 sm:gap-2">
