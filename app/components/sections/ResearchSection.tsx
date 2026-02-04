@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { easeInOut } from "framer-motion";
-import { 
-  FiArrowUpRight, 
-  FiAward, 
-  FiChevronDown, 
-  FiExternalLink, 
+import {
+  FiArrowUpRight,
+  FiAward,
+  FiChevronDown,
+  FiExternalLink,
   FiClock,
   FiFileText,
   FiCode
@@ -21,50 +21,66 @@ const UNDER_REVIEW = [
     venue: "International Mathematics Conference 2024",
     status: "Under Review",
     award: "Best Presenter Award",
-    abstract: "Benchmarking ResNet-50, ConvNeXt-Tiny, and FastViT-T8 under CPU constraints. FastViT achieved 99.66% accuracy with 0.022s inference—ideal for edge deployment in resource-limited agricultural settings.",
+    abstract:
+      "Benchmarking ResNet-50, ConvNeXt-Tiny, and FastViT-T8 under strict CPU constraints. FastViT achieved 99.66% accuracy with 0.022s inference latency, demonstrating suitability for edge deployment in resource-limited agricultural environments.",
     metrics: [
       { label: "Accuracy", value: "99.66", suffix: "%" },
       { label: "Latency", value: "0.022", suffix: "s" },
       { label: "Parameters", value: "4.03", suffix: "M" }
     ],
     tags: ["PyTorch", "FastViT", "Quantization", "Agriculture"],
-    link: "/research/cpu-constrained-vision",
+    link: "", ///research/cpu-constrained-vision 
   }
 ];
 
 const ONGOING_RESEARCH = [
   {
     id: "geometric-dilution",
-    title: "Geometric Dilution of SMOTE in High-Dimensional Feature Spaces",
+    title: "Geometric Dilution",
     status: "In Progress",
     timeline: "",
-    desc: "A mathematical investigation into the failure of SMOTE in high-dimensional spaces (>10D). Proving that synthetic point coverage approaches zero as dimensionality increases.",
+    desc:
+      "A mathematical investigation into the failure of SMOTE in high-dimensional spaces (>10D), demonstrating that synthetic sample coverage asymptotically approaches zero as dimensionality increases. Formal proofs and constructions are withheld until submission.",
     tags: ["Mathematics", "SMOTE", "High-Dimensional"],
     link: "https://ashfinnn.github.io/geometric-dilution/",
   },
   {
-    id: "efficient-vit",
-    title: "Efficient Vision Transformers for Mobile Deployment",
+    id: "project-fluency",
+    title: "The Illusion of Fluency",
     status: "Early Stage",
-    timeline: "",
-    desc: "Investigating knowledge distillation and structured pruning for compressing ViT models to sub-5M parameters while maintaining accuracy.",
-    tags: ["Vision Transformers", "Pruning", "Mobile AI"],
+    timeline: "2026",
+    desc:
+      "Investigating the hypothesis that aggressive 4-bit quantization preserves surface-level fluency while degrading calibration and truthfulness in large language models. Detailed experimental protocols and calibration analyses are intentionally omitted until formal submission.",
+    tags: [
+      "LLMs",
+      "Quantization",
+      "Model Calibration",
+      "Edge AI",
+      "Hallucinations"
+    ],
+    meta: {
+      theme: "Engineering, Technology & Data Sciences",
+      summit: "Scholars' Convergence: Research and Innovation Summit 2026",
+      author: "Obidur Rahman, University of Chittagong"
+    }
   },
   {
     id: "math-sparsity",
     title: "Mathematical Foundations of Neural Network Sparsity",
     status: "Exploration",
     timeline: "",
-    desc: "Applying concepts from abstract algebra to understand and predict weight importance in deep networks.",
+    desc:
+      "Exploring algebraic and theoretical frameworks for understanding and predicting weight importance and sparsity patterns in deep neural networks.",
     tags: ["Mathematics", "Pruning", "Theory"],
   }
 ];
 
+
 const RESEARCH_INTERESTS = [
   "Computer Vision",
-  "Model Compression", 
-  "Edge AI", 
-  "Mathematical ML", 
+  "Model Compression",
+  "Edge AI",
+  "Mathematical ML",
   "Efficient Architectures"
 ];
 
@@ -78,7 +94,7 @@ export default function ResearchSection() {
       <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -89,18 +105,18 @@ export default function ResearchSection() {
             Publications &<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Ongoing Work</span>
           </h2>
-          <motion.div 
+          <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left" 
+            className="w-full h-[2px] bg-[#050505] origin-left"
           />
         </motion.div>
 
         {/* Main Container */}
         <div className="border border-[#050505] bg-white shadow-xl">
-          
+
           {/* Under Review Section */}
           <div className="border-b border-[#050505]">
             {/* Section Header */}
@@ -173,7 +189,7 @@ export default function ResearchSection() {
                   {/* Metrics */}
                   <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-[#E5E5E5]">
                     {paper.metrics.map((metric, i) => (
-                      <motion.div 
+                      <motion.div
                         key={metric.label}
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -222,7 +238,7 @@ export default function ResearchSection() {
                             </h5>
                             <div className="flex flex-wrap gap-1.5 sm:gap-2">
                               {paper.tags.map((tag) => (
-                                <span 
+                                <span
                                   key={tag}
                                   className="px-2 py-1 bg-[#F4F4F5] border border-[#E5E5E5] font-mono text-[9px] sm:text-[10px] text-gray-600 uppercase tracking-wider"
                                 >
@@ -275,7 +291,7 @@ export default function ResearchSection() {
             {/* Research Grid */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3">
               {ONGOING_RESEARCH.map((research, index) => (
-                <motion.div 
+                <motion.div
                   key={research.id}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
@@ -317,7 +333,7 @@ export default function ResearchSection() {
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
                     {research.tags.slice(0, 3).map((tag) => (
-                      <span 
+                      <span
                         key={tag}
                         className="px-1.5 sm:px-2 py-0.5 bg-[#F4F4F5] group-hover:bg-[#333] font-mono text-[8px] sm:text-[9px] text-gray-500 group-hover:text-gray-400 uppercase transition-colors duration-300"
                       >
@@ -350,7 +366,7 @@ export default function ResearchSection() {
               </span>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {RESEARCH_INTERESTS.map((interest, i) => (
-                  <motion.span 
+                  <motion.span
                     key={interest}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
