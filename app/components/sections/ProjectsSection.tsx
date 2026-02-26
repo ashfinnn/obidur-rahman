@@ -201,7 +201,7 @@ export default function ProjectsSection() {
 
           {/* GitHub CTA Row */}
           <motion.a
-            href="https://github.com/Ashfinn"
+            href="https://github.com/Ashfinnn"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0 }}
