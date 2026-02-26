@@ -2,9 +2,6 @@
 
 This repository contains the source code for my personal portfolio, a futuristic and interactive web experience designed with a Heads-Up Display (HUD) aesthetic. Built from the ground up with a focus on performance, responsiveness, and clean, maintainable code.
 
-[![Vercel Deployment](https://img.shields.io/github/deployments/your-username/your-repo/production?label=vercel&style=for-the-badge)](https://obidur.vercel.app)
-[![License: MIT](https://img.shields.io/badge/License-MIT-cyan.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-
 ### [**Visit the Live Site →**](https://obidur.vercel.app)
 
 ---
