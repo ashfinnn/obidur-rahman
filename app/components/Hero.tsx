@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FiArrowRight, FiArrowDown, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiArrowRight, FiArrowDown, FiGithub, FiLinkedin, FiBook } from "react-icons/fi";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -141,6 +141,15 @@ export default function Hero() {
             >
               <FiLinkedin size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">LinkedIn</span>
+            </a>
+            <a 
+              href="https://www.researchgate.net/profile/Obidur-Rahman-3" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
+            >
+              <FiBook size={16} />
+              <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">ResearchGate</span>
             </a>
           </div>
         </motion.div>
