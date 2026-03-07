@@ -78,7 +78,9 @@ export default function AboutSection() {
               className="md:col-span-4 aspect-[4/5] md:aspect-auto md:min-h-[400px] lg:min-h-[500px] border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group"
             >
               <Image
-                src="/me.png"
+                // src="/1.jpg"
+                src="/me.jpg"
+
                 alt="Obidur Rahman"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
