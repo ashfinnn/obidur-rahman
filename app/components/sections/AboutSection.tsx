@@ -112,7 +112,7 @@ export default function AboutSection() {
                   Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
                 </p>
                 <a 
-                  href="/resume.pdf"
+                  href="/obidur_cv_public.pdf"
                   target="_blank"
                   className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
                 >
