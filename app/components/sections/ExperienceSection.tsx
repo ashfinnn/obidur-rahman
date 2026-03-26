@@ -14,14 +14,14 @@ import {
 const WORK = {
   role: "R&D Engineer",
   company: "NorthAxis",
-  location: "Dhaka, Bangladesh",
-  period: "Dec 2024 — Present",
-  desc: "Leading research and development for product launches and client projects. Designing and prototyping innovative solutions tailored to client requirements and market needs.",
+  location: "Remote",
+  period: "Dec 2025 — Present",
+  desc: "Lead research and development for product launches and client projects. Core responsibilities include AI feature research, technical feasibility analysis, and end-to-end solution design.",
   responsibilities: [
-    "Lead research and development for product launches and client projects",
-    "Design and prototype innovative solutions for client requirements",
-    "Collaborate with teams to integrate R&D outcomes into production",
-    "Technical feasibility assessments and market analysis"
+    "Evaluate and integrate AI capabilities into products, researching emerging models and deployment strategies",
+    "Design and prototype software solutions, translating briefs into engineering specifications",
+    "Collaborate across teams to bring R&D outcomes into production",
+    "Technical feasibility studies and architectural planning for new product initiatives"
   ]
 };
 
@@ -29,13 +29,11 @@ const EDUCATION = {
   degree: "B.S. in Mathematics",
   institution: "University of Chittagong",
   location: "Chittagong, Bangladesh",
-  period: "2022 — 2026",
-  // focus: "Abstract Algebra, Linear Optimization & Neural Network Theory",
-  desc: "Specializing in pure mathematics with applications to machine learning and neural network.",
+  period: "2022 — 2027 (Expected)",
+  desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
   highlights: [
-    { text: "Best Presenter Award - IMC 2024", isAward: true },
-    // { text: "Research in linear algebra for neural networks", isAward: false },
-    // { text: "Self-directed study in deep learning", isAward: false }
+    { text: "Best Presenter Award — 24th International Mathematics Conference", isAward: true },
+    { text: "Coursework: Real Analysis, Linear Algebra, Abstract Algebra, Complex Analysis, Numerical Methods", isAward: false },
   ]
 };
 
@@ -70,16 +68,16 @@ export default function ExperienceSection() {
         {/* Main Grid */}
         <div className="border border-[#050505] bg-white shadow-xl">
 
-          {/* Row 1: Work & Education Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* Row 1: Work & Education Cards — Work takes 7 cols, Education 5 */}
+          <div className="grid grid-cols-1 lg:grid-cols-12">
             
-            {/* Work Card */}
+            {/* Work Card — Wider, more prominent */}
             <motion.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={fast}
-              className="border-b lg:border-b-0 lg:border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
+              className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[#050505] group hover:bg-[#050505] transition-colors duration-300"
             >
               {/* Card Header */}
               <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
@@ -121,8 +119,7 @@ export default function ExperienceSection() {
                   </span>
                   <span className="flex items-center gap-1 sm:gap-2">
                     <FiMapPin size={12} />
-                    <span className="hidden sm:inline">{WORK.location}</span>
-                    <span className="sm:hidden">Chattogram</span>
+                    {WORK.location}
                   </span>
                 </div>
 
@@ -150,7 +147,7 @@ export default function ExperienceSection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ ...fast, delay: 0.1 }}
-              className="group hover:bg-[#050505] transition-colors duration-300"
+              className="lg:col-span-5 group hover:bg-[#050505] transition-colors duration-300"
             >
               {/* Card Header */}
               <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
@@ -173,9 +170,6 @@ export default function ExperienceSection() {
                 <p className="text-base sm:text-lg text-[#050505] font-semibold mb-1 group-hover:text-white transition-colors duration-300">
                   @ {EDUCATION.institution}
                 </p>
-                {/* <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4 group-hover:text-gray-400 transition-colors duration-300">
-                  Focus: {EDUCATION.focus}
-                </p> */}
                 
                 <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 group-hover:text-gray-400 transition-colors duration-300">
                   <span className="flex items-center gap-1 sm:gap-2">

@@ -78,9 +78,7 @@ export default function AboutSection() {
               className="md:col-span-4 aspect-[4/5] md:aspect-auto md:min-h-[400px] lg:min-h-[500px] border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group"
             >
               <Image
-                // src="/1.jpg"
                 src="/me.jpg"
-
                 alt="Obidur Rahman"
                 fill
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
@@ -94,15 +92,6 @@ export default function AboutSection() {
                 transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
                 className="absolute bottom-0 left-0 right-0 bg-[#050505] z-10"
               />
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                </span>
-                <span className="font-mono text-[8px] sm:text-[9px] font-bold text-white bg-black/60 px-1.5 sm:px-2 py-0.5 sm:py-1 backdrop-blur-sm uppercase tracking-wider">
-                  Available
-                </span>
-              </div>
             </motion.div>
 
             <motion.div 
@@ -115,28 +104,21 @@ export default function AboutSection() {
               <div className="relative mb-4 sm:mb-6">
                 <span className="absolute -left-2 sm:-left-4 md:-left-6 -top-2 sm:-top-4 text-4xl sm:text-5xl md:text-6xl text-gray-200 font-serif hidden sm:inline">&ldquo;</span>
                 <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif leading-relaxed text-[#050505] relative z-10">
-                  I am a mathematician turned engineer. While many focus on just making models work, 
-                  I focus on making them <span className="italic text-[#FF4D00] font-medium">efficient</span>.
+                  Mathematician turned engineer. My background in <span className="italic text-[#FF4D00] font-medium">pure mathematics</span> gives me a different lens on AI.
                 </p>
               </div>
-              <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-12 border-t border-gray-100 pt-4 sm:pt-6">
-                <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed lg:max-w-sm">
-                  My background in <strong className="text-[#050505]">pure mathematics</strong> gives me a different lens on AI. 
-                  I don&apos;t just import libraries; I understand the linear algebra underneath.
+              <div className="border-t border-gray-100 pt-4 sm:pt-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed max-w-md">
+                  Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
                 </p>
-                <div className="flex flex-col justify-between">
-                  <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed lg:max-w-sm mb-4">
-                    Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
-                  </p>
-                  <a 
-                    href="/resume.pdf"
-                    target="_blank"
-                    className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
-                  >
-                    Download CV
-                    <FiCornerDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-200" />
-                  </a>
-                </div>
+                <a 
+                  href="/resume.pdf"
+                  target="_blank"
+                  className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
+                >
+                  Download CV
+                  <FiCornerDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-200" />
+                </a>
               </div>
             </motion.div>
           </div>

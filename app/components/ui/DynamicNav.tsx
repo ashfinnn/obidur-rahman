@@ -83,7 +83,7 @@ export default function DynamicNav() {
               className={`relative flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-2 transition-all duration-200 shrink-0 ${
                 isActive 
                   ? 'bg-[#050505] text-white' 
-                  : 'hover:bg-gray-100 text-[#050505]'
+                  : 'hover:bg-gray-50 hover:text-[#FF4D00] text-[#050505]'
               }`}
               aria-label={item.label}
             >

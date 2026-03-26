@@ -150,11 +150,10 @@ export default function ProjectsSection() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ ...fast, delay: i * 0.05 }}
-                className={`p-4 sm:p-6 md:p-8 flex flex-col group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default ${
-                  i < PROJECT.features.length - 1
-                    ? "border-r border-[#050505]"
-                    : ""
-                } ${i < 2 ? "border-b md:border-b-0 border-[#050505]" : ""}`}
+                className={`p-4 sm:p-6 md:p-8 flex flex-col group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default ${i < PROJECT.features.length - 1
+                  ? "border-r border-[#050505]"
+                  : ""
+                  } ${i < 2 ? "border-b md:border-b-0 border-[#050505]" : ""}`}
               >
                 <div className="p-2 sm:p-3 bg-[#F4F4F5] border border-[#E5E5E5] w-fit mb-3 sm:mb-4 group-hover:bg-white group-hover:border-white transition-colors duration-300">
                   <feature.icon

@@ -33,13 +33,13 @@ export default function Hero() {
 
   const item = {
     hidden: { opacity: 0, y: 15 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.3, 
-        ease: "easeOut" as const 
-      } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut" as const
+      }
     }
   };
 
@@ -50,7 +50,7 @@ export default function Hero() {
     >
       {/* Texture */}
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply hidden md:block" />
-      
+
       {/* Grid Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="container mx-auto h-full border-r border-l border-[#E5E5E5] relative">
@@ -61,24 +61,24 @@ export default function Hero() {
         <div className="absolute bottom-24 left-0 right-0 h-px bg-[#E5E5E5]" />
       </div>
 
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="visible"
         className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 flex flex-col justify-center h-full"
       >
-        
+
         {/* Job Title */}
         <motion.div variants={item} className="flex items-center gap-3 mb-4 md:mb-8">
-          <div className="h-1.5 w-1.5 md:h-2 md:w-2 bg-[#FF4D00]" />
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-sm font-bold tracking-widest text-[#050505] uppercase">
+          <div className="h-2 w-2 md:h-2.5 md:w-2.5 bg-[#FF4D00]" />
+          <span className="font-mono text-xs sm:text-sm md:text-base font-bold tracking-widest text-[#050505] uppercase">
             Machine Learning Engineer
           </span>
         </motion.div>
 
         {/* OBIDUR */}
         <div className="overflow-hidden">
-          <motion.h1 
+          <motion.h1
             variants={item}
             style={isMounted && !isMobile ? { y: y1 } : undefined}
             className="text-[15vw] sm:text-[14vw] md:text-[12vw] lg:text-[14vw] leading-[0.85] font-bold tracking-tighter text-[#050505]"
@@ -87,21 +87,22 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        {/* Details */}
-        <motion.div 
+        {/* Tagline */}
+        <motion.div
           variants={item}
-          className="w-full pl-4 border-l-2 border-[#FF4D00] my-4 sm:my-6 md:my-8 md:ml-2 md:w-64"
+          className="w-full pl-4 border-l-2 border-[#FF4D00] my-4 sm:my-6 md:my-8 md:ml-2 md:w-auto md:max-w-lg"
         >
-          <p className="font-mono text-[9px] sm:text-[10px] md:text-xs leading-relaxed text-gray-500 uppercase">
-            Deep Learning<br/>
-            Pure Mathematics Bg.<br/>
-            Computer Vision
+          <p className="font-mono text-xs sm:text-sm md:text-base leading-relaxed text-[#050505] font-medium">
+            Mathematician turned ML engineer.
+          </p>
+          <p className="font-mono text-[10px] sm:text-xs md:text-sm leading-relaxed text-gray-500 uppercase mt-1">
+            Deep Learning · Computer Vision · Model Compression
           </p>
         </motion.div>
 
         {/* RAHMAN */}
         <div className="overflow-hidden text-right md:text-left">
-          <motion.h1 
+          <motion.h1
             variants={item}
             style={isMounted && !isMobile ? { y: y2 } : undefined}
             className="text-[15vw] sm:text-[14vw] md:text-[12vw] lg:text-[14vw] leading-[0.85] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#555] to-[#050505]"
@@ -111,11 +112,11 @@ export default function Hero() {
         </div>
 
         {/* CTAs */}
-        <motion.div 
+        <motion.div
           variants={item}
           className="mt-8 sm:mt-10 md:mt-16 flex flex-col sm:flex-row sm:items-center gap-4"
         >
-          <a 
+          <a
             href="#research"
             className="group inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 bg-[#050505] text-white font-bold tracking-widest text-[10px] sm:text-xs uppercase hover:bg-[#FF4D00] transition-colors duration-200 w-full sm:w-auto"
           >
@@ -124,29 +125,29 @@ export default function Hero() {
           </a>
 
           <div className="flex items-center justify-center sm:justify-start gap-3">
-            <a 
-              href="https://github.com/Ashfinn" 
+            <a
+              href="https://github.com/Ashfinn"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
             >
               <FiGithub size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">GitHub</span>
             </a>
-            <a 
-              href="https://linkedin.com/in/obidur-rahman-shawal" 
+            <a
+              href="https://linkedin.com/in/obidur-rahman-shawal"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
             >
               <FiLinkedin size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">LinkedIn</span>
             </a>
-            <a 
-              href="https://www.researchgate.net/profile/Obidur-Rahman-3" 
+            <a
+              href="https://www.researchgate.net/profile/Obidur-Rahman-3"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
             >
               <FiBook size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">ResearchGate</span>
@@ -173,7 +174,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Footer Bar */}
-      <motion.div 
+      <motion.div
         initial={{ y: 30 }}
         animate={{ y: 0 }}
         transition={{ delay: 0.3, duration: 0.3 }}
@@ -200,7 +201,7 @@ export default function Hero() {
 }
 
 const Crosshair = ({ position }: { position: string }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 0.4, duration: 0.2 }}

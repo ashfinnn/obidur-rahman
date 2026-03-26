@@ -2,38 +2,38 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
-import { 
-  FiCheck, 
-  FiMail, 
-  FiGithub, 
-  FiLinkedin, 
-  FiArrowUpRight, 
-  FiCopy, 
-  FiArrowRight 
+import {
+  FiCheck,
+  FiMail,
+  FiGithub,
+  FiLinkedin,
+  FiArrowUpRight,
+  FiCopy,
+  FiArrowRight
 } from "react-icons/fi";
 import { SiX } from "react-icons/si";
 
 const fast = { duration: 0.3, ease: easeInOut };
 
 const SOCIAL_LINKS = [
-  { 
-    name: "GitHub", 
+  {
+    name: "GitHub",
     handle: "@Ashfinnn",
-    url: "https://github.com/Ashfinnn", 
+    url: "https://github.com/Ashfinnn",
     icon: FiGithub,
     desc: "Open source projects"
   },
-  { 
-    name: "LinkedIn", 
+  {
+    name: "LinkedIn",
     handle: "/in/obidur-rahman-shawal",
-    url: "https://linkedin.com/in/obidur-rahman-shawal", 
+    url: "https://linkedin.com/in/obidur-rahman-shawal",
     icon: FiLinkedin,
     desc: "Professional network"
   },
-  { 
-    name: "ResearchGate", 
+  {
+    name: "ResearchGate",
     handle: "/profile/Obidur-Rahman-3",
-    url: "https://www.researchgate.net/profile/Obidur-Rahman-3", 
+    url: "https://www.researchgate.net/profile/Obidur-Rahman-3",
     icon: FiArrowUpRight,
     desc: "Research & publications"
   },
@@ -58,7 +58,7 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -69,23 +69,23 @@ export default function ContactSection() {
             Get In<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Touch</span>
           </h2>
-          <motion.div 
+          <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left" 
+            className="w-full h-[2px] bg-[#050505] origin-left"
           />
         </motion.div>
 
         {/* Main Grid Container */}
         <div className="border border-[#050505] bg-white shadow-xl">
-          
+
           {/* Row 1: Email Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#050505]">
-            
+
             {/* Email Display */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -126,18 +126,18 @@ export default function ContactSection() {
                   )}
                 </AnimatePresence>
               </div>
-              
+
               <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black tracking-tight group-hover:text-white transition-colors duration-300 break-all leading-tight">
                 {email}
               </p>
-              
+
               <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
                 Click to copy or use the button to open your email client
               </p>
             </motion.div>
 
             {/* Send Email CTA */}
-            <motion.a 
+            <motion.a
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -179,18 +179,17 @@ export default function ContactSection() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-5 sm:p-6 md:p-8 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group hover:bg-[#050505] transition-colors duration-300 ${
-                    index < 2 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''
-                  }`}
+                  className={`p-5 sm:p-6 md:p-8 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group hover:bg-[#050505] transition-colors duration-300 ${index < 2 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''
+                    }`}
                 >
                   <div className="flex items-start justify-between">
-                    <Icon 
-                      size={24} 
-                      className="text-[#050505] group-hover:text-white transition-colors duration-300" 
+                    <Icon
+                      size={24}
+                      className="text-[#050505] group-hover:text-white transition-colors duration-300"
                     />
-                    <FiArrowUpRight 
-                      className="text-gray-300 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" 
-                      size={18} 
+                    <FiArrowUpRight
+                      className="text-gray-300 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300"
+                      size={18}
                     />
                   </div>
                   <div>
@@ -208,7 +207,7 @@ export default function ContactSection() {
         </div>
 
         {/* Footer */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

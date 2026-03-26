@@ -8,9 +8,8 @@ import {
   FiAward,
   FiChevronDown,
   FiExternalLink,
-  FiClock,
   FiFileText,
-  FiCode
+  FiBook
 } from "react-icons/fi";
 
 const UNDER_REVIEW = [
@@ -25,70 +24,49 @@ const UNDER_REVIEW = [
       "Atif Ibna Latif"
     ],
     orcid: ["0009-0007-7960-9423", "0000-0001-8150-8057", "0009-0008-5111-6990", "0009-0002-3503-6276", "0009-0001-4785-9782"],
-    venue: "International Mathematics Conference 2024",
+    venue: "Springer Book Proceedings — 24th International Mathematics Conference",
     status: "Under Review",
     award: "Best Presenter Award",
     abstract:
-      "Benchmarking ResNet-50, ConvNeXt-Tiny, and FastViT-T8 under strict CPU constraints. FastViT achieved 99.66% accuracy with 0.022s inference latency, demonstrating suitability for edge deployment in resource-limited agricultural environments.",
+      "Evaluated ResNet-50, ConvNeXt-Tiny, and FastViT-T8 for tomato leaf disease classification on CPU-only hardware using the PlantVillage dataset (16,012 images, 10 classes). Applied a two-phase transfer learning protocol to benchmark accuracy and inference latency under constraints representative of smallholder agricultural settings.",
     metrics: [
       { label: "Accuracy", value: "99.66", suffix: "%" },
       { label: "Latency", value: "0.022", suffix: "s" },
       { label: "Parameters", value: "4.03", suffix: "M" }
     ],
     tags: ["PyTorch", "FastViT", "Quantization", "Agriculture"],
-    link: "", ///research/cpu-constrained-vision 
+    link: "",
   }
 ];
 
-const ONGOING_RESEARCH = [
+const CONFERENCE_PRESENTATIONS = [
   {
-    id: "geometric-dilution",
-    title: "Geometric Dilution",
-    status: "In Progress",
-    timeline: "",
-    desc:
-      "A mathematical investigation into the failure of SMOTE in high-dimensional spaces (>10D), demonstrating that synthetic sample coverage asymptotically approaches zero as dimensionality increases. Formal proofs and constructions are withheld until submission.",
-    tags: ["Mathematics", "SMOTE", "High-Dimensional"],
-    link: "https://ashfinnn.github.io/geometric-dilution/",
+    id: "digital-distractions",
+    title: "Pathways from Digital Distractions and Study Habits to Academic Performance",
+    coAuthors: "With Md. Ali Arman Rafi",
+    venue: "Scholars' Convergence Research & Innovation Summit (SCRIS), Chittagong, 2026",
+    doi: "10.13140/RG.2.2.24207.24483",
+    desc: "Surveyed 225 university students across Bangladesh to examine how digital habits, self-regulation, and socio-economic factors jointly predict CGPA. Found that behavioural self-regulation outweighs raw study hours as a predictor of academic success.",
+    tags: ["Statistics", "Machine Learning", "Survey Research"],
   },
   {
-    id: "project-fluency",
-    title: "The Illusion of Fluency",
-    status: "Early Stage",
-    timeline: "2026",
-    desc:
-      "Investigating the hypothesis that aggressive 4-bit quantization preserves surface-level fluency while degrading calibration and truthfulness in large language models. Detailed experimental protocols and calibration analyses are intentionally omitted until formal submission.",
-    tags: [
-      "LLMs",
-      "Quantization",
-      "Model Calibration",
-      "Edge AI",
-      "Hallucinations"
-    ],
-    meta: {
-      theme: "Engineering, Technology & Data Sciences",
-      summit: "Scholars' Convergence: Research and Innovation Summit 2026",
-      author: "Obidur Rahman, University of Chittagong"
-    }
+    id: "congestion-premium",
+    title: "Quantifying the Congestion Premium: Determinants of Non-Metered Fares in a Developing Port City",
+    coAuthors: "With Sifatul Islam",
+    venue: "Scholars' Convergence Research & Innovation Summit (SCRIS), Chittagong, 2026",
+    doi: "10.13140/RG.2.2.16906.53448",
+    desc: "Modelled fare deviations from official government rates using a revealed-preference survey of 100 commuter trips. Regression analysis identified traffic intensity, time of day, and waterlogging as primary structural drivers of the congestion premium.",
+    tags: ["Regression", "Economics", "Urban Transport"],
   },
-  {
-    id: "math-sparsity",
-    title: "Mathematical Foundations of Neural Network Sparsity",
-    status: "Exploration",
-    timeline: "",
-    desc:
-      "Exploring algebraic and theoretical frameworks for understanding and predicting weight importance and sparsity patterns in deep neural networks.",
-    tags: ["Mathematics", "Pruning", "Theory"],
-  }
 ];
-
 
 const RESEARCH_INTERESTS = [
   "Computer Vision",
   "Model Compression",
   "Edge AI",
-  "Mathematical ML",
-  "Efficient Architectures"
+  "Efficient Architectures",
+  "Imbalanced Learning",
+  "Low-Resource NLP"
 ];
 
 const fast = { duration: 0.3, ease: easeInOut };
@@ -110,7 +88,7 @@ export default function ResearchSection() {
         >
           <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
             Publications &<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Ongoing Work</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Research</span>
           </h2>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -162,8 +140,8 @@ export default function ResearchSection() {
                             </span>
                           </div>
                         )}
-                        <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 border border-[#050505]">
-                          <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-[#050505]">
+                        <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 border border-[#FF4D00] text-[#FF4D00]">
+                          <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest">
                             {paper.status}
                           </span>
                         </div>
@@ -247,7 +225,7 @@ export default function ResearchSection() {
                               {paper.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="px-2 py-1 bg-[#F4F4F5] border border-[#E5E5E5] font-mono text-[9px] sm:text-[10px] text-gray-600 uppercase tracking-wider"
+                                  className="px-2 py-1 bg-[#F4F4F5] border border-[#E5E5E5] font-mono text-[9px] sm:text-[10px] text-gray-600 uppercase tracking-wider hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors duration-200"
                                 >
                                   {tag}
                                 </span>
@@ -258,7 +236,7 @@ export default function ResearchSection() {
                           {/* CTA */}
                           <a
                             href={paper.link}
-                            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#050505] text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#333] transition-colors duration-200 group"
+                            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#050505] text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#FF4D00] transition-colors duration-200 group"
                           >
                             Read Full Paper
                             <FiArrowUpRight size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -272,74 +250,54 @@ export default function ResearchSection() {
             ))}
           </div>
 
-          {/* Ongoing Research Section */}
+          {/* Conference Presentations Section */}
           <div>
             {/* Section Header */}
-            <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-[#050505]">
-                  <FiCode className="text-white" size={14} />
-                </div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
-                  Ongoing Research
-                </span>
+            <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center gap-3">
+              <div className="p-2 bg-[#050505]">
+                <FiBook className="text-white" size={14} />
               </div>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 bg-green-500" />
-                </span>
-                <span className="font-mono text-[8px] sm:text-[9px] font-bold text-green-600 uppercase tracking-wider hidden sm:inline">
-                  Active
-                </span>
-              </div>
+              <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
+                Conference Presentations
+              </span>
             </div>
 
-            {/* Research Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3">
-              {ONGOING_RESEARCH.map((research, index) => (
+            {/* Presentations Grid */}
+            <div className="grid sm:grid-cols-2">
+              {CONFERENCE_PRESENTATIONS.map((pres, index) => (
                 <motion.div
-                  key={research.id}
+                  key={pres.id}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ ...fast, delay: index * 0.05 }}
-                  className={`p-4 sm:p-6 border-b sm:border-b lg:border-b-0 border-[#E5E5E5] hover:bg-[#050505] transition-colors duration-300 group cursor-default flex flex-col min-h-[200px] sm:min-h-[240px]
-                    ${index < 2 ? 'sm:border-r lg:border-r' : ''} 
-                    ${index === 0 ? 'lg:border-r' : ''}
-                    ${index === 1 ? 'lg:border-r' : ''}
+                  className={`p-4 sm:p-6 md:p-8 hover:bg-[#050505] transition-colors duration-300 group cursor-default flex flex-col min-h-[200px] sm:min-h-[260px]
+                    ${index === 0 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''}
                   `}
                 >
-                  {/* Status Row */}
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full bg-green-400 opacity-75" />
-                        <span className="relative inline-flex h-1.5 w-1.5 bg-green-500" />
-                      </span>
-                      <span className="font-mono text-[9px] sm:text-[10px] text-green-600 group-hover:text-green-400 uppercase tracking-widest font-bold transition-colors duration-300">
-                        {research.status}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1 text-gray-400 group-hover:text-gray-500 transition-colors duration-300">
-                      <FiClock size={10} />
-                      <span className="font-mono text-[9px] sm:text-[10px] uppercase">{research.timeline}</span>
-                    </div>
-                  </div>
-
                   {/* Title */}
                   <h4 className="text-sm sm:text-base font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300 leading-tight">
-                    {research.title}
+                    {pres.title}
                   </h4>
+
+                  {/* Co-authors */}
+                  <p className="text-[11px] sm:text-xs text-gray-500 group-hover:text-gray-400 mb-2 transition-colors duration-300">
+                    {pres.coAuthors}
+                  </p>
+
+                  {/* Venue */}
+                  <p className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-3 group-hover:text-gray-500 transition-colors duration-300">
+                    {pres.venue}
+                  </p>
 
                   {/* Description */}
                   <p className="text-[11px] sm:text-xs text-gray-600 group-hover:text-gray-400 leading-relaxed mb-3 sm:mb-4 flex-1 transition-colors duration-300">
-                    {research.desc}
+                    {pres.desc}
                   </p>
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
-                    {research.tags.slice(0, 3).map((tag) => (
+                    {pres.tags.map((tag) => (
                       <span
                         key={tag}
                         className="px-1.5 sm:px-2 py-0.5 bg-[#F4F4F5] group-hover:bg-[#333] font-mono text-[8px] sm:text-[9px] text-gray-500 group-hover:text-gray-400 uppercase transition-colors duration-300"
@@ -349,17 +307,15 @@ export default function ResearchSection() {
                     ))}
                   </div>
 
-                  {/* Link */}
-                  {research.link && (
-                    <a
-                      href={research.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 sm:gap-2 text-[#050505] group-hover:text-white font-mono text-[9px] sm:text-[10px] uppercase tracking-widest hover:underline transition-colors duration-300"
-                    >
-                      View Progress <FiExternalLink size={10} />
-                    </a>
-                  )}
+                  {/* DOI Link */}
+                  <a
+                    href={`https://doi.org/${pres.doi}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 text-[#FF4D00] font-mono text-[9px] sm:text-[10px] uppercase tracking-widest hover:underline transition-colors duration-300"
+                  >
+                    DOI: {pres.doi} <FiExternalLink size={10} />
+                  </a>
                 </motion.div>
               ))}
             </div>
@@ -379,7 +335,7 @@ export default function ResearchSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 + i * 0.03 }}
-                    className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-colors duration-200 cursor-default"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors duration-200 cursor-default"
                   >
                     {interest}
                   </motion.span>

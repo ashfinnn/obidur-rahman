@@ -76,6 +76,11 @@
   background: #FF4D00;
 }
 
+/* Interactive link hover color consistency */
+a:hover {
+  color: inherit; /* Let component-level styles handle this */
+}
+
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
