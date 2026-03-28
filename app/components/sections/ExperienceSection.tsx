@@ -31,16 +31,6 @@ const EDUCATION = {
   location: "Chittagong, Bangladesh",
   period: "2022 — 2027 (Expected)",
   desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
-  highlights: [
-    {
-      text: "Best Presenter Award — 24th International Mathematics Conference",
-      isAward: true,
-    },
-    {
-      text: "Coursework: Real Analysis, Linear Algebra, Abstract Algebra, Complex Analysis, Numerical Methods",
-      isAward: false,
-    },
-  ],
   courses: [
     "Real Analysis",
     "Linear Algebra",
@@ -80,69 +70,42 @@ export default function ExperienceSection() {
           />
         </motion.div>
 
-        {/* Main Card */}
+        {/* Card */}
         <div className="border border-[#050505] bg-white shadow-xl">
+          {/*
+            Mobile:  flex-col  → Work (header + content) then Education (header + content)
+            Desktop: grid 12   → side by side, divided by a vertical border
+          */}
+          <div className="flex flex-col lg:grid lg:grid-cols-12">
 
-          {/* Header Bar */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 bg-[#050505] text-white border-b border-[#050505]">
-            <div className="lg:col-span-6 p-4 sm:p-6 border-b lg:border-b-0 lg:border-r border-gray-700 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white">
-                  <FiBriefcase className="text-[#050505]" size={16} />
-                </div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
-                  Work Experience
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                  </span>
-                  <span className="font-mono text-[8px] sm:text-[9px] font-bold text-green-400 uppercase tracking-wider hidden sm:inline">
-                    Active
-                  </span>
-                </div>
-                <FiArrowUpRight className="text-gray-500" size={18} />
-              </div>
-            </div>
-            <div className="lg:col-span-6 p-4 sm:p-6 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white">
-                  <FiBook className="text-[#050505]" size={16} />
-                </div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
-                  Education
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
-                  </span>
-                  <span className="font-mono text-[8px] sm:text-[9px] font-bold text-blue-400 uppercase tracking-wider hidden sm:inline">
-                    Ongoing
-                  </span>
-                </div>
-                <FiArrowUpRight className="text-gray-500" size={18} />
-              </div>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#050505]">
-
-            {/* ── Work Column ── */}
+            {/* ── WORK ── */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={fast}
-              className="lg:col-span-6 group hover:bg-[#050505] transition-colors duration-300 cursor-default"
+              className="lg:col-span-6 group hover:bg-[#050505] transition-colors duration-300 cursor-default lg:border-r border-[#050505] border-b lg:border-b-0"
             >
-              {/* Role block */}
+              {/* Work header */}
+              <div className="bg-[#050505] text-white p-3 sm:p-6 flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="p-1.5 sm:p-2 bg-white">
+                    <FiBriefcase className="text-[#050505]" size={14} />
+                  </div>
+                  <span className="font-mono text-[9px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
+                    Work Experience
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                  </span>
+                  <FiArrowUpRight className="text-gray-500 hidden sm:block" size={18} />
+                </div>
+              </div>
+
+              {/* Work body */}
               <div className="p-6 sm:p-8">
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
                   <div>
@@ -153,7 +116,6 @@ export default function ExperienceSection() {
                       @ {WORK.company}
                     </p>
                   </div>
-                  {/* Inline meta pill */}
                   <div className="flex items-center gap-3 shrink-0">
                     <span className="flex items-center gap-1.5 text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-300 font-mono">
                       <FiCalendar size={11} />
@@ -171,7 +133,6 @@ export default function ExperienceSection() {
                 </p>
               </div>
 
-              {/* Responsibilities block — timeline style */}
               <div className="px-6 sm:px-8 pb-6 sm:pb-8">
                 <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest block mb-4">
                   Key Responsibilities
@@ -179,7 +140,6 @@ export default function ExperienceSection() {
                 <ul className="space-y-0 ml-3">
                   {WORK.responsibilities.map((item, i) => (
                     <li key={i} className="flex items-start gap-3 pb-4 last:pb-0">
-                      {/* dot — pulled left to sit on the rail */}
                       <div className="shrink-0 -ml-[5px] mt-[5px] w-[9px] h-[9px] bg-[#050505] group-hover:bg-[#FF4D00] transition-colors duration-300" />
                       <span className="text-[11px] sm:text-sm text-gray-600 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed">
                         {item}
@@ -190,7 +150,7 @@ export default function ExperienceSection() {
               </div>
             </motion.div>
 
-            {/* ── Education Column ── */}
+            {/* ── EDUCATION ── */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -198,7 +158,26 @@ export default function ExperienceSection() {
               transition={{ ...fast, delay: 0.1 }}
               className="lg:col-span-6 group hover:bg-[#050505] transition-colors duration-300 cursor-default flex flex-col"
             >
-              {/* Degree block */}
+              {/* Education header */}
+              <div className="bg-[#050505] text-white p-3 sm:p-6 flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="p-1.5 sm:p-2 bg-white">
+                    <FiBook className="text-[#050505]" size={14} />
+                  </div>
+                  <span className="font-mono text-[9px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
+                    Education
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+                  </span>
+                  <FiArrowUpRight className="text-gray-500 hidden sm:block" size={18} />
+                </div>
+              </div>
+
+              {/* Education body */}
               <div className="p-6 sm:p-8">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight group-hover:text-white transition-colors duration-300 mb-0.5">
                   {EDUCATION.degree}
@@ -222,7 +201,6 @@ export default function ExperienceSection() {
                 </p>
               </div>
 
-              {/* Award block */}
               <div className="px-6 sm:px-8 py-4 flex items-start gap-3 bg-[#050505]/[0.02] group-hover:bg-white/5 transition-colors duration-300">
                 <FiAward className="text-[#FF4D00] mt-0.5 flex-shrink-0" size={16} />
                 <span className="text-[11px] sm:text-sm text-[#FF4D00] font-semibold leading-snug">
@@ -230,7 +208,6 @@ export default function ExperienceSection() {
                 </span>
               </div>
 
-              {/* Coursework block — pill grid */}
               <div className="p-6 sm:p-8 flex-1">
                 <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest block mb-3">
                   Coursework
@@ -249,7 +226,6 @@ export default function ExperienceSection() {
             </motion.div>
 
           </div>
-
         </div>
       </div>
     </section>
