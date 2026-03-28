@@ -92,7 +92,7 @@ export default function Hero() {
           variants={item}
           className="pl-4 border-l-2 border-[#FF4D00] my-4 sm:my-6 md:my-8 md:ml-2"
         >
-          <p className="font-mono text-[12px] sm:text-[12px] md:text-sm leading-relaxed text-gray-600 uppercase whitespace-nowrap">
+          <p className="font-mono text-[10px] sm:text-[10px] md:text-sm leading-relaxed text-gray-600 uppercase whitespace-nowrap">
             Deep Learning · Computer Vision · Model Compression
           </p>
         </motion.div>
