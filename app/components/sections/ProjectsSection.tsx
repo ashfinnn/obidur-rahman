@@ -60,36 +60,35 @@ export default function ProjectsSection() {
 
         {/* Main Container */}
         <div className="border border-[#050505] bg-white shadow-xl">
+
           {/* Project Header Row */}
           <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#050505]">
-            {/* Title & Year */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={fast}
-              className="lg:col-span-8 p-5 sm:p-6 md:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-[#050505]"
+              className="lg:col-span-8 p-5 sm:p-6 md:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-[#050505] bg-[#050505] text-white"
             >
               <div className="flex items-center gap-3 mb-3 sm:mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 bg-[#050505]" />
-                  <span className="font-mono text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest">
+                  <span className="h-2 w-2 bg-[#FF4D00]" />
+                  <span className="font-mono text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">
                     Featured Project
                   </span>
                 </div>
-                <span className="font-mono text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">
+                <span className="font-mono text-[10px] sm:text-xs text-gray-600 uppercase tracking-widest">
                   / {PROJECT.year}
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2">
                 {PROJECT.title}
               </h3>
-              <p className="text-sm sm:text-base text-gray-500">
+              <p className="text-sm sm:text-base text-gray-400">
                 {PROJECT.subtitle}
               </p>
             </motion.div>
 
-            {/* Links */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -103,13 +102,8 @@ export default function ProjectsSection() {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center justify-center p-4 sm:p-6 border-r border-[#050505] hover:bg-[#050505] hover:text-white transition-colors duration-300 group"
               >
-                <FiExternalLink
-                  size={20}
-                  className="mb-2 group-hover:scale-110 transition-transform"
-                />
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">
-                  Live Site
-                </span>
+                <FiExternalLink size={20} className="mb-2 group-hover:scale-110 transition-transform" />
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">Live Site</span>
               </a>
               <a
                 href={PROJECT.github}
@@ -117,13 +111,8 @@ export default function ProjectsSection() {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center justify-center p-4 sm:p-6 hover:bg-[#050505] hover:text-white transition-colors duration-300 group"
               >
-                <FiGithub
-                  size={20}
-                  className="mb-2 group-hover:scale-110 transition-transform"
-                />
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">
-                  Source
-                </span>
+                <FiGithub size={20} className="mb-2 group-hover:scale-110 transition-transform" />
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">Source</span>
               </a>
             </motion.div>
           </div>
@@ -150,20 +139,14 @@ export default function ProjectsSection() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ ...fast, delay: i * 0.05 }}
-                className={`p-4 sm:p-6 md:p-8 flex flex-col group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default ${i < PROJECT.features.length - 1
-                  ? "border-r border-[#050505]"
-                  : ""
-                  } ${i < 2 ? "border-b md:border-b-0 border-[#050505]" : ""}`}
+                className={`p-4 sm:p-6 md:p-8 flex flex-col group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default
+                  ${i < PROJECT.features.length - 1 ? "border-r border-[#050505]" : ""}
+                  ${i < 2 ? "border-b md:border-b-0 border-[#050505]" : ""}`}
               >
                 <div className="p-2 sm:p-3 bg-[#F4F4F5] border border-[#E5E5E5] w-fit mb-3 sm:mb-4 group-hover:bg-white group-hover:border-white transition-colors duration-300">
-                  <feature.icon
-                    size={18}
-                    className="text-[#050505] transition-colors"
-                  />
+                  <feature.icon size={18} className="text-[#050505] transition-colors" />
                 </div>
-                <h4 className="font-bold text-sm sm:text-base mb-1">
-                  {feature.title}
-                </h4>
+                <h4 className="font-bold text-sm sm:text-base mb-1">{feature.title}</h4>
                 <p className="text-[10px] sm:text-xs text-gray-500 group-hover:text-gray-300 transition-colors">
                   {feature.desc}
                 </p>
@@ -171,13 +154,13 @@ export default function ProjectsSection() {
             ))}
           </div>
 
-          {/* Tech Stack Row */}
+          {/* Tech Stack Row — black */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ ...fast, delay: 0.2 }}
-            className="p-5 sm:p-6 md:p-8 border-b border-[#050505] flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
+            className="bg-[#050505] p-5 sm:p-6 md:p-8 border-b border-[#050505] flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
           >
             <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest shrink-0">
               Built with:
@@ -190,7 +173,7 @@ export default function ProjectsSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + i * 0.03 }}
-                  className="px-2 sm:px-3 py-1 sm:py-1.5 bg-[#F4F4F5] border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-colors cursor-default"
+                  className="px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-600 font-mono text-[10px] sm:text-xs text-gray-200 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors cursor-default"
                 >
                   {tech}
                 </motion.span>

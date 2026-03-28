@@ -104,14 +104,26 @@ export default function ResearchSection() {
 
           {/* Under Review Section */}
           <div className="border-b border-[#050505]">
-            {/* Section Header */}
-            <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center gap-3">
-              <div className="p-2 bg-[#050505]">
-                <FiFileText className="text-white" size={14} />
+
+            {/* Section Header — dark bar */}
+            <div className="bg-[#050505] p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white">
+                  <FiFileText className="text-[#050505]" size={14} />
+                </div>
+                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
+                  Under Review
+                </span>
               </div>
-              <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
-                Under Review
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+                </span>
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold text-amber-400 uppercase tracking-wider hidden sm:inline">
+                  Pending
+                </span>
+              </div>
             </div>
 
             {/* Paper Card */}
@@ -251,15 +263,27 @@ export default function ResearchSection() {
           </div>
 
           {/* Conference Presentations Section */}
-          <div>
-            {/* Section Header */}
-            <div className="p-4 sm:p-6 border-b border-[#050505] flex items-center gap-3">
-              <div className="p-2 bg-[#050505]">
-                <FiBook className="text-white" size={14} />
+          <div className="border-b border-[#050505]">
+
+            {/* Section Header — dark bar */}
+            <div className="bg-[#050505] p-4 sm:p-6 border-b border-[#050505] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white">
+                  <FiBook className="text-[#050505]" size={14} />
+                </div>
+                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
+                  Conference Presentations
+                </span>
               </div>
-              <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500">
-                Conference Presentations
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                </span>
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold text-green-400 uppercase tracking-wider hidden sm:inline">
+                  Published
+                </span>
+              </div>
             </div>
 
             {/* Presentations Grid */}
@@ -275,27 +299,18 @@ export default function ResearchSection() {
                     ${index === 0 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''}
                   `}
                 >
-                  {/* Title */}
                   <h4 className="text-sm sm:text-base font-bold mb-2 sm:mb-3 group-hover:text-white transition-colors duration-300 leading-tight">
                     {pres.title}
                   </h4>
-
-                  {/* Co-authors */}
                   <p className="text-[11px] sm:text-xs text-gray-500 group-hover:text-gray-400 mb-2 transition-colors duration-300">
                     {pres.coAuthors}
                   </p>
-
-                  {/* Venue */}
                   <p className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-3 group-hover:text-gray-500 transition-colors duration-300">
                     {pres.venue}
                   </p>
-
-                  {/* Description */}
                   <p className="text-[11px] sm:text-xs text-gray-600 group-hover:text-gray-400 leading-relaxed mb-3 sm:mb-4 flex-1 transition-colors duration-300">
                     {pres.desc}
                   </p>
-
-                  {/* Tags */}
                   <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
                     {pres.tags.map((tag) => (
                       <span
@@ -306,8 +321,6 @@ export default function ResearchSection() {
                       </span>
                     ))}
                   </div>
-
-                  {/* DOI Link */}
                   <a
                     href={`https://doi.org/${pres.doi}`}
                     target="_blank"
@@ -321,28 +334,27 @@ export default function ResearchSection() {
             </div>
           </div>
 
-          {/* Research Interests Footer */}
-          <div className="p-4 sm:p-6 border-t border-[#050505] bg-[#FAFAFA]">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-              <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest shrink-0">
-                Research Interests
-              </span>
-              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {RESEARCH_INTERESTS.map((interest, i) => (
-                  <motion.span
-                    key={interest}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + i * 0.03 }}
-                    className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white border border-[#E5E5E5] font-mono text-[10px] sm:text-xs text-gray-600 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors duration-200 cursor-default"
-                  >
-                    {interest}
-                  </motion.span>
-                ))}
-              </div>
+          {/* Research Interests — dark bar */}
+          <div className="bg-[#050505] p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest shrink-0">
+              Research Interests
+            </span>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {RESEARCH_INTERESTS.map((interest, i) => (
+                <motion.span
+                  key={interest}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.03 }}
+                  className="px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-700 font-mono text-[10px] sm:text-xs text-gray-400 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors duration-200 cursor-default"
+                >
+                  {interest}
+                </motion.span>
+              ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>

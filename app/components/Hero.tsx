@@ -70,8 +70,8 @@ export default function Hero() {
 
         {/* Job Title */}
         <motion.div variants={item} className="flex items-center gap-3 mb-4 md:mb-8">
-          <div className="h-2 w-2 md:h-2.5 md:w-2.5 bg-[#FF4D00]" />
-          <span className="font-mono text-xs sm:text-sm md:text-base font-bold tracking-widest text-[#050505] uppercase">
+          <div className="h-1.5 w-1.5 md:h-2 md:w-2 bg-[#FF4D00]" />
+          <span className="font-mono text-[9px] sm:text-[10px] md:text-sm font-bold tracking-widest text-[#050505] uppercase">
             Machine Learning Engineer
           </span>
         </motion.div>
@@ -87,15 +87,12 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        {/* Tagline */}
+        {/* Details */}
         <motion.div
           variants={item}
-          className="w-full pl-4 border-l-2 border-[#FF4D00] my-4 sm:my-6 md:my-8 md:ml-2 md:w-auto md:max-w-lg"
+          className="pl-4 border-l-2 border-[#FF4D00] my-4 sm:my-6 md:my-8 md:ml-2"
         >
-          <p className="font-mono text-xs sm:text-sm md:text-base leading-relaxed text-[#050505] font-medium">
-            Mathematician turned ML engineer.
-          </p>
-          <p className="font-mono text-[10px] sm:text-xs md:text-sm leading-relaxed text-gray-500 uppercase mt-1">
+          <p className="font-mono text-[12px] sm:text-[12px] md:text-sm leading-relaxed text-gray-600 uppercase whitespace-nowrap">
             Deep Learning · Computer Vision · Model Compression
           </p>
         </motion.div>
@@ -129,7 +126,7 @@ export default function Hero() {
               href="https://github.com/Ashfinn"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
             >
               <FiGithub size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">GitHub</span>
@@ -138,7 +135,7 @@ export default function Hero() {
               href="https://linkedin.com/in/obidur-rahman-shawal"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
             >
               <FiLinkedin size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">LinkedIn</span>
@@ -147,7 +144,7 @@ export default function Hero() {
               href="https://www.researchgate.net/profile/Obidur-Rahman-3"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#FF4D00] hover:bg-[#FF4D00] hover:text-white transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-3 border border-[#E5E5E5] hover:border-[#050505] hover:bg-[#050505] hover:text-white transition-all duration-200"
             >
               <FiBook size={16} />
               <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">ResearchGate</span>

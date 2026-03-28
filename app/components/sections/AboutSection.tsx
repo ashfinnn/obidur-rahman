@@ -45,7 +45,7 @@ export default function AboutSection() {
       <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
 
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -56,12 +56,12 @@ export default function AboutSection() {
             Architecting<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Intelligence</span>
           </h2>
-          <motion.div 
+          <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left" 
+            className="w-full h-[2px] bg-[#050505] origin-left"
           />
         </motion.div>
 
@@ -70,7 +70,7 @@ export default function AboutSection() {
 
           {/* Row 1: Photo + Bio */}
           <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -94,7 +94,7 @@ export default function AboutSection() {
               />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -111,7 +111,7 @@ export default function AboutSection() {
                 <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed max-w-md">
                   Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
                 </p>
-                <a 
+                <a
                   href="/obidur_cv_public.pdf"
                   target="_blank"
                   className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
@@ -128,7 +128,7 @@ export default function AboutSection() {
             <InfoCard
               icon={<FiCpu size={20} />}
               title="Deep Learning"
-              desc="Custom architectures for computer vision using CNNs and Vision Transformers."
+              desc="Custom architectures for computer vision."
               className="border-b sm:border-b md:border-b-0 sm:border-r border-[#050505]"
             />
             <InfoCard
@@ -139,8 +139,8 @@ export default function AboutSection() {
             />
             <InfoCard
               icon={<FiBook size={20} />}
-              title="Math ML"
-              desc="Applying linear algebra and abstract algebra to neural network theory."
+              title="R&D"
+              desc="Prototyping and validating novel ML solutions from research to production."
               className="border-b sm:border-b-0 sm:border-r border-[#050505]"
             />
             <InfoCard
@@ -151,7 +151,7 @@ export default function AboutSection() {
           </div>
 
           {/* Row 3: Tech Stack - DESKTOP VIEW (Grid) */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
@@ -165,7 +165,7 @@ export default function AboutSection() {
 
           {/* Row 3: Tech Stack - MOBILE VIEW (Infinite Marquee) */}
           <div className="md:hidden overflow-hidden relative w-full h-[80px] bg-white">
-            <motion.div 
+            <motion.div
               className="flex absolute left-0"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
@@ -194,7 +194,7 @@ const InfoCard = ({ icon, title, desc, className = "" }: {
   desc: string;
   className?: string;
 }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0 }}
     whileInView={{ opacity: 1 }}
     viewport={{ once: true, margin: "-50px" }}
@@ -219,7 +219,7 @@ const TechItem = ({ data, index, isMobile }: {
   isMobile: boolean;
 }) => {
   const Icon = data.icon;
-  
+
   return (
     <motion.div
       variants={{
@@ -228,9 +228,9 @@ const TechItem = ({ data, index, isMobile }: {
       }}
       className="aspect-square border-r last:border-r-0 border-[#E5E5E5] flex flex-col items-center justify-center relative group cursor-crosshair hover:bg-[#050505] transition-colors duration-200"
     >
-      <Icon 
-        size={24} 
-        className="mb-2 text-[#050505] group-hover:text-white transition-colors duration-200" 
+      <Icon
+        size={24}
+        className="mb-2 text-[#050505] group-hover:text-white transition-colors duration-200"
       />
       <span className="font-mono text-[8px] font-bold tracking-widest text-gray-500 group-hover:text-[#FF4D00] transition-colors duration-200 uppercase text-center px-1">
         {data.name}
