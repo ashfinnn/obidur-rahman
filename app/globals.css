@@ -28,6 +28,7 @@
     /* Ensure body doesn't interfere with scroll */
     position: relative;
     min-height: 100vh;
+    cursor: none;
   }
 
   /* Ensure sections are properly positioned for scroll detection */

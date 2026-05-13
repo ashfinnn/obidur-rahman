@@ -16,19 +16,19 @@ export default function Loader({ onLoaded }: LoaderProps) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setIsComplete(true), 800);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 10) + 2;
-      });
-    }, 120);
+    const handleLoad = () => {
+      setProgress(100);
+      setTimeout(() => setIsComplete(true), 500);
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
 
     return () => {
-      clearInterval(interval);
+      window.removeEventListener('load', handleLoad);
       document.body.style.overflow = '';
     };
   }, []);

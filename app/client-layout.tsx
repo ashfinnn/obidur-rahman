@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Loader from "@/app/components/Loader";
+import Cursor from "@/app/components/ui/Cursor";
 import { ReactLenis } from '@studio-freight/react-lenis';
 
 export default function ClientLayout({
@@ -40,6 +41,7 @@ export default function ClientLayout({
   const content = (
     <>
       {isLoading && <Loader onLoaded={handleLoaded} />}
+      {!isLoading && !isMobile && <Cursor />}
 
       <div 
         className={`
