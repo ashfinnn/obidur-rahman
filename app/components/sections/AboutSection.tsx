@@ -40,10 +40,13 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function AboutSection() {
   return (
-    <section className="bg-white text-[#111] w-full">
+    <section className="relative bg-white text-[#111] w-full overflow-hidden">
+      
+      {/* ── Subtle Grain Overlay ───────────────────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
       {/* ── Name + rule ─────────────────────────────────────────────────────── */}
-      <div className="flex flex-col items-center pt-20 md:pt-28 pb-14 px-6">
+      <div className="relative z-10 flex flex-col items-center pt-20 md:pt-28 pb-14 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +72,7 @@ export default function AboutSection() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={{ visible: { transition: { staggerChildren: 0.09 } }, hidden: {} }}
-        className="flex items-start justify-center gap-8 sm:gap-14 md:gap-20 lg:gap-24 px-6 pb-20 md:pb-28"
+        className="flex flex-wrap items-start justify-center gap-x-8 gap-y-10 sm:gap-x-14 md:gap-x-20 lg:gap-x-24 px-6 pb-20 md:pb-28"
       >
         {DISCIPLINES.map(({ icon: Icon, label }) => (
           <motion.div
@@ -78,7 +81,7 @@ export default function AboutSection() {
               hidden:   { opacity: 0, y: 10 },
               visible:  { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
             }}
-            className="flex flex-col items-center gap-3 group cursor-default"
+            className="flex flex-col items-center gap-3 group cursor-default min-w-[80px]"
           >
             {/* Thin-stroke icon feel */}
             <Icon
@@ -87,7 +90,7 @@ export default function AboutSection() {
               className="text-[#111] group-hover:text-[#FF4D00] transition-colors duration-200"
             />
             <span
-              className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#111]"
+              className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#111] text-center"
               style={{ fontFamily: "'Georgia', serif" }}
             >
               {label}
@@ -100,7 +103,7 @@ export default function AboutSection() {
       <div className="w-full h-[1px] bg-[#E8E8E8]" />
 
       {/* ── Three-column editorial body ──────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
         {/* Col 1 — centered pull-quote / intro */}
         <motion.div
@@ -109,16 +112,16 @@ export default function AboutSection() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease }}
           className="
-            flex items-start justify-center md:justify-end
-            px-8 md:pr-10 lg:pr-16 py-16 md:py-24
-            border-b md:border-b-0 md:border-r border-[#E8E8E8]
+            flex items-start justify-center lg:justify-end
+            px-8 md:px-10 lg:pr-16 py-16 md:py-24
+            border-b md:border-r border-[#E8E8E8]
           "
         >
           <p
             className="
-              text-xl sm:text-2xl md:text-xl lg:text-[1.35rem]
-              leading-[1.45] text-center md:text-right text-[#111]
-              max-w-[280px] md:max-w-[210px] lg:max-w-[250px]
+              text-xl sm:text-2xl lg:text-[1.35rem]
+              leading-[1.45] text-center lg:text-right text-[#111]
+              max-w-[320px] md:max-w-full lg:max-w-[250px]
             "
             style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
@@ -136,11 +139,11 @@ export default function AboutSection() {
           transition={{ duration: 0.7, ease, delay: 0.08 }}
           className="
             px-8 md:px-10 lg:px-14 py-16 md:py-24
-            border-b md:border-b-0 md:border-r border-[#E8E8E8]
+            border-b lg:border-b-0 lg:border-r border-[#E8E8E8]
             space-y-5
           "
         >
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             With a background in pure mathematics, I approach machine learning
             differently — model compression is fundamentally a mathematical
             problem, and I treat it like one. Quantization, pruning, and
@@ -148,7 +151,7 @@ export default function AboutSection() {
             expressions of how we understand the geometry of learned
             representations.
           </p>
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             My work spans custom CV architectures for detection and
             segmentation, efficient inference pipelines optimised for
             CPU-class hardware, and the full research-to-production arc —
@@ -160,7 +163,7 @@ export default function AboutSection() {
             rel="noopener noreferrer"
             className="
               inline-flex items-center gap-1.5 mt-2
-              text-[10px] tracking-[0.28em] uppercase text-[#111]
+              text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-[#111]
               border-b border-[#111] pb-0.5
               hover:text-[#FF4D00] hover:border-[#FF4D00]
               transition-colors duration-200 group
@@ -180,15 +183,15 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease, delay: 0.16 }}
-          className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-5"
+          className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-5 md:col-span-2 lg:col-span-1 border-b md:border-b-0 border-[#E8E8E8]"
         >
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
             Currently working as an R&D Engineer at NorthAxis, prototyping and
             validating novel ML solutions. Previously built medical imaging
             pipelines and satellite-based land-use classification systems —
             work that demanded both rigour and real-world pragmatism.
           </p>
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
             I'm open to research collaborations, engineering roles, and
             consulting at the intersection of computer vision and efficient
             inference. If you need models that are both smart and fast,
@@ -196,7 +199,7 @@ export default function AboutSection() {
           </p>
           <div className="pt-1 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0" />
-            <span className="text-[10px] tracking-[0.22em] uppercase text-[#999]">
+            <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
               Available · Bangladesh · Remote
             </span>
           </div>
@@ -212,7 +215,7 @@ export default function AboutSection() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={{ visible: { transition: { staggerChildren: 0.04 } }, hidden: {} }}
-        className="hidden md:grid grid-cols-12"
+        className="hidden sm:grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12"
       >
         {TECH.map((t) => {
           const Icon = t.icon;
@@ -224,7 +227,7 @@ export default function AboutSection() {
                 visible: { opacity: 1, transition: { duration: 0.2 } },
               }}
               className="
-                aspect-square border-r last:border-r-0 border-[#E8E8E8]
+                aspect-square border-r border-b lg:border-b-0 last:border-r-0 border-[#E8E8E8]
                 flex flex-col items-center justify-center gap-2
                 group hover:bg-[#111] transition-colors duration-200 cursor-crosshair
               "
@@ -239,7 +242,7 @@ export default function AboutSection() {
       </motion.div>
 
       {/* ── Tech stack — mobile marquee ──────────────────────────────────────── */}
-      <div className="md:hidden overflow-hidden relative w-full h-[70px] border-t border-[#E8E8E8]">
+      <div className="sm:hidden overflow-hidden relative w-full h-[70px] border-t border-[#E8E8E8]">
         <motion.div
           className="flex absolute left-0"
           animate={{ x: ["0%", "-50%"] }}

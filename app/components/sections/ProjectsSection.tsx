@@ -7,35 +7,35 @@ import { FiArrowUpRight, FiCornerDownRight } from "react-icons/fi";
 const PROJECTS = [
   {
     id: "01",
-    title: "THIS PORTFOLIO",
-    category: "Frontend Architecture",
+    title: "CPU-CONSTRAINED VISION",
+    category: "Computer Vision & Research",
     year: "2024",
     image:
       "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
-    link: "https://obidur.vercel.app",
+    link: "/research/cpu-constrained-vision",
   },
   {
     id: "02",
-    title: "CLIMATE ML",
-    category: "Research Systems",
-    year: "2025",
+    title: "SATELLITE ANALYSIS",
+    category: "Remote Sensing / ML",
+    year: "2023",
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
     link: "#",
   },
   {
     id: "03",
-    title: "RAG ENGINE",
-    category: "LLM Infrastructure",
-    year: "2025",
+    title: "BIO-MEDICAL IMAGING",
+    category: "Healthcare Technology",
+    year: "2023",
     image:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
     link: "#",
   },
   {
     id: "04",
-    title: "VISION STACK",
-    category: "Computer Vision",
+    title: "NORTHAXIS AI R&D",
+    category: "Systems Engineering",
     year: "2025",
     image:
       "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=1600&auto=format&fit=crop",
@@ -66,73 +66,91 @@ export default function ProjectsSection() {
   });
 
   return (
-    <section className="bg-white text-[#111] w-full min-h-screen flex flex-col">
+    <section className="relative bg-white text-[#111] w-full min-h-screen flex flex-col overflow-hidden">
       
+      {/* ── Subtle Grain Overlay ───────────────────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
       {/* ── HEADER ────────────────────────────────────────────────────────── */}
-      <div className="px-6 sm:px-12 md:px-24 pt-32 pb-20">
+      <div className="relative z-10 flex flex-col items-center pt-20 md:pt-28 pb-14 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease }}
+          transition={{ duration: 0.7, ease }}
+          className="flex flex-col items-center"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="h-1.5 w-1.5 bg-[#FF4D00]" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#999]">
-              Selected Works & Case Studies
+          <div className="flex items-center gap-3 mb-7">
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="h-[1.5px] w-8 bg-[#FF4D00]" 
+            />
+            <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#999]">
+              Case Studies
             </span>
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="h-[1.5px] w-8 bg-[#FF4D00]" 
+            />
           </div>
 
           <h2 
-            className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-light tracking-tighter leading-[0.85] uppercase mb-12"
-            style={{ fontFamily: "'Georgia', serif" }}
+            className="text-xl md:text-2xl tracking-[0.4em] uppercase text-[#111]"
+            style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
-            Projects<span className="text-[#FF4D00]">.</span>
+            Selected Projects<span className="text-[#FF4D00]">.</span>
           </h2>
         </motion.div>
       </div>
 
+      {/* ── Full-width divider ───────────────────────────────────────────────── */}
+      <div className="w-full h-[1px] bg-[#E8E8E8]" />
+
       {/* ── PROJECTS LIST ─────────────────────────────────────────────────── */}
-      <div className="w-full border-t border-[#E8E8E8]">
+      <div className="relative z-10 w-full">
         {PROJECTS.map((project, i) => (
           <motion.a
             key={project.id}
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: i * 0.1, ease }}
+            transition={{ duration: 0.6, delay: i * 0.08, ease }}
             onMouseEnter={() => setActiveProject(project)}
             onMouseLeave={() => setActiveProject(null)}
             onMouseMove={(e) => {
               mouseX.set(e.clientX - 220);
               mouseY.set(e.clientY - 140);
             }}
-            className="group relative flex flex-col md:flex-row md:items-center justify-between py-12 px-6 sm:px-12 md:px-24 border-b border-[#E8E8E8] transition-colors hover:bg-[#FAFAFA]"
+            className="group relative flex flex-col md:flex-row md:items-center justify-between py-10 px-8 md:px-10 lg:px-14 border-b border-[#E8E8E8] transition-colors hover:bg-[#FAFAFA]"
           >
-            <div className="flex items-center gap-8 md:gap-16">
-              <span className="font-mono text-[10px] text-[#999] pt-2">[{project.id}]</span>
+            <div className="flex items-center gap-6 md:gap-12">
+              <span className="font-mono text-[9px] text-[#bbb] tracking-widest uppercase">[{project.id}]</span>
               <div>
                 <h3 
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none text-[#111] group-hover:text-[#FF4D00] transition-colors"
-                  style={{ fontFamily: "'Georgia', serif" }}
+                  className="text-2xl md:text-3xl tracking-tight leading-tight text-[#111] group-hover:text-[#FF4D00] transition-colors"
+                  style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
                 >
                   {project.title}
                 </h3>
-                <div className="mt-4 flex items-center gap-4">
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#999]">{project.category}</span>
+                <div className="mt-2 flex items-center gap-4">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#999]">{project.category}</span>
                   <span className="w-1 h-1 bg-[#E8E8E8] rounded-full" />
-                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#999]">{project.year}</span>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#999]">{project.year}</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 md:mt-0 flex items-center gap-4">
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#999] opacity-0 group-hover:opacity-100 transition-opacity">View Case Study</span>
-              <div className="w-12 h-12 border border-[#E8E8E8] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-all">
-                <FiArrowUpRight size={20} />
+            <div className="mt-6 md:mt-0 flex items-center gap-5">
+              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-[#bbb] opacity-0 group-hover:opacity-100 transition-opacity">View Case Study</span>
+              <div className="w-10 h-10 border border-[#E8E8E8] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-all">
+                <FiArrowUpRight size={16} />
               </div>
             </div>
           </motion.a>
@@ -140,13 +158,13 @@ export default function ProjectsSection() {
       </div>
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <div className="w-full p-10 flex justify-between items-center bg-white">
-         <div className="flex gap-10 font-mono text-[8px] uppercase tracking-[0.4em] text-[#999]">
-            <span>Total Projects: {PROJECTS.length}</span>
-            <span className="hidden sm:block">Filter: All Works</span>
+      <div className="relative z-10 w-full px-8 md:px-10 lg:px-14 py-8 flex justify-between items-center bg-white border-t border-[#E8E8E8]">
+         <div className="flex gap-10 font-mono text-[8px] uppercase tracking-[0.4em] text-[#bbb]">
+            <span>Vol. {PROJECTS.length}</span>
+            <span className="hidden sm:block">Index: Primary</span>
          </div>
-         <div className="font-mono text-[8px] uppercase tracking-[0.4em] text-[#999]">
-            Hover for Preview
+         <div className="font-mono text-[8px] uppercase tracking-[0.4em] text-[#bbb]">
+            2023—2025 Archive
          </div>
       </div>
 

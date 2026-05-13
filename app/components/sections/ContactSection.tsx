@@ -88,31 +88,31 @@ export default function ContactSection() {
       {/* MAIN CONTENT */}
       <div className="relative z-10 flex h-full w-full flex-col">
         {/* TOP GRID */}
-        <div className="grid flex-1 min-h-0 grid-cols-1 lg:grid-cols-12">
+        <div className="grid flex-1 min-h-0 grid-cols-1 lg:grid-cols-12 overflow-y-auto lg:overflow-hidden no-scrollbar">
           {/* LEFT PANEL: THE VAULT + LINKS */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col justify-between border-r border-white/5 bg-[#0A0A0A] p-8 sm:p-12 md:p-16 lg:col-span-4"
+            className="flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 bg-[#0A0A0A] p-8 sm:p-12 md:p-14 lg:col-span-4"
           >
             <div 
               onClick={() => scrollTo('projects')}
               className="group cursor-pointer"
             >
-              <div className="mb-8 flex items-start justify-between">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 sm:text-xs">
+              <div className="mb-6 md:mb-8 flex items-start justify-between">
+                <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.4em] opacity-40">
                   Portfolio
                 </span>
 
                 <FiArrowUpRight
-                  size={24}
+                  size={20}
                   className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
                 />
               </div>
 
-              <h3 className="text-4xl font-black uppercase leading-[0.9] tracking-tighter sm:text-5xl">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase leading-[0.9] tracking-tighter">
                 Return to
                 <br />
                 The Vault.
@@ -120,14 +120,14 @@ export default function ContactSection() {
             </div>
 
             {/* INTEGRATED SOCIAL LINKS */}
-            <div className="mt-12 flex flex-col gap-8">
-              <p className="max-w-[200px] font-mono text-[10px] uppercase tracking-widest opacity-30 leading-relaxed">
+            <div className="mt-10 md:mt-12 flex flex-col gap-6 md:gap-8">
+              <p className="max-w-[200px] font-mono text-[9px] sm:text-[10px] uppercase tracking-widest opacity-30 leading-relaxed">
                 View all selected works and research projects.
               </p>
               
-              <div className="flex flex-col gap-4">
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-20">Find Me Online</span>
-                <div className="flex gap-6">
+              <div className="flex flex-col gap-3 md:gap-4">
+                <span className="font-mono text-[8px] uppercase tracking-[0.3em] opacity-20">Find Me Online</span>
+                <div className="flex gap-5 md:gap-6">
                   {SOCIAL_LINKS.map((link) => (
                     <a
                       key={link.name}
@@ -137,14 +137,14 @@ export default function ContactSection() {
                       className="group/link flex items-center justify-center transition-opacity hover:opacity-100 opacity-40"
                       title={link.name}
                     >
-                      <link.icon size={20} className="transition-colors group-hover/link:text-[#FF4D00]" />
+                      <link.icon size={18} className="md:w-5 md:h-5 transition-colors group-hover/link:text-[#FF4D00]" />
                     </a>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-8 border-t border-white/5">
-                <p className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-20">
+              <div className="pt-6 md:pt-8 border-t border-white/5">
+                <p className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] opacity-20">
                   © {new Date().getFullYear()} Obidur Rahman
                 </p>
               </div>
@@ -164,32 +164,39 @@ export default function ContactSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className={`relative overflow-hidden transition-colors duration-500 lg:col-span-8 ${
+            className={`relative overflow-hidden transition-colors duration-500 lg:col-span-8 min-h-[400px] lg:min-h-0 ${
               isHovered ? 'bg-[#FF4D00]' : 'bg-[#6344E8]'
             }`}
           >
             <AnimatePresence mode="wait">
+              {/* On mobile, we might want to show options directly or simplify */}
               {!isHovered ? (
                 <motion.div
                   key="default"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="flex h-full w-full flex-col justify-between p-8 sm:p-12 md:p-16"
+                  className="flex h-full w-full flex-col justify-between p-8 sm:p-12 md:p-14 lg:p-16"
+                  onClick={() => {
+                    // Toggle for touch devices
+                    if (window.matchMedia('(max-width: 1024px)').matches) {
+                      setIsHovered(true);
+                    }
+                  }}
                 >
                   <div>
-                    <span className="mb-10 block font-mono text-[10px] font-bold uppercase tracking-[0.5em] opacity-60 sm:text-xs">
+                    <span className="mb-8 md:mb-10 block font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.5em] opacity-60">
                       Get In Touch
                     </span>
 
-                    <h3 className="mb-8 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl tracking-tight">
+                    <h3 className="mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
                       Let&apos;s get to it.
                       <br />
                       together.
                     </h3>
                   </div>
 
-                  <div className="text-6xl font-black uppercase leading-[0.8] tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl">
+                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase leading-[0.8] tracking-tighter">
                     Start a
                     <br />
                     Project
@@ -203,53 +210,62 @@ export default function ContactSection() {
                   exit={{ opacity: 0, y: -10 }}
                   className="flex h-full w-full flex-col"
                 >
-                  <div className="p-8 sm:p-12 md:p-16 pb-6 sm:pb-8">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.5em] text-white/90 sm:text-xs">
+                  <div className="p-8 sm:p-12 md:p-14 flex justify-between items-center">
+                    <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.5em] text-white/90">
                       Choose Method
                     </span>
+                    <button 
+                      className="lg:hidden font-mono text-[9px] uppercase tracking-widest bg-white/10 px-3 py-1 rounded-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsHovered(false);
+                      }}
+                    >
+                      Back
+                    </button>
                   </div>
 
                   <div className="flex flex-1 flex-col">
                     <a
                       href={`mailto:${email}`}
-                      className="group/opt flex flex-1 items-center border-y border-white/20 px-8 sm:px-12 md:px-16 transition-colors hover:bg-black/10"
+                      className="group/opt flex flex-1 items-center border-y border-white/20 px-8 sm:px-12 md:px-14 py-10 lg:py-0 transition-colors hover:bg-black/10"
                     >
                       <div className="flex flex-col">
-                        <span className="text-4xl font-black uppercase tracking-tighter sm:text-5xl md:text-6xl">
+                        <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter">
                           Send Email
                         </span>
 
-                        <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] opacity-70">
+                        <span className="mt-2 font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] opacity-70">
                           Direct Communication
                         </span>
                       </div>
 
                       <FiArrowRight
-                        size={32}
+                        size={28}
                         className="ml-auto transition-transform group-hover/opt:translate-x-2"
                       />
                     </a>
 
                     <button
                       onClick={handleCopy}
-                      className="group/opt flex flex-1 items-center px-8 sm:px-12 md:px-16 text-left transition-colors hover:bg-black/10"
+                      className="group/opt flex flex-1 items-center px-8 sm:px-12 md:px-14 py-10 lg:py-0 text-left transition-colors hover:bg-black/10"
                     >
                       <div className="flex flex-col">
-                        <span className="text-4xl font-black uppercase tracking-tighter sm:text-5xl md:text-6xl">
+                        <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter">
                           {copied ? 'Address Copied' : 'Copy Address'}
                         </span>
 
-                        <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] opacity-70">
+                        <span className="mt-2 font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.3em] opacity-70">
                           To Clipboard
                         </span>
                       </div>
 
                       <div className="ml-auto">
                         {copied ? (
-                          <FiCheck size={32} />
+                          <FiCheck size={28} />
                         ) : (
                           <FiCopy
-                            size={32}
+                            size={28}
                             className="transition-transform group-hover/opt:scale-110"
                           />
                         )}

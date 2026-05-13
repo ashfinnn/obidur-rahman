@@ -76,46 +76,46 @@ export default function ExperienceSection() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease }}
           className="
-            px-8 md:px-10 lg:px-14 py-16 md:py-24
+            px-6 sm:px-10 lg:px-14 py-16 md:py-24
             border-b md:border-b-0 md:border-r border-[#E8E8E8]
             space-y-6
           "
         >
           {/* Label */}
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
             Work Experience
           </span>
 
           {/* Role & Meta */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3
-              className="text-2xl md:text-3xl tracking-tight text-[#111]"
+              className="text-2xl sm:text-3xl tracking-tight text-[#111] leading-tight"
               style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
             >
               {WORK.role}
             </h3>
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
                 {WORK.company}
               </span>
-              <span className="w-1 h-1 rounded-full bg-[#E8E8E8]" />
-              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-[#E8E8E8]" />
+              <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
                 {WORK.location} · {WORK.period}
               </span>
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             {WORK.desc}
           </p>
 
           {/* Responsibilities List */}
-          <ul className="space-y-3 pt-2">
+          <ul className="space-y-4 pt-2">
             {WORK.responsibilities.map((item, i) => (
               <li key={i} className="flex gap-3 group">
-                <span className="w-1 h-1 mt-[10px] bg-[#E8E8E8] shrink-0 group-hover:bg-[#FF4D00] transition-colors duration-200" />
-                <p className="text-sm leading-[1.9] text-[#555] group-hover:text-[#111] transition-colors duration-200">
+                <span className="w-1 h-1 mt-[9px] bg-[#E8E8E8] shrink-0 group-hover:bg-[#FF4D00] transition-colors duration-200" />
+                <p className="text-xs sm:text-sm leading-[1.7] sm:leading-[1.9] text-[#555] group-hover:text-[#111] transition-colors duration-200">
                   {item}
                 </p>
               </li>
@@ -129,41 +129,41 @@ export default function ExperienceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease, delay: 0.08 }}
-          className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-6"
+          className="px-6 sm:px-10 lg:px-14 py-16 md:py-24 space-y-6"
         >
           {/* Label */}
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
             Academic Base
           </span>
 
           {/* Degree & Meta */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h3
-              className="text-2xl md:text-3xl tracking-tight text-[#111]"
+              className="text-2xl sm:text-3xl tracking-tight text-[#111] leading-tight"
               style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
             >
               {EDUCATION.degree}
             </h3>
-            <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+            <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
               {EDUCATION.institution} · {EDUCATION.period}
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-sm leading-[1.9] text-[#555]">
+          <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             {EDUCATION.desc}
           </p>
 
           {/* Coursework */}
           <div className="pt-2">
-            <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-[#bbb] block mb-4">
+            <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.22em] uppercase text-[#bbb] block mb-4">
               Focus Coursework
             </span>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               {EDUCATION.courses.map((course) => (
                 <span
                   key={course}
-                  className="font-mono text-[10px] tracking-widest text-[#999] uppercase"
+                  className="font-mono text-[9px] sm:text-[10px] tracking-widest text-[#999] uppercase"
                 >
                   {course}
                 </span>
@@ -173,13 +173,13 @@ export default function ExperienceSection() {
 
           {/* Recognition / Award */}
           <div className="pt-6 border-t border-[#E8E8E8]">
-            <div className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0 mt-1.5" />
-              <div className="space-y-1">
-                <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-[#999] block">
+            <div className="flex items-start gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0 mt-[6px]" />
+              <div className="space-y-1.5">
+                <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.22em] uppercase text-[#999] block">
                   Recognition
                 </span>
-                <p className="text-sm text-[#555] leading-[1.6]">
+                <p className="text-xs sm:text-sm text-[#555] leading-[1.6]">
                   Best Presenter Award — 24th International Mathematics Conference
                 </p>
               </div>

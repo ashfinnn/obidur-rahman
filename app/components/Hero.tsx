@@ -58,13 +58,13 @@ export default function Hero() {
           variants={container}
           initial="hidden"
           animate={isMounted ? 'visible' : 'hidden'}
-          className="relative z-10 container mx-auto px-6 sm:px-12 md:px-24 flex flex-col lg:flex-row lg:items-center justify-between gap-12"
+          className="relative z-10 container mx-auto px-6 sm:px-10 md:px-16 lg:px-24 flex flex-col lg:flex-row lg:items-center justify-between gap-10 md:gap-12"
         >
           {/* Main Text Block */}
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <motion.h1
               variants={item}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] tracking-tight"
+              className="text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-[1.15] tracking-tight"
               style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
             >
               <span className="italic text-white">Machine Learning Engineer</span> —
@@ -76,13 +76,13 @@ export default function Hero() {
 
             <motion.div
               variants={item}
-              className="mt-8 flex items-center gap-4"
+              className="mt-6 md:mt-8 flex items-center gap-4"
             >
-              <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-white/50">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] text-white/50">
                 Obidur Rahman
               </span>
-              <div className="h-[1px] w-12 bg-white/20" />
-              <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-[#FF4D00]">
+              <div className="h-[1px] w-8 md:w-12 bg-white/20" />
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] text-[#FF4D00]">
                 Available for Research
               </span>
             </motion.div>
@@ -91,26 +91,26 @@ export default function Hero() {
           {/* Right Side */}
           <motion.div
             variants={item}
-            className="flex flex-col gap-6 lg:items-end"
+            className="flex flex-col gap-6 lg:items-end mt-4 lg:mt-0"
           >
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="w-2 h-2 rounded-full bg-[#FF4D00]" />
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#FF4D00]" />
               <a
                 href="mailto:obidur.shawal@gmail.com"
-                className="font-mono text-sm tracking-widest hover:text-[#FF4D00] transition-colors"
+                className="font-mono text-xs md:text-sm tracking-widest hover:text-[#FF4D00] transition-colors"
               >
                 obidur.shawal@gmail.com
               </a>
             </div>
 
-            <div className="flex gap-6 mt-4">
+            <div className="flex gap-5 md:gap-6">
               <a
                 href="https://github.com/Ashfinn"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-white transition-colors"
               >
-                <FiGithub size={20} />
+                <FiGithub size={18} className="md:w-5 md:h-5" />
               </a>
               <a
                 href="https://linkedin.com/in/obidur-rahman-shawal"
@@ -118,7 +118,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-white transition-colors"
               >
-                <FiLinkedin size={20} />
+                <FiLinkedin size={18} className="md:w-5 md:h-5" />
               </a>
               <a
                 href="https://www.researchgate.net/profile/Obidur-Rahman-3"
@@ -126,7 +126,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-white transition-colors"
               >
-                <FiBook size={20} />
+                <FiBook size={18} className="md:w-5 md:h-5" />
               </a>
             </div>
           </motion.div>
