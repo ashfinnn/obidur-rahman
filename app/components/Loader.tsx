@@ -16,19 +16,54 @@ export default function Loader({ onLoaded }: LoaderProps) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
-    const handleLoad = () => {
-      setProgress(100);
-      setTimeout(() => setIsComplete(true), 500);
+    let windowLoaded = false;
+    let gifLoaded = false;
+    let completedSteps = 0;
+    const totalSteps = 2;
+
+    const stepComplete = () => {
+      completedSteps++;
+      setProgress((completedSteps / totalSteps) * 100);
+      if (completedSteps === totalSteps) {
+        setTimeout(() => setIsComplete(true), 500);
+      }
+    };
+
+    const handleWindowLoad = () => {
+      if (!windowLoaded) {
+        windowLoaded = true;
+        stepComplete();
+      }
+    };
+
+    const preloadGif = () => {
+      const img = new Image();
+      img.src = '/bg.gif';
+      img.onload = () => {
+        if (!gifLoaded) {
+          gifLoaded = true;
+          stepComplete();
+        }
+      };
+      img.onerror = () => {
+        if (!gifLoaded) {
+          gifLoaded = true;
+          stepComplete();
+        }
+      };
     };
 
     if (document.readyState === 'complete') {
-      handleLoad();
+      windowLoaded = true;
+      stepComplete();
     } else {
-      window.addEventListener('load', handleLoad);
+      window.addEventListener('load', handleWindowLoad);
     }
 
+    preloadGif();
+
     return () => {
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('load', handleWindowLoad);
       document.body.style.overflow = '';
     };
   }, []);
