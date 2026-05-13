@@ -56,7 +56,7 @@ const RESEARCH_ITEMS = [
   }
 ];
 
-const ease = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function ResearchSection() {
   return (

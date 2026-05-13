@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { FiArrowDown, FiGithub, FiLinkedin, FiBook } from 'react-icons/fi';
 import Image from 'next/image';
 
@@ -12,7 +12,7 @@ export default function Hero() {
     setIsMounted(true);
   }, []);
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -20,12 +20,12 @@ export default function Hero() {
     },
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -65,7 +65,7 @@ export default function Hero() {
             <motion.h1
               variants={item}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] tracking-tight"
-              style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
+              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
             >
               <span className="italic text-white">Machine Learning Engineer</span> —
               with a focus on{' '}

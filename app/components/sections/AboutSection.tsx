@@ -34,7 +34,7 @@ const TECH = [
   { name: "Git",        icon: SiGit        },
 ];
 
-const ease = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 /* ─── Component ─────────────────────────────────────────────────────────────── */
 
