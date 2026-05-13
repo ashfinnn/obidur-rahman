@@ -1,236 +1,283 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence, easeInOut } from "framer-motion";
 import {
-  FiCheck,
-  FiMail,
+  motion,
+  useMotionValue,
+  useSpring,
+  AnimatePresence,
+} from 'framer-motion';
+import { useState } from 'react';
+import {
+  FiArrowUpRight,
+  FiArrowRight,
   FiGithub,
   FiLinkedin,
-  FiArrowUpRight,
+  FiMail,
   FiCopy,
-  FiArrowRight
-} from "react-icons/fi";
-import { SiX } from "react-icons/si";
-
-const fast = { duration: 0.3, ease: easeInOut };
+  FiCheck,
+} from 'react-icons/fi';
+import { SiResearchgate } from 'react-icons/si';
 
 const SOCIAL_LINKS = [
   {
-    name: "GitHub",
-    handle: "@Ashfinnn",
-    url: "https://github.com/Ashfinnn",
+    name: 'GitHub',
+    url: 'https://github.com/Ashfinnn',
     icon: FiGithub,
-    desc: "Open source projects"
   },
   {
-    name: "LinkedIn",
-    handle: "/in/obidur-rahman-shawal",
-    url: "https://linkedin.com/in/obidur-rahman-shawal",
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/obidur-rahman-shawal',
     icon: FiLinkedin,
-    desc: "Professional network"
   },
   {
-    name: "ResearchGate",
-    handle: "/profile/Obidur-Rahman-3",
-    url: "https://www.researchgate.net/profile/Obidur-Rahman-3",
-    icon: FiArrowUpRight,
-    desc: "Research & publications"
+    name: 'ResearchGate',
+    url: 'https://www.researchgate.net/profile/Obidur-Rahman-3',
+    icon: SiResearchgate,
   },
 ];
 
 export default function ContactSection() {
-  const [copied, setCopied] = useState(false);
-  const email = "obidur.shawal@gmail.com";
+  const email = 'obidur.shawal@gmail.com';
 
-  const handleCopy = async () => {
+  const [copied, setCopied] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springX = useSpring(mouseX, {
+    damping: 28,
+    stiffness: 180,
+    mass: 0.5,
+  });
+
+  const springY = useSpring(mouseY, {
+    damping: 28,
+    stiffness: 180,
+    mass: 0.5,
+  });
+
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     try {
       await navigator.clipboard.writeText(email);
+
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
     }
   };
 
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={fast}
-          className="mb-10 sm:mb-12 md:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
-            Get In<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Touch</span>
-          </h2>
+    <section className="relative flex h-full w-full flex-col overflow-hidden bg-[#050505] text-white">
+      {/* MAIN CONTENT */}
+      <div className="relative z-10 flex h-full w-full flex-col">
+        {/* TOP GRID */}
+        <div className="grid flex-1 min-h-0 grid-cols-1 lg:grid-cols-12">
+          {/* LEFT PANEL: THE VAULT + LINKS */}
           <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left"
-          />
-        </motion.div>
-
-        {/* Main Grid Container */}
-        <div className="border border-[#050505] bg-white shadow-xl">
-
-          {/* Row 1: Email Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#050505]">
-
-            {/* Email Display */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={fast}
-              onClick={handleCopy}
-              className="lg:col-span-8 p-6 sm:p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#050505] cursor-pointer group hover:bg-[#050505] transition-colors duration-300"
+            transition={{ duration: 0.8 }}
+            className="flex flex-col justify-between border-r border-white/5 bg-[#0A0A0A] p-8 sm:p-12 md:p-16 lg:col-span-4"
+          >
+            <div 
+              onClick={() => scrollTo('projects')}
+              className="group cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[#050505] group-hover:bg-white transition-colors duration-300">
-                    <FiMail className="text-white group-hover:text-[#050505] transition-colors duration-300" size={16} />
-                  </div>
-                  <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
-                    Email Address
-                  </span>
-                </div>
-                <AnimatePresence mode="wait">
-                  {copied ? (
-                    <motion.span
-                      key="copied"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="flex items-center gap-1.5 text-green-500 font-mono text-[10px] sm:text-xs uppercase tracking-widest"
-                    >
-                      <FiCheck size={14} /> Copied
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="copy"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="flex items-center gap-1.5 text-gray-400 group-hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-colors duration-300"
-                    >
-                      <FiCopy size={12} /> Copy
-                    </motion.span>
-                  )}
-                </AnimatePresence>
+              <div className="mb-8 flex items-start justify-between">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 sm:text-xs">
+                  Portfolio
+                </span>
+
+                <FiArrowUpRight
+                  size={24}
+                  className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
+                />
               </div>
 
-              <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black tracking-tight group-hover:text-white transition-colors duration-300 break-all leading-tight">
-                {email}
-              </p>
+              <h3 className="text-4xl font-black uppercase leading-[0.9] tracking-tighter sm:text-5xl">
+                Return to
+                <br />
+                The Vault.
+              </h3>
+            </div>
 
-              <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
-                Click to copy or use the button to open your email client
+            {/* INTEGRATED SOCIAL LINKS */}
+            <div className="mt-12 flex flex-col gap-8">
+              <p className="max-w-[200px] font-mono text-[10px] uppercase tracking-widest opacity-30 leading-relaxed">
+                View all selected works and research projects.
               </p>
-            </motion.div>
+              
+              <div className="flex flex-col gap-4">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-20">Find Me Online</span>
+                <div className="flex gap-6">
+                  {SOCIAL_LINKS.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/link flex items-center justify-center transition-opacity hover:opacity-100 opacity-40"
+                      title={link.name}
+                    >
+                      <link.icon size={20} className="transition-colors group-hover/link:text-[#FF4D00]" />
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-            {/* Send Email CTA */}
-            <motion.a
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...fast, delay: 0.1 }}
-              href={`mailto:${email}`}
-              className="lg:col-span-4 p-6 sm:p-8 md:p-12 flex flex-col justify-between min-h-[200px] lg:min-h-0 group hover:bg-[#050505] transition-colors duration-300"
-            >
-              <div>
-                <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-500 group-hover:text-gray-400 transition-colors duration-300">
-                  Preferred Method
-                </span>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight mt-2 group-hover:text-white transition-colors duration-300">
-                  Send Email
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-500 group-hover:text-gray-400 mt-2 transition-colors duration-300">
-                  Opens your default email client
+              <div className="pt-8 border-t border-white/5">
+                <p className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-20">
+                  © {new Date().getFullYear()} Obidur Rahman
                 </p>
               </div>
-              <div className="flex items-center gap-2 mt-4">
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors duration-300">
-                  Compose
-                </span>
-                <FiArrowUpRight className="text-gray-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" size={16} />
-              </div>
-            </motion.a>
-          </div>
+            </div>
+          </motion.div>
 
-          {/* Row 2: Social Links */}
-          <div className="grid grid-cols-1 sm:grid-cols-3">
-            {SOCIAL_LINKS.map((social, index) => {
-              const Icon = social.icon;
-              return (
-                <motion.a
-                  key={social.name}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ ...fast, delay: index * 0.05 }}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`p-5 sm:p-6 md:p-8 flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group hover:bg-[#050505] transition-colors duration-300 ${index < 2 ? 'border-b sm:border-b-0 sm:border-r border-[#050505]' : ''
-                    }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <Icon
-                      size={24}
-                      className="text-[#050505] group-hover:text-white transition-colors duration-300"
-                    />
-                    <FiArrowUpRight
-                      className="text-gray-300 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300"
-                      size={18}
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-mono text-xs sm:text-sm font-bold uppercase tracking-widest group-hover:text-white transition-colors duration-300">
-                      {social.name}
-                    </h4>
-                    <p className="text-[10px] sm:text-xs text-gray-400 mt-1 group-hover:text-gray-400 transition-colors duration-300">
-                      {social.desc}
-                    </p>
-                  </div>
-                </motion.a>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 border-t border-[#050505] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
-            <span className="font-mono text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest">
-              © {new Date().getFullYear()} Obidur Rahman
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-gray-300" />
-            <span className="font-mono text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest">
-              Designed with precision
-            </span>
-          </div>
-          <motion.a
-            href="#top"
-            className="group flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 hover:text-[#050505] transition-colors"
+          {/* RIGHT PANEL: CONTACT ACTIONS */}
+          <motion.div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              mouseX.set(e.clientX - rect.left - 100);
+              mouseY.set(e.clientY - rect.top - 40);
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className={`relative overflow-hidden transition-colors duration-500 lg:col-span-8 ${
+              isHovered ? 'bg-[#FF4D00]' : 'bg-[#6344E8]'
+            }`}
           >
-            Back to top
-            <FiArrowRight className="rotate-[-90deg] group-hover:-translate-y-1 transition-transform duration-300" size={12} />
-          </motion.a>
-        </motion.div>
+            <AnimatePresence mode="wait">
+              {!isHovered ? (
+                <motion.div
+                  key="default"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex h-full w-full flex-col justify-between p-8 sm:p-12 md:p-16"
+                >
+                  <div>
+                    <span className="mb-10 block font-mono text-[10px] font-bold uppercase tracking-[0.5em] opacity-60 sm:text-xs">
+                      Get In Touch
+                    </span>
+
+                    <h3 className="mb-8 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl tracking-tight">
+                      Let&apos;s get to it.
+                      <br />
+                      together.
+                    </h3>
+                  </div>
+
+                  <div className="text-6xl font-black uppercase leading-[0.8] tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl">
+                    Start a
+                    <br />
+                    Project
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="options"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex h-full w-full flex-col"
+                >
+                  <div className="p-8 sm:p-12 md:p-16 pb-6 sm:pb-8">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.5em] text-white/90 sm:text-xs">
+                      Choose Method
+                    </span>
+                  </div>
+
+                  <div className="flex flex-1 flex-col">
+                    <a
+                      href={`mailto:${email}`}
+                      className="group/opt flex flex-1 items-center border-y border-white/20 px-8 sm:px-12 md:px-16 transition-colors hover:bg-black/10"
+                    >
+                      <div className="flex flex-col">
+                        <span className="text-4xl font-black uppercase tracking-tighter sm:text-5xl md:text-6xl">
+                          Send Email
+                        </span>
+
+                        <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] opacity-70">
+                          Direct Communication
+                        </span>
+                      </div>
+
+                      <FiArrowRight
+                        size={32}
+                        className="ml-auto transition-transform group-hover/opt:translate-x-2"
+                      />
+                    </a>
+
+                    <button
+                      onClick={handleCopy}
+                      className="group/opt flex flex-1 items-center px-8 sm:px-12 md:px-16 text-left transition-colors hover:bg-black/10"
+                    >
+                      <div className="flex flex-col">
+                        <span className="text-4xl font-black uppercase tracking-tighter sm:text-5xl md:text-6xl">
+                          {copied ? 'Address Copied' : 'Copy Address'}
+                        </span>
+
+                        <span className="mt-2 font-mono text-[10px] uppercase tracking-[0.3em] opacity-70">
+                          To Clipboard
+                        </span>
+                      </div>
+
+                      <div className="ml-auto">
+                        {copied ? (
+                          <FiCheck size={32} />
+                        ) : (
+                          <FiCopy
+                            size={32}
+                            className="transition-transform group-hover/opt:scale-110"
+                          />
+                        )}
+                      </div>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* FLOATING CURSOR */}
+            <motion.div
+              style={{
+                x: springX,
+                y: springY,
+              }}
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                scale: isHovered ? 1 : 0.8,
+              }}
+              className="pointer-events-none absolute left-0 top-0 z-50 hidden items-center gap-4 bg-white px-6 py-3 font-mono text-[10px] font-black uppercase tracking-widest text-[#FF4D00] shadow-2xl xl:flex"
+            >
+              <FiMail />
+
+              <span>Select Communication</span>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

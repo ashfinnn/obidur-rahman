@@ -1,240 +1,267 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, easeInOut } from "framer-motion";
-import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  FiCpu, FiEye, FiZap, FiBook, FiCode, FiCornerDownRight,
+} from "react-icons/fi";
 import {
   SiPython, SiPytorch, SiTensorflow, SiNextdotjs, SiTypescript,
-  SiNumpy, SiPandas, SiScikitlearn, SiGit, SiFastapi, SiOpencv, SiScipy
+  SiNumpy, SiPandas, SiScikitlearn, SiGit, SiFastapi, SiOpencv, SiScipy,
 } from "react-icons/si";
-import { FiCpu, FiActivity, FiLayout, FiCornerDownRight, FiBook } from "react-icons/fi";
 
-const TECH_DATA = [
-  { id: "01", name: "Python", icon: SiPython },
-  { id: "02", name: "PyTorch", icon: SiPytorch },
-  { id: "03", name: "OpenCV", icon: SiOpencv },
-  { id: "04", name: "TensorFlow", icon: SiTensorflow },
-  { id: "05", name: "NumPy", icon: SiNumpy },
-  { id: "06", name: "SciPy", icon: SiScipy },
-  { id: "07", name: "Next.js", icon: SiNextdotjs },
-  { id: "08", name: "TypeScript", icon: SiTypescript },
-  { id: "09", name: "FastAPI", icon: SiFastapi },
-  { id: "10", name: "Pandas", icon: SiPandas },
-  { id: "11", name: "Sklearn", icon: SiScikitlearn },
-  { id: "12", name: "Git", icon: SiGit },
+/* ─── Data ─────────────────────────────────────────────────────────────────── */
+
+const DISCIPLINES = [
+  { icon: FiCpu,  label: "Deep Learning"    },
+  { icon: FiEye,  label: "Computer Vision"  },
+  { icon: FiZap,  label: "Compression"      },
+  { icon: FiBook, label: "Research"         },
+  { icon: FiCode, label: "Engineering"      },
 ];
 
-const fast = { duration: 0.3, ease: easeInOut };
-const stagger = {
-  visible: { staggerChildren: 0.03 },
-  hidden: { staggerChildren: 0 }
-};
+const TECH = [
+  { name: "Python",     icon: SiPython     },
+  { name: "PyTorch",    icon: SiPytorch    },
+  { name: "OpenCV",     icon: SiOpencv     },
+  { name: "TensorFlow", icon: SiTensorflow },
+  { name: "NumPy",      icon: SiNumpy      },
+  { name: "SciPy",      icon: SiScipy      },
+  { name: "Next.js",    icon: SiNextdotjs  },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "FastAPI",    icon: SiFastapi    },
+  { name: "Pandas",     icon: SiPandas     },
+  { name: "Sklearn",    icon: SiScikitlearn},
+  { name: "Git",        icon: SiGit        },
+];
+
+const ease = [0.16, 1, 0.3, 1];
+
+/* ─── Component ─────────────────────────────────────────────────────────────── */
 
 export default function AboutSection() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
+    <section className="bg-white text-[#111] w-full">
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
+      {/* ── Name + rule ─────────────────────────────────────────────────────── */}
+      <div className="flex flex-col items-center pt-20 md:pt-28 pb-14 px-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={fast}
-          className="mb-10 sm:mb-12 md:mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease }}
+          className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-7 text-[#111]"
+          style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
-            Architecting<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">Intelligence</span>
-          </h2>
+          Obidur Rahman
+        </motion.h2>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}
+          className="w-14 h-[1.5px] bg-[#111] origin-center"
+        />
+      </div>
+
+      {/* ── Disciplines row ──────────────────────────────────────────────────── */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{ visible: { transition: { staggerChildren: 0.09 } }, hidden: {} }}
+        className="flex items-start justify-center gap-8 sm:gap-14 md:gap-20 lg:gap-24 px-6 pb-20 md:pb-28"
+      >
+        {DISCIPLINES.map(({ icon: Icon, label }) => (
           <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left"
-          />
+            key={label}
+            variants={{
+              hidden:   { opacity: 0, y: 10 },
+              visible:  { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+            }}
+            className="flex flex-col items-center gap-3 group cursor-default"
+          >
+            {/* Thin-stroke icon feel */}
+            <Icon
+              size={26}
+              strokeWidth={1.2}
+              className="text-[#111] group-hover:text-[#FF4D00] transition-colors duration-200"
+            />
+            <span
+              className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#111]"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
+              {label}
+            </span>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* ── Full-width divider ───────────────────────────────────────────────── */}
+      <div className="w-full h-[1px] bg-[#E8E8E8]" />
+
+      {/* ── Three-column editorial body ──────────────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3">
+
+        {/* Col 1 — centered pull-quote / intro */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease }}
+          className="
+            flex items-start justify-center md:justify-end
+            px-8 md:pr-10 lg:pr-16 py-16 md:py-24
+            border-b md:border-b-0 md:border-r border-[#E8E8E8]
+          "
+        >
+          <p
+            className="
+              text-xl sm:text-2xl md:text-xl lg:text-[1.35rem]
+              leading-[1.45] text-center md:text-right text-[#111]
+              max-w-[280px] md:max-w-[210px] lg:max-w-[250px]
+            "
+            style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+          >
+            Hello, I'm Obidur — Machine Learning Engineer focused on building
+            efficient vision models that run{" "}
+            <em style={{ fontStyle: "italic" }}>anywhere</em>.
+          </p>
         </motion.div>
 
-        {/* Main Grid Container */}
-        <div className="border border-[#050505] bg-white shadow-xl">
-
-          {/* Row 1: Photo + Bio */}
-          <div className="grid grid-cols-1 md:grid-cols-12 border-b border-[#050505]">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={fast}
-              className="md:col-span-4 aspect-[4/5] md:aspect-auto md:min-h-[400px] lg:min-h-[500px] border-b md:border-b-0 md:border-r border-[#050505] relative overflow-hidden group"
-            >
-              <Image
-                src="/me.jpg"
-                alt="Obidur Rahman"
-                fill
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
-                priority
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              <motion.div
-                initial={{ height: "100%" }}
-                whileInView={{ height: "0%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
-                className="absolute bottom-0 left-0 right-0 bg-[#050505] z-10"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ ...fast, delay: 0.1 }}
-              className="md:col-span-8 p-5 sm:p-6 md:p-10 lg:p-16 flex flex-col justify-center"
-            >
-              <div className="relative mb-4 sm:mb-6">
-                <span className="absolute -left-2 sm:-left-4 md:-left-6 -top-2 sm:-top-4 text-4xl sm:text-5xl md:text-6xl text-gray-200 font-serif hidden sm:inline">&ldquo;</span>
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif leading-relaxed text-[#050505] relative z-10">
-                  Mathematician turned engineer. My background in <span className="italic text-[#FF4D00] font-medium">pure mathematics</span> gives me a different lens on AI.
-                </p>
-              </div>
-              <div className="border-t border-gray-100 pt-4 sm:pt-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                <p className="text-xs sm:text-sm md:text-[15px] text-gray-600 font-medium leading-relaxed max-w-md">
-                  Currently researching efficient vision models and working as an <strong className="text-[#050505]">R&D Engineer at NorthAxis</strong>.
-                </p>
-                <a
-                  href="/obidur_cv_public.pdf"
-                  target="_blank"
-                  className="group inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest border-b-2 border-[#050505] pb-1 w-fit hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors duration-200"
-                >
-                  Download CV
-                  <FiCornerDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-200" />
-                </a>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Row 2: Focus Areas */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-b border-[#050505]">
-            <InfoCard
-              icon={<FiCpu size={20} />}
-              title="Deep Learning"
-              desc="Custom architectures for computer vision."
-              className="border-b sm:border-b md:border-b-0 sm:border-r border-[#050505]"
-            />
-            <InfoCard
-              icon={<FiActivity size={20} />}
-              title="Optimization"
-              desc="Quantization, pruning, and distillation for efficient CPU inference."
-              className="border-b md:border-b-0 md:border-r border-[#050505]"
-            />
-            <InfoCard
-              icon={<FiBook size={20} />}
-              title="R&D"
-              desc="Prototyping and validating novel ML solutions from research to production."
-              className="border-b sm:border-b-0 sm:border-r border-[#050505]"
-            />
-            <InfoCard
-              icon={<FiLayout size={20} />}
-              title="Engineering"
-              desc="High-performance inference APIs with FastAPI and modern web tech."
-            />
-          </div>
-
-          {/* Row 3: Tech Stack - DESKTOP VIEW (Grid) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={stagger}
-            className="hidden md:grid grid-cols-12"
+        {/* Col 2 — body copy */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease, delay: 0.08 }}
+          className="
+            px-8 md:px-10 lg:px-14 py-16 md:py-24
+            border-b md:border-b-0 md:border-r border-[#E8E8E8]
+            space-y-5
+          "
+        >
+          <p className="text-sm leading-[1.9] text-[#555]">
+            With a background in pure mathematics, I approach machine learning
+            differently — model compression is fundamentally a mathematical
+            problem, and I treat it like one. Quantization, pruning, and
+            knowledge distillation aren't just engineering techniques; they're
+            expressions of how we understand the geometry of learned
+            representations.
+          </p>
+          <p className="text-sm leading-[1.9] text-[#555]">
+            My work spans custom CV architectures for detection and
+            segmentation, efficient inference pipelines optimised for
+            CPU-class hardware, and the full research-to-production arc —
+            from reading the paper to shipping the API.
+          </p>
+          <a
+            href="/obidur_cv_public.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-flex items-center gap-1.5 mt-2
+              text-[10px] tracking-[0.28em] uppercase text-[#111]
+              border-b border-[#111] pb-0.5
+              hover:text-[#FF4D00] hover:border-[#FF4D00]
+              transition-colors duration-200 group
+            "
           >
-            {TECH_DATA.map((tech, i) => (
-              <TechItem key={tech.id} data={tech} index={i} isMobile={isMobile} />
-            ))}
-          </motion.div>
+            Download CV
+            <FiCornerDownRight
+              size={10}
+              className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"
+            />
+          </a>
+        </motion.div>
 
-          {/* Row 3: Tech Stack - MOBILE VIEW (Infinite Marquee) */}
-          <div className="md:hidden overflow-hidden relative w-full h-[80px] bg-white">
-            <motion.div
-              className="flex absolute left-0"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 15 }}
-            >
-              {/* Duplicate the array twice to create a seamless loop */}
-              {[...TECH_DATA, ...TECH_DATA].map((tech, i) => (
-                <div key={`${tech.id}-${i}`} className="w-[80px] h-[80px] border-r border-[#E5E5E5] flex flex-col items-center justify-center shrink-0">
-                  <tech.icon size={20} className="mb-2 text-[#050505]" />
-                  <span className="font-mono text-[8px] font-bold tracking-widest text-gray-500 uppercase">
-                    {tech.name}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
+        {/* Col 3 — body copy continued */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease, delay: 0.16 }}
+          className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-5"
+        >
+          <p className="text-sm leading-[1.9] text-[#555]">
+            Currently working as an R&D Engineer at NorthAxis, prototyping and
+            validating novel ML solutions. Previously built medical imaging
+            pipelines and satellite-based land-use classification systems —
+            work that demanded both rigour and real-world pragmatism.
+          </p>
+          <p className="text-sm leading-[1.9] text-[#555]">
+            I'm open to research collaborations, engineering roles, and
+            consulting at the intersection of computer vision and efficient
+            inference. If you need models that are both smart and fast,
+            let's talk.
+          </p>
+          <div className="pt-1 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0" />
+            <span className="text-[10px] tracking-[0.22em] uppercase text-[#999]">
+              Available · Bangladesh · Remote
+            </span>
           </div>
-
-        </div>
+        </motion.div>
       </div>
+
+      {/* ── Divider ──────────────────────────────────────────────────────────── */}
+      <div className="w-full h-[1px] bg-[#E8E8E8]" />
+
+      {/* ── Tech stack — desktop grid ────────────────────────────────────────── */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{ visible: { transition: { staggerChildren: 0.04 } }, hidden: {} }}
+        className="hidden md:grid grid-cols-12"
+      >
+        {TECH.map((t) => {
+          const Icon = t.icon;
+          return (
+            <motion.div
+              key={t.name}
+              variants={{
+                hidden:  { opacity: 0 },
+                visible: { opacity: 1, transition: { duration: 0.2 } },
+              }}
+              className="
+                aspect-square border-r last:border-r-0 border-[#E8E8E8]
+                flex flex-col items-center justify-center gap-2
+                group hover:bg-[#111] transition-colors duration-200 cursor-crosshair
+              "
+            >
+              <Icon size={20} className="text-[#111] group-hover:text-white transition-colors" />
+              <span className="font-mono text-[8px] tracking-widest text-[#bbb] group-hover:text-[#FF4D00] uppercase transition-colors">
+                {t.name}
+              </span>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* ── Tech stack — mobile marquee ──────────────────────────────────────── */}
+      <div className="md:hidden overflow-hidden relative w-full h-[70px] border-t border-[#E8E8E8]">
+        <motion.div
+          className="flex absolute left-0"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 18 }}
+        >
+          {[...TECH, ...TECH].map((t, i) => {
+            const Icon = t.icon;
+            return (
+              <div
+                key={`${t.name}-${i}`}
+                className="w-[70px] h-[70px] border-r border-[#E8E8E8] flex flex-col items-center justify-center gap-1.5 shrink-0"
+              >
+                <Icon size={18} className="text-[#111]" />
+                <span className="font-mono text-[7px] tracking-widest text-[#bbb] uppercase">
+                  {t.name}
+                </span>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+
     </section>
   );
 }
-
-const InfoCard = ({ icon, title, desc, className = "" }: {
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  className?: string;
-}) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={fast}
-    className={`p-4 sm:p-6 md:p-8 flex flex-col justify-between min-h-[160px] sm:min-h-[180px] md:min-h-[220px] group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default ${className}`}
-  >
-    <div className="text-[#FF4D00] group-hover:text-white transition-colors duration-200 mb-3 sm:mb-4">
-      {icon}
-    </div>
-    <div>
-      <h3 className="font-mono text-[10px] sm:text-xs font-bold tracking-widest mb-2 uppercase group-hover:text-[#FF4D00] transition-colors duration-200">
-        {title}
-      </h3>
-      <p className="text-[10px] sm:text-xs font-medium opacity-70 leading-relaxed">{desc}</p>
-    </div>
-  </motion.div>
-);
-
-const TechItem = ({ data, index, isMobile }: {
-  data: { id: string; name: string; icon: React.ComponentType<{ size?: number; className?: string }> };
-  index: number;
-  isMobile: boolean;
-}) => {
-  const Icon = data.icon;
-
-  return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.2 } }
-      }}
-      className="aspect-square border-r last:border-r-0 border-[#E5E5E5] flex flex-col items-center justify-center relative group cursor-crosshair hover:bg-[#050505] transition-colors duration-200"
-    >
-      <Icon
-        size={24}
-        className="mb-2 text-[#050505] group-hover:text-white transition-colors duration-200"
-      />
-      <span className="font-mono text-[8px] font-bold tracking-widest text-gray-500 group-hover:text-[#FF4D00] transition-colors duration-200 uppercase text-center px-1">
-        {data.name}
-      </span>
-    </motion.div>
-  );
-};

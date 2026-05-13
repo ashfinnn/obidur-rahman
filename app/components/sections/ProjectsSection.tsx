@@ -1,215 +1,177 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { easeInOut } from "framer-motion";
-import {
-  FiGithub,
-  FiExternalLink,
-  FiZap,
-  FiCode,
-  FiLayers,
-  FiSmartphone,
-  FiArrowUpRight,
-} from "react-icons/fi";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useState } from "react";
+import { FiArrowUpRight, FiCornerDownRight } from "react-icons/fi";
 
-const PROJECT = {
-  title: "This Portfolio",
-  subtitle: "The site you're viewing right now",
-  year: "2024",
-  desc: "A brutalist, high-performance portfolio built to showcase ML research and engineering work. Clean typography, smooth interactions, and optimal performance across all devices.",
-  link: "https://obidur.vercel.app",
-  github: "https://github.com/ashfinnn/obidur-rahman",
-  features: [
-    { icon: FiZap, title: "100 Lighthouse", desc: "Perfect performance score" },
-    { icon: FiCode, title: "TypeScript", desc: "Fully type-safe codebase" },
-    { icon: FiLayers, title: "Framer Motion", desc: "Smooth animations" },
-    { icon: FiSmartphone, title: "Responsive", desc: "All screen sizes" },
-  ],
-  tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
-};
+const PROJECTS = [
+  {
+    id: "01",
+    title: "THIS PORTFOLIO",
+    category: "Frontend Architecture",
+    year: "2024",
+    image:
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
+    link: "https://obidur.vercel.app",
+  },
+  {
+    id: "02",
+    title: "CLIMATE ML",
+    category: "Research Systems",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
+    link: "#",
+  },
+  {
+    id: "03",
+    title: "RAG ENGINE",
+    category: "LLM Infrastructure",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
+    link: "#",
+  },
+  {
+    id: "04",
+    title: "VISION STACK",
+    category: "Computer Vision",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=1600&auto=format&fit=crop",
+    link: "#",
+  },
+];
 
-const fast = { duration: 0.3, ease: easeInOut };
+const ease = [0.16, 1, 0.3, 1];
 
 export default function ProjectsSection() {
+  const [activeProject, setActiveProject] = useState<
+    null | (typeof PROJECTS)[0]
+  >(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springX = useSpring(mouseX, {
+    damping: 28,
+    stiffness: 180,
+    mass: 0.5,
+  });
+
+  const springY = useSpring(mouseY, {
+    damping: 28,
+    stiffness: 180,
+    mass: 0.5,
+  });
+
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
-        {/* Header */}
+    <section className="bg-white text-[#111] w-full min-h-screen flex flex-col">
+      
+      {/* ── HEADER ────────────────────────────────────────────────────────── */}
+      <div className="px-6 sm:px-12 md:px-24 pt-32 pb-20">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={fast}
-          className="mb-10 sm:mb-12 md:mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
-            Selected
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">
-              Work
+          <div className="flex items-center gap-3 mb-8">
+            <div className="h-1.5 w-1.5 bg-[#FF4D00]" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#999]">
+              Selected Works & Case Studies
             </span>
+          </div>
+
+          <h2 
+            className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-light tracking-tighter leading-[0.85] uppercase mb-12"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
+            Projects<span className="text-[#FF4D00]">.</span>
           </h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left"
-          />
         </motion.div>
+      </div>
 
-        {/* Main Container */}
-        <div className="border border-[#050505] bg-white shadow-xl">
-
-          {/* Project Header Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#050505]">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={fast}
-              className="lg:col-span-8 p-5 sm:p-6 md:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-[#050505] bg-[#050505] text-white"
-            >
-              <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 bg-[#FF4D00]" />
-                  <span className="font-mono text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">
-                    Featured Project
-                  </span>
-                </div>
-                <span className="font-mono text-[10px] sm:text-xs text-gray-600 uppercase tracking-widest">
-                  / {PROJECT.year}
-                </span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2">
-                {PROJECT.title}
-              </h3>
-              <p className="text-sm sm:text-base text-gray-400">
-                {PROJECT.subtitle}
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...fast, delay: 0.1 }}
-              className="lg:col-span-4 grid grid-cols-2"
-            >
-              <a
-                href={PROJECT.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center p-4 sm:p-6 border-r border-[#050505] hover:bg-[#050505] hover:text-white transition-colors duration-300 group"
-              >
-                <FiExternalLink size={20} className="mb-2 group-hover:scale-110 transition-transform" />
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">Live Site</span>
-              </a>
-              <a
-                href={PROJECT.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center p-4 sm:p-6 hover:bg-[#050505] hover:text-white transition-colors duration-300 group"
-              >
-                <FiGithub size={20} className="mb-2 group-hover:scale-110 transition-transform" />
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest">Source</span>
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Description Row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ ...fast, delay: 0.1 }}
-            className="p-5 sm:p-6 md:p-8 lg:p-10 border-b border-[#050505]"
-          >
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-4xl">
-              {PROJECT.desc}
-            </p>
-          </motion.div>
-
-          {/* Features Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 border-b border-[#050505]">
-            {PROJECT.features.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ ...fast, delay: i * 0.05 }}
-                className={`p-4 sm:p-6 md:p-8 flex flex-col group hover:bg-[#050505] hover:text-white transition-colors duration-300 cursor-default
-                  ${i < PROJECT.features.length - 1 ? "border-r border-[#050505]" : ""}
-                  ${i < 2 ? "border-b md:border-b-0 border-[#050505]" : ""}`}
-              >
-                <div className="p-2 sm:p-3 bg-[#F4F4F5] border border-[#E5E5E5] w-fit mb-3 sm:mb-4 group-hover:bg-white group-hover:border-white transition-colors duration-300">
-                  <feature.icon size={18} className="text-[#050505] transition-colors" />
-                </div>
-                <h4 className="font-bold text-sm sm:text-base mb-1">{feature.title}</h4>
-                <p className="text-[10px] sm:text-xs text-gray-500 group-hover:text-gray-300 transition-colors">
-                  {feature.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Tech Stack Row — black */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ ...fast, delay: 0.2 }}
-            className="bg-[#050505] p-5 sm:p-6 md:p-8 border-b border-[#050505] flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
-          >
-            <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest shrink-0">
-              Built with:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {PROJECT.tech.map((tech, i) => (
-                <motion.span
-                  key={tech}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.03 }}
-                  className="px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-600 font-mono text-[10px] sm:text-xs text-gray-200 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors cursor-default"
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* GitHub CTA Row */}
+      {/* ── PROJECTS LIST ─────────────────────────────────────────────────── */}
+      <div className="w-full border-t border-[#E8E8E8]">
+        {PROJECTS.map((project, i) => (
           <motion.a
-            href="https://github.com/Ashfinnn"
+            key={project.id}
+            href={project.link}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ ...fast, delay: 0.2 }}
-            className="flex items-center justify-between p-5 sm:p-6 md:p-8 hover:bg-[#050505] hover:text-white transition-colors duration-300 group"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, delay: i * 0.1, ease }}
+            onMouseEnter={() => setActiveProject(project)}
+            onMouseLeave={() => setActiveProject(null)}
+            onMouseMove={(e) => {
+              mouseX.set(e.clientX - 220);
+              mouseY.set(e.clientY - 140);
+            }}
+            className="group relative flex flex-col md:flex-row md:items-center justify-between py-12 px-6 sm:px-12 md:px-24 border-b border-[#E8E8E8] transition-colors hover:bg-[#FAFAFA]"
           >
-            <div className="flex items-center gap-3 sm:gap-4">
-              <FiGithub size={20} />
+            <div className="flex items-center gap-8 md:gap-16">
+              <span className="font-mono text-[10px] text-[#999] pt-2">[{project.id}]</span>
               <div>
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest">
-                  View All Projects on GitHub
-                </span>
-                <p className="text-[10px] sm:text-xs text-gray-500 group-hover:text-gray-300 mt-0.5">
-                  Explore more repositories and contributions
-                </p>
+                <h3 
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none text-[#111] group-hover:text-[#FF4D00] transition-colors"
+                  style={{ fontFamily: "'Georgia', serif" }}
+                >
+                  {project.title}
+                </h3>
+                <div className="mt-4 flex items-center gap-4">
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#999]">{project.category}</span>
+                  <span className="w-1 h-1 bg-[#E8E8E8] rounded-full" />
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#999]">{project.year}</span>
+                </div>
               </div>
             </div>
-            <FiArrowUpRight
-              size={20}
-              className="text-gray-300 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
-            />
+
+            <div className="mt-8 md:mt-0 flex items-center gap-4">
+              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#999] opacity-0 group-hover:opacity-100 transition-opacity">View Case Study</span>
+              <div className="w-12 h-12 border border-[#E8E8E8] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-all">
+                <FiArrowUpRight size={20} />
+              </div>
+            </div>
           </motion.a>
-        </div>
+        ))}
       </div>
+
+      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
+      <div className="w-full p-10 flex justify-between items-center bg-white">
+         <div className="flex gap-10 font-mono text-[8px] uppercase tracking-[0.4em] text-[#999]">
+            <span>Total Projects: {PROJECTS.length}</span>
+            <span className="hidden sm:block">Filter: All Works</span>
+         </div>
+         <div className="font-mono text-[8px] uppercase tracking-[0.4em] text-[#999]">
+            Hover for Preview
+         </div>
+      </div>
+
+      {/* FLOATING IMAGE PREVIEW */}
+      <motion.div
+        style={{ x: springX, y: springY }}
+        animate={{
+          opacity: activeProject ? 1 : 0,
+          scale: activeProject ? 1 : 0.8,
+        }}
+        transition={{ duration: 0.4, ease }}
+        className="fixed top-0 left-0 z-[100] hidden xl:block w-[400px] h-[250px] overflow-hidden pointer-events-none shadow-2xl border border-[#E8E8E8] bg-white"
+      >
+        {activeProject && (
+          <motion.img
+            key={activeProject.image}
+            src={activeProject.image}
+            alt={activeProject.title}
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.8, ease }}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </motion.div>
     </section>
   );
 }

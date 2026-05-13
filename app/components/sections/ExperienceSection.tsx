@@ -1,15 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { easeInOut } from "framer-motion";
-import {
-  FiMapPin,
-  FiCalendar,
-  FiBriefcase,
-  FiBook,
-  FiAward,
-  FiArrowUpRight,
-} from "react-icons/fi";
+import { FiCornerDownRight } from "react-icons/fi";
+
+/* ─── Data ─────────────────────────────────────────────────────────────────── */
 
 const WORK = {
   role: "R&D Engineer",
@@ -28,8 +22,8 @@ const WORK = {
 const EDUCATION = {
   degree: "B.S. in Mathematics",
   institution: "University of Chittagong",
-  location: "Chittagong, Bangladesh",
-  period: "2022 — 2027 (Expected)",
+  location: "Chittagong, BD",
+  period: "2022 — 2027",
   desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
   courses: [
     "Real Analysis",
@@ -40,194 +34,191 @@ const EDUCATION = {
   ],
 };
 
-const fast = { duration: 0.3, ease: easeInOut };
+const ease = [0.16, 1, 0.3, 1];
+
+/* ─── Component ─────────────────────────────────────────────────────────────── */
 
 export default function ExperienceSection() {
   return (
-    <section className="bg-[#F4F4F5] text-[#050505] w-full py-16 sm:py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
+    <section className="bg-white text-[#111] w-full">
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
+      {/* ── Section Header + rule ────────────────────────────────────────────── */}
+      <div className="flex flex-col items-center pt-20 md:pt-28 pb-14 px-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={fast}
-          className="mb-10 sm:mb-12 md:mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease }}
+          className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-7 text-[#111]"
+          style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-4 sm:mb-6">
-            Experience &<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-200">
-              Education
-            </span>
-          </h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-[2px] bg-[#050505] origin-left"
-          />
+          Experience
+        </motion.h2>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}
+          className="w-14 h-[1.5px] bg-[#111] origin-center"
+        />
+      </div>
+
+      {/* ── Full-width divider ───────────────────────────────────────────────── */}
+      <div className="w-full h-[1px] bg-[#E8E8E8]" />
+
+      {/* ── Two-column editorial body ────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2">
+
+        {/* Col 1 — Work Experience */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease }}
+          className="
+            px-8 md:px-10 lg:px-14 py-16 md:py-24
+            border-b md:border-b-0 md:border-r border-[#E8E8E8]
+            space-y-6
+          "
+        >
+          {/* Label */}
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+            Work Experience
+          </span>
+
+          {/* Role & Meta */}
+          <div className="space-y-2">
+            <h3
+              className="text-2xl md:text-3xl tracking-tight text-[#111]"
+              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+            >
+              {WORK.role}
+            </h3>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+                {WORK.company}
+              </span>
+              <span className="w-1 h-1 rounded-full bg-[#E8E8E8]" />
+              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+                {WORK.location} · {WORK.period}
+              </span>
+            </div>
+          </div>
+
+          {/* Description */}
+          <p className="text-sm leading-[1.9] text-[#555]">
+            {WORK.desc}
+          </p>
+
+          {/* Responsibilities List */}
+          <ul className="space-y-3 pt-2">
+            {WORK.responsibilities.map((item, i) => (
+              <li key={i} className="flex gap-3 group">
+                <span className="w-1 h-1 mt-[10px] bg-[#E8E8E8] shrink-0 group-hover:bg-[#FF4D00] transition-colors duration-200" />
+                <p className="text-sm leading-[1.9] text-[#555] group-hover:text-[#111] transition-colors duration-200">
+                  {item}
+                </p>
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
-        {/* Card */}
-        <div className="border border-[#050505] bg-white shadow-xl">
-          {/*
-            Mobile:  flex-col  → Work (header + content) then Education (header + content)
-            Desktop: grid 12   → side by side, divided by a vertical border
-          */}
-          <div className="flex flex-col lg:grid lg:grid-cols-12">
+        {/* Col 2 — Education */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease, delay: 0.08 }}
+          className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-6"
+        >
+          {/* Label */}
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+            Academic Base
+          </span>
 
-            {/* ── WORK ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={fast}
-              className="lg:col-span-6 group hover:bg-[#050505] transition-colors duration-300 cursor-default lg:border-r border-[#050505] border-b lg:border-b-0"
+          {/* Degree & Meta */}
+          <div className="space-y-2">
+            <h3
+              className="text-2xl md:text-3xl tracking-tight text-[#111]"
+              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
             >
-              {/* Work header */}
-              <div className="bg-[#050505] text-white p-3 sm:p-6 flex items-center justify-between">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-1.5 sm:p-2 bg-white">
-                    <FiBriefcase className="text-[#050505]" size={14} />
-                  </div>
-                  <span className="font-mono text-[9px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
-                    Work Experience
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                  </span>
-                  <FiArrowUpRight className="text-gray-500 hidden sm:block" size={18} />
-                </div>
-              </div>
-
-              {/* Work body */}
-              <div className="p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight group-hover:text-white transition-colors duration-300">
-                      {WORK.role}
-                    </h3>
-                    <p className="text-base sm:text-lg font-semibold group-hover:text-[#FF4D00] transition-colors duration-300 mt-0.5">
-                      @ {WORK.company}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className="flex items-center gap-1.5 text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-300 font-mono">
-                      <FiCalendar size={11} />
-                      {WORK.period}
-                    </span>
-                    <span className="w-px h-3 bg-gray-300 group-hover:bg-gray-600 transition-colors duration-300" />
-                    <span className="flex items-center gap-1.5 text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-300 font-mono">
-                      <FiMapPin size={11} />
-                      {WORK.location}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed group-hover:text-gray-300 transition-colors duration-300 max-w-prose">
-                  {WORK.desc}
-                </p>
-              </div>
-
-              <div className="px-6 sm:px-8 pb-6 sm:pb-8">
-                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest block mb-4">
-                  Key Responsibilities
-                </span>
-                <ul className="space-y-0 ml-3">
-                  {WORK.responsibilities.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 pb-4 last:pb-0">
-                      <div className="shrink-0 -ml-[5px] mt-[5px] w-[9px] h-[9px] bg-[#050505] group-hover:bg-[#FF4D00] transition-colors duration-300" />
-                      <span className="text-[11px] sm:text-sm text-gray-600 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-
-            {/* ── EDUCATION ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ ...fast, delay: 0.1 }}
-              className="lg:col-span-6 group hover:bg-[#050505] transition-colors duration-300 cursor-default flex flex-col"
-            >
-              {/* Education header */}
-              <div className="bg-[#050505] text-white p-3 sm:p-6 flex items-center justify-between">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-1.5 sm:p-2 bg-white">
-                    <FiBook className="text-[#050505]" size={14} />
-                  </div>
-                  <span className="font-mono text-[9px] sm:text-xs font-bold uppercase tracking-widest text-gray-400">
-                    Education
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
-                  </span>
-                  <FiArrowUpRight className="text-gray-500 hidden sm:block" size={18} />
-                </div>
-              </div>
-
-              {/* Education body */}
-              <div className="p-6 sm:p-8">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight group-hover:text-white transition-colors duration-300 mb-0.5">
-                  {EDUCATION.degree}
-                </h3>
-                <p className="text-base sm:text-lg font-semibold mb-4 group-hover:text-white transition-colors duration-300">
-                  @ {EDUCATION.institution}
-                </p>
-                <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-4 group-hover:text-gray-400 transition-colors duration-300 font-mono">
-                  <span className="flex items-center gap-1.5">
-                    <FiCalendar size={11} />
-                    {EDUCATION.period}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <FiMapPin size={11} />
-                    <span className="hidden sm:inline">{EDUCATION.location}</span>
-                    <span className="sm:hidden">Chittagong</span>
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                  {EDUCATION.desc}
-                </p>
-              </div>
-
-              <div className="px-6 sm:px-8 py-4 flex items-start gap-3 bg-[#050505]/[0.02] group-hover:bg-white/5 transition-colors duration-300">
-                <FiAward className="text-[#FF4D00] mt-0.5 flex-shrink-0" size={16} />
-                <span className="text-[11px] sm:text-sm text-[#FF4D00] font-semibold leading-snug">
-                  Best Presenter Award — 24th International Mathematics Conference
-                </span>
-              </div>
-
-              <div className="p-6 sm:p-8 flex-1">
-                <span className="font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest block mb-3">
-                  Coursework
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {EDUCATION.courses.map((course, i) => (
-                    <span
-                      key={i}
-                      className="text-[10px] sm:text-xs font-mono px-2.5 py-1 border border-[#050505] text-[#050505] group-hover:border-gray-500 group-hover:text-gray-300 transition-colors duration-300 uppercase tracking-wide"
-                    >
-                      {course}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
+              {EDUCATION.degree}
+            </h3>
+            <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#999]">
+              {EDUCATION.institution} · {EDUCATION.period}
+            </div>
           </div>
-        </div>
+
+          {/* Description */}
+          <p className="text-sm leading-[1.9] text-[#555]">
+            {EDUCATION.desc}
+          </p>
+
+          {/* Coursework */}
+          <div className="pt-2">
+            <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-[#bbb] block mb-4">
+              Focus Coursework
+            </span>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {EDUCATION.courses.map((course) => (
+                <span
+                  key={course}
+                  className="font-mono text-[10px] tracking-widest text-[#999] uppercase"
+                >
+                  {course}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Recognition / Award */}
+          <div className="pt-6 border-t border-[#E8E8E8]">
+            <div className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0 mt-1.5" />
+              <div className="space-y-1">
+                <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-[#999] block">
+                  Recognition
+                </span>
+                <p className="text-sm text-[#555] leading-[1.6]">
+                  Best Presenter Award — 24th International Mathematics Conference
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
+
+      {/* ── Divider ──────────────────────────────────────────────────────────── */}
+      <div className="w-full h-[1px] bg-[#E8E8E8]" />
+
+      {/* ── Footer Action ────────────────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="px-8 md:px-10 lg:px-14 py-10 flex justify-end"
+      >
+        <a
+          href="/obidur_cv_public.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="
+            inline-flex items-center gap-1.5
+            text-[10px] tracking-[0.28em] uppercase text-[#111]
+            border-b border-[#111] pb-0.5
+            hover:text-[#FF4D00] hover:border-[#FF4D00]
+            transition-colors duration-200 group
+          "
+        >
+          Download CV
+          <FiCornerDownRight
+            size={10}
+            className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"
+          />
+        </a>
+      </motion.div>
+
     </section>
   );
 }

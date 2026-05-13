@@ -1,90 +1,105 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoaderProps {
   onLoaded: () => void;
 }
 
+const STATUS_MESSAGES = [
+  'Initializing',
+  'Loading Modules',
+  'Connecting',
+  'Rendering',
+  'Ready',
+];
+
+const ease = [0.16, 1, 0.3, 1];
+
 export default function Loader({ onLoaded }: LoaderProps) {
   const [isComplete, setIsComplete] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [statusIndex, setStatusIndex] = useState(0);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    
-    // 1.8s total load time for the "computation" to feel finished
-    const timer = setTimeout(() => {
-      setIsComplete(true);
-      setTimeout(() => {
-        document.body.style.overflow = "";
-        onLoaded();
-      }, 500); 
-    }, 1800);
+    document.body.style.overflow = 'hidden';
+
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => setIsComplete(true), 800);
+          return 100;
+        }
+        return prev + Math.floor(Math.random() * 10) + 2;
+      });
+    }, 120);
+
+    const statusInterval = setInterval(() => {
+      setStatusIndex((prev) => (prev + 1) % STATUS_MESSAGES.length);
+    }, 450);
 
     return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = "";
+      clearInterval(interval);
+      clearInterval(statusInterval);
+      document.body.style.overflow = '';
     };
-  }, [onLoaded]);
-
-  // The grid indices for a 3x3 matrix
-  // 0 1 2
-  // 3 4 5
-  // 6 7 8
-  const squares = Array.from({ length: 9 });
+  }, []);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={onLoaded}>
       {!isComplete && (
         <motion.div
-          className="fixed inset-0 z-[9999] bg-[#F4F4F5] flex items-center justify-center"
-          exit={{ 
-            opacity: 0,
-            transition: { duration: 0.4, ease: "easeInOut" } 
+          className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden"
+          initial={{ y: 0 }}
+          exit={{
+            y: '-100%',
+            transition: { duration: 1, ease: [0.76, 0, 0.24, 1] },
           }}
         >
-          {/* Container for the Matrix */}
-          <motion.div 
-            className="grid grid-cols-3 gap-1"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ scale: 0, transition: { duration: 0.3, ease: "backIn" } }}
-            transition={{ duration: 0.3 }}
-          >
-            {squares.map((_, i) => {
-              // Calculate diagonal index (x + y) to create a wave effect
-              // Row 0: 0, 1, 2
-              // Row 1: 1, 2, 3
-              // Row 2: 2, 3, 4
-              const row = Math.floor(i / 3);
-              const col = i % 3;
-              const diagonalIndex = row + col;
-              
-              const isCenter = i === 4;
+          {/* Subtle Grid Background */}
+          <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+            <div 
+              className="w-full h-full"
+              style={{
+                backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
+                backgroundSize: '100px 100px'
+              }}
+            />
+          </div>
 
-              return (
-                <motion.div
-                  key={i}
-                  className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 ${
-                    isCenter ? "bg-[#FF4D00]" : "bg-[#050505]"
-                  }`}
-                  // The Computation Animation
-                  animate={{
-                    opacity: [0.2, 1, 0.2],
-                    scale: [0.85, 1, 0.85],
-                  }}
-                  transition={{
-                    duration: 1.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    // Stagger based on diagonal index for "Wave" effect
-                    delay: diagonalIndex * 0.15, 
-                  }}
+          <div className="relative flex flex-col items-center gap-12">
+            {/* Main Title Center */}
+            <div className="flex flex-col items-center">
+              <div className="overflow-hidden mb-8">
+                <motion.h2
+                  initial={{ y: 60 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1, ease }}
+                  className="text-2xl sm:text-4xl md:text-5xl font-light text-white uppercase tracking-tighter leading-none"
+                  style={{ fontFamily: "'Georgia', serif" }}
+                >
+                  Obidur Rahman<span className="text-[#FF4D00]">.</span>
+                </motion.h2>
+              </div>
+              
+              <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden">
+                <motion.div 
+                  className="absolute top-0 left-0 h-full bg-white/40"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ ease: 'linear' }}
                 />
-              );
-            })}
-          </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Decorative Corner Accents */}
+          <div className="absolute top-10 left-10 w-4 h-4 border-t border-l border-white/10" />
+          <div className="absolute top-10 right-10 w-4 h-4 border-t border-r border-white/10" />
+          <div className="absolute bottom-10 left-10 w-4 h-4 border-b border-l border-white/10" />
+          <div className="absolute bottom-10 right-10 w-4 h-4 border-b border-r border-white/10" />
         </motion.div>
       )}
     </AnimatePresence>
