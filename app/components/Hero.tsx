@@ -37,16 +37,17 @@ export default function Hero() {
      */
     <div className="h-[80vh] w-full">
       <section className="relative h-full w-full bg-black overflow-hidden flex flex-col justify-center text-white">
-        {/* Background GIF & Gradients */}
+        {/* Background Video & Gradients */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/bg.gif"
-            alt="Background"
-            fill
-            className="object-cover opacity-70 mix-blend-overlay"
-            priority
-            unoptimized
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-70 mix-blend-overlay"
+          >
+            <source src="/bg.webm" type="video/webm" />
+          </video>
           {/* Colorful overlays */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-black/60 to-[#FF4D00]/20" />
           <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />

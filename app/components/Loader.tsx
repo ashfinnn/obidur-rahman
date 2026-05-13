@@ -36,21 +36,22 @@ export default function Loader({ onLoaded }: LoaderProps) {
       }
     };
 
-    const preloadGif = () => {
-      const img = new Image();
-      img.src = '/bg.gif';
-      img.onload = () => {
+    const preloadVideo = () => {
+      const video = document.createElement('video');
+      video.src = '/bg.webm';
+      video.oncanplaythrough = () => {
         if (!gifLoaded) {
           gifLoaded = true;
           stepComplete();
         }
       };
-      img.onerror = () => {
+      video.onerror = () => {
         if (!gifLoaded) {
           gifLoaded = true;
           stepComplete();
         }
       };
+      video.load();
     };
 
     if (document.readyState === 'complete') {
@@ -60,7 +61,7 @@ export default function Loader({ onLoaded }: LoaderProps) {
       window.addEventListener('load', handleWindowLoad);
     }
 
-    preloadGif();
+    preloadVideo();
 
     return () => {
       window.removeEventListener('load', handleWindowLoad);
