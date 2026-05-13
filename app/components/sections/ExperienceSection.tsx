@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { FiCornerDownRight } from "react-icons/fi";
+import { motion } from 'framer-motion';
+import { FiCornerDownRight } from 'react-icons/fi';
 
 /* ─── Data ─────────────────────────────────────────────────────────────────── */
 
 const WORK = {
-  role: "R&D Engineer",
-  company: "NorthAxis",
-  location: "Remote",
-  period: "Dec 2025 — Present",
-  desc: "Lead research and development for product launches and client projects. Core responsibilities include AI feature research, technical feasibility analysis, and end-to-end solution design.",
+  role: 'R&D Engineer',
+  company: 'NorthAxis',
+  location: 'Remote',
+  period: 'Dec 2025 — Present',
+  desc: 'Lead research and development for product launches and client projects. Core responsibilities include AI feature research, technical feasibility analysis, and end-to-end solution design.',
   responsibilities: [
-    "Evaluate and integrate AI capabilities into products, researching emerging models and deployment strategies",
-    "Design and prototype software solutions, translating briefs into engineering specifications",
-    "Collaborate across teams to bring R&D outcomes into production",
-    "Technical feasibility studies and architectural planning for new product initiatives",
+    'Evaluate and integrate AI capabilities into products, researching emerging models and deployment strategies',
+    'Design and prototype software solutions, translating briefs into engineering specifications',
+    'Collaborate across teams to bring R&D outcomes into production',
+    'Technical feasibility studies and architectural planning for new product initiatives',
   ],
 };
 
 const EDUCATION = {
-  degree: "B.S. in Mathematics",
-  institution: "University of Chittagong",
-  location: "Chittagong, BD",
-  period: "2022 — 2027",
-  desc: "Specializing in pure mathematics with applications to machine learning and neural network theory.",
+  degree: 'B.S. in Mathematics',
+  institution: 'University of Chittagong',
+  location: 'Chittagong, BD',
+  period: '2022 — 2027',
+  desc: 'Specializing in pure mathematics with applications to machine learning and neural network theory.',
   courses: [
-    "Real Analysis",
-    "Linear Algebra",
-    "Abstract Algebra",
-    "Complex Analysis",
-    "Numerical Methods",
+    'Real Analysis',
+    'Linear Algebra',
+    'Abstract Algebra',
+    'Complex Analysis',
+    'Numerical Methods',
   ],
 };
 
@@ -50,7 +50,7 @@ export default function ExperienceSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease }}
           className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-7 text-[#111]"
-          style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+          style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
         >
           Experience
         </motion.h2>
@@ -58,7 +58,7 @@ export default function ExperienceSection() {
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45, ease: "easeOut", delay: 0.15 }}
+          transition={{ duration: 0.45, ease: 'easeOut', delay: 0.15 }}
           className="w-14 h-[1.5px] bg-[#111] origin-center"
         />
       </div>
@@ -73,7 +73,7 @@ export default function ExperienceSection() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease }}
           className="
             px-8 md:px-10 lg:px-14 py-16 md:py-24
@@ -90,7 +90,7 @@ export default function ExperienceSection() {
           <div className="space-y-2">
             <h3
               className="text-2xl md:text-3xl tracking-tight text-[#111]"
-              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+              style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
             >
               {WORK.role}
             </h3>
@@ -127,7 +127,7 @@ export default function ExperienceSection() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease, delay: 0.08 }}
           className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-6"
         >
@@ -140,7 +140,7 @@ export default function ExperienceSection() {
           <div className="space-y-2">
             <h3
               className="text-2xl md:text-3xl tracking-tight text-[#111]"
-              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+              style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
             >
               {EDUCATION.degree}
             </h3>

@@ -7,20 +7,11 @@ interface LoaderProps {
   onLoaded: () => void;
 }
 
-const STATUS_MESSAGES = [
-  'Initializing',
-  'Loading Modules',
-  'Connecting',
-  'Rendering',
-  'Ready',
-];
-
 const ease = [0.16, 1, 0.3, 1];
 
 export default function Loader({ onLoaded }: LoaderProps) {
   const [isComplete, setIsComplete] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [statusIndex, setStatusIndex] = useState(0);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -36,13 +27,8 @@ export default function Loader({ onLoaded }: LoaderProps) {
       });
     }, 120);
 
-    const statusInterval = setInterval(() => {
-      setStatusIndex((prev) => (prev + 1) % STATUS_MESSAGES.length);
-    }, 450);
-
     return () => {
       clearInterval(interval);
-      clearInterval(statusInterval);
       document.body.style.overflow = '';
     };
   }, []);
@@ -78,7 +64,7 @@ export default function Loader({ onLoaded }: LoaderProps) {
                   animate={{ y: 0 }}
                   transition={{ duration: 1, ease }}
                   className="text-2xl sm:text-4xl md:text-5xl font-light text-white uppercase tracking-tighter leading-none"
-                  style={{ fontFamily: "'Georgia', serif" }}
+                  style={{ fontFamily: '\'Georgia\', serif' }}
                 >
                   Obidur Rahman<span className="text-[#FF4D00]">.</span>
                 </motion.h2>

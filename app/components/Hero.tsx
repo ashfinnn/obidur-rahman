@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { FiArrowDown, FiGithub, FiLinkedin, FiBook } from "react-icons/fi";
-import Image from "next/image";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { FiArrowDown, FiGithub, FiLinkedin, FiBook } from 'react-icons/fi';
+import Image from 'next/image';
 
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
@@ -57,7 +57,7 @@ export default function Hero() {
         <motion.div
           variants={container}
           initial="hidden"
-          animate={isMounted ? "visible" : "hidden"}
+          animate={isMounted ? 'visible' : 'hidden'}
           className="relative z-10 container mx-auto px-6 sm:px-12 md:px-24 flex flex-col lg:flex-row lg:items-center justify-between gap-12"
         >
           {/* Main Text Block */}
@@ -65,12 +65,12 @@ export default function Hero() {
             <motion.h1
               variants={item}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] tracking-tight"
-              style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+              style={{ fontFamily: '\'Georgia\', \'Times New Roman\', serif' }}
             >
               <span className="italic text-white">Machine Learning Engineer</span> —
-              with a focus on{" "}
-              <span className="text-white/70">Deep Learning</span>,{" "}
-              <span className="text-white/70">Computer Vision</span> and{" "}
+              with a focus on{' '}
+              <span className="text-white/70">Deep Learning</span>,{' '}
+              <span className="text-white/70">Computer Vision</span> and{' '}
               <span className="text-white/70">Model Compression</span>.
             </motion.h1>
 
@@ -144,7 +144,7 @@ export default function Hero() {
           </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           >
             <FiArrowDown className="text-[#FF4D00]" size={20} />
           </motion.div>
