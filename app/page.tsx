@@ -1,12 +1,25 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Hero from "./components/Hero";
-import AboutSection from "./components/sections/AboutSection";
-import ExperienceSection from "./components/sections/ExperienceSection";
-import ResearchSection from "./components/sections/ResearchSection";
-import ProjectsSection from "./components/sections/ProjectsSection";
-import ContactSection from "./components/sections/ContactSection";
 import DynamicNav from "./components/ui/DynamicNav";
+
+// Dynamic imports for sections below the fold
+const AboutSection = dynamic(() => import("./components/sections/AboutSection"), {
+  loading: () => <div className="h-screen bg-[#F4F4F5] animate-pulse" />,
+});
+const ExperienceSection = dynamic(() => import("./components/sections/ExperienceSection"), {
+  loading: () => <div className="h-screen bg-[#F4F4F5] animate-pulse" />,
+});
+const ResearchSection = dynamic(() => import("./components/sections/ResearchSection"), {
+  loading: () => <div className="h-screen bg-white animate-pulse" />,
+});
+const ProjectsSection = dynamic(() => import("./components/sections/ProjectsSection"), {
+  loading: () => <div className="h-screen bg-white animate-pulse" />,
+});
+const ContactSection = dynamic(() => import("./components/sections/ContactSection"), {
+  loading: () => <div className="h-screen bg-[#050505] animate-pulse" />,
+});
 
 export default function Home() {
   return (
