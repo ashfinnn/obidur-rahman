@@ -176,7 +176,7 @@ export default function ContactSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="flex h-full w-full flex-col justify-between p-8 sm:p-12 md:p-14 lg:p-16"
+                  className="flex h-full w-full flex-col justify-between p-8 sm:p-12 md:p-14 lg:p-16 cursor-pointer"
                   onClick={() => {
                     // Toggle for touch devices
                     if (window.matchMedia('(max-width: 1024px)').matches) {
@@ -196,7 +196,7 @@ export default function ContactSection() {
                     </h3>
                   </div>
 
-                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase leading-[0.8] tracking-tighter">
+                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase leading-[0.8] tracking-tighter mb-4">
                     Start a
                     <br />
                     Project
@@ -215,7 +215,7 @@ export default function ContactSection() {
                       Choose Method
                     </span>
                     <button 
-                      className="lg:hidden font-mono text-[9px] uppercase tracking-widest bg-white/10 px-3 py-1 rounded-full"
+                      className="lg:hidden font-mono text-[9px] uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full active:bg-white/20"
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsHovered(false);

@@ -7,6 +7,7 @@ import {
 import {
   SiPython, SiPytorch, SiTensorflow, SiNextdotjs, SiTypescript,
   SiNumpy, SiPandas, SiScikitlearn, SiGit, SiFastapi, SiOpencv, SiScipy,
+  SiCplusplus, SiLatex, SiFlask,
 } from "react-icons/si";
 
 /* ─── Data ─────────────────────────────────────────────────────────────────── */
@@ -14,24 +15,24 @@ import {
 const DISCIPLINES = [
   { icon: FiCpu,  label: "Deep Learning"    },
   { icon: FiEye,  label: "Computer Vision"  },
-  { icon: FiZap,  label: "Compression"      },
-  { icon: FiBook, label: "Research"         },
+  { icon: FiZap,  label: "Model Efficiency" },
+  { icon: FiBook, label: "R&D"              },
   { icon: FiCode, label: "Engineering"      },
 ];
 
 const TECH = [
   { name: "Python",     icon: SiPython     },
   { name: "PyTorch",    icon: SiPytorch    },
-  { name: "OpenCV",     icon: SiOpencv     },
+  { name: "C++",        icon: SiCplusplus  },
   { name: "TensorFlow", icon: SiTensorflow },
   { name: "NumPy",      icon: SiNumpy      },
-  { name: "SciPy",      icon: SiScipy      },
-  { name: "Next.js",    icon: SiNextdotjs  },
-  { name: "TypeScript", icon: SiTypescript },
+  { name: "OpenCV",     icon: SiOpencv     },
+  { name: "Flask",      icon: SiFlask      },
   { name: "FastAPI",    icon: SiFastapi    },
-  { name: "Pandas",     icon: SiPandas     },
-  { name: "Sklearn",    icon: SiScikitlearn},
+  { name: "Next.js",    icon: SiNextdotjs  },
+  { name: "LaTeX",      icon: SiLatex      },
   { name: "Git",        icon: SiGit        },
+  { name: "Sklearn",    icon: SiScikitlearn},
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -55,7 +56,7 @@ export default function AboutSection() {
           className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-7 text-[#111]"
           style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
         >
-          Obidur Rahman
+          About me
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -162,16 +163,16 @@ export default function AboutSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="
-              inline-flex items-center gap-1.5 mt-2
-              text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-[#111]
-              border-b border-[#111] pb-0.5
-              hover:text-[#FF4D00] hover:border-[#FF4D00]
-              transition-colors duration-200 group
+              inline-flex items-center gap-2 mt-4
+              px-6 py-3 bg-[#111] text-white
+              text-[9px] sm:text-[10px] tracking-[0.28em] uppercase
+              hover:bg-[#FF4D00]
+              transition-all duration-300 group
             "
           >
             Download CV
             <FiCornerDownRight
-              size={10}
+              size={12}
               className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"
             />
           </a>
@@ -186,23 +187,17 @@ export default function AboutSection() {
           className="px-8 md:px-10 lg:px-14 py-16 md:py-24 space-y-5 md:col-span-2 lg:col-span-1 border-b md:border-b-0 border-[#E8E8E8]"
         >
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
-            Currently working as an R&D Engineer at NorthAxis, prototyping and
-            validating novel ML solutions. Previously built medical imaging
-            pipelines and satellite-based land-use classification systems —
-            work that demanded both rigour and real-world pragmatism.
+            Currently working as an R&D Engineer at NorthAxis, where I lead AI
+            feature research and technical feasibility analysis. My academic
+            base in Mathematics at the University of Chittagong provides the
+            theoretical rigour necessary for high-stakes ML development.
           </p>
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
-            I'm open to research collaborations, engineering roles, and
-            consulting at the intersection of computer vision and efficient
-            inference. If you need models that are both smart and fast,
-            let's talk.
+            I'm particularly interested in imbalanced learning, high-dimensional
+            geometry, and low-resource NLP. My goal is to bridge the gap between
+            theoretical machine learning and practical, hardware-constrained
+            deployment.
           </p>
-          <div className="pt-1 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D00] flex-shrink-0" />
-            <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#999]">
-              Available · Bangladesh · Remote
-            </span>
-          </div>
         </motion.div>
       </div>
 

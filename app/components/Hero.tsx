@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { FiArrowDown, FiGithub, FiLinkedin, FiBook } from 'react-icons/fi';
-import Image from 'next/image';
+import { FiGithub, FiLinkedin, FiBook } from 'react-icons/fi';
 
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
@@ -82,10 +81,6 @@ export default function Hero() {
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] text-white/50">
                 Obidur Rahman
               </span>
-              <div className="h-[1px] w-8 md:w-12 bg-white/20" />
-              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] text-[#FF4D00]">
-                Available for Research
-              </span>
             </motion.div>
           </div>
 
@@ -106,7 +101,7 @@ export default function Hero() {
 
             <div className="flex gap-5 md:gap-6">
               <a
-                href="https://github.com/Ashfinn"
+                href="https://github.com/Ashfinnn"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-white transition-colors"
@@ -130,24 +125,6 @@ export default function Hero() {
                 <FiBook size={18} className="md:w-5 md:h-5" />
               </a>
             </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
-        >
-          <span className="font-mono text-[10px] text-white/30 uppercase tracking-[0.4em]">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <FiArrowDown className="text-[#FF4D00]" size={20} />
           </motion.div>
         </motion.div>
       </section>

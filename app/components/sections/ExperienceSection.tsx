@@ -30,7 +30,10 @@ const EDUCATION = {
     'Linear Algebra',
     'Abstract Algebra',
     'Complex Analysis',
+    'Differential Equations',
+    'Probability & Statistics',
     'Numerical Methods',
+    'Discrete Mathematics',
   ],
 };
 

@@ -9,7 +9,7 @@ const PROJECTS = [
     id: "01",
     title: "CPU-CONSTRAINED VISION",
     category: "Computer Vision & Research",
-    year: "2024",
+    year: "2025",
     image:
       "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
     link: "/research/cpu-constrained-vision",
@@ -80,24 +80,6 @@ export default function ProjectsSection() {
           transition={{ duration: 0.7, ease }}
           className="flex flex-col items-center"
         >
-          <div className="flex items-center gap-3 mb-7">
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="h-[1.5px] w-8 bg-[#FF4D00]" 
-            />
-            <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#999]">
-              Case Studies
-            </span>
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="h-[1.5px] w-8 bg-[#FF4D00]" 
-            />
-          </div>
-
           <h2 
             className="text-xl md:text-2xl tracking-[0.4em] uppercase text-[#111]"
             style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
@@ -155,17 +137,6 @@ export default function ProjectsSection() {
             </div>
           </motion.a>
         ))}
-      </div>
-
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full px-8 md:px-10 lg:px-14 py-8 flex justify-between items-center bg-white border-t border-[#E8E8E8]">
-         <div className="flex gap-10 font-mono text-[8px] uppercase tracking-[0.4em] text-[#bbb]">
-            <span>Vol. {PROJECTS.length}</span>
-            <span className="hidden sm:block">Index: Primary</span>
-         </div>
-         <div className="font-mono text-[8px] uppercase tracking-[0.4em] text-[#bbb]">
-            2023—2025 Archive
-         </div>
       </div>
 
       {/* FLOATING IMAGE PREVIEW */}
