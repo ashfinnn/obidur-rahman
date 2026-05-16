@@ -120,7 +120,7 @@ export default function LeafDiseasePage() {
                <p 
                 className="text-2xl sm:text-3xl lg:text-[1.75rem] leading-[1.3] text-[#111] font-serif italic"
                >
-                 "The findings demonstrate the feasibility of real-time, CPU-only plant disease detection for field deployment scenarios."
+                 "The findings show that real-time, CPU-only plant disease detection is feasible for field deployment scenarios."
                </p>
             </div>
 

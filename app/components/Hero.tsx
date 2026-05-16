@@ -30,7 +30,7 @@ export default function Hero() {
 
   return (
     /**
-     * STICKY WRAPPER — this is the key to the card-stack effect.
+     * STICKY WRAPPER: this is the key to the card-stack effect.
      * The parent in page.jsx must NOT have overflow:hidden so sticky works.
      * Height is 100vh; the About card sits below and scrolls over this.
      */
@@ -67,7 +67,7 @@ export default function Hero() {
               className="text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-[1.15] tracking-tight"
               style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
             >
-              <span className="italic text-white">Machine Learning Engineer</span> —
+              <span className="italic text-white">Machine Learning Engineer</span>,
               with a focus on{' '}
               <span className="text-white/70">Deep Learning</span>,{' '}
               <span className="text-white/70">Computer Vision</span> and{' '}

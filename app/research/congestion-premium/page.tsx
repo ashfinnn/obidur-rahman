@@ -400,9 +400,9 @@ export default function CongestionPremiumPage() {
                   </h3>
 
                   <p className="text-sm text-[#666] leading-relaxed">
-                    Policy interventions should target structural urban
-                    bottlenecks — including drainage systems, road management,
-                    and peak-hour traffic flows — instead of relying solely on
+                    Policy interventions should address structural urban
+                    bottlenecks, including drainage systems, road management,
+                    and peak-hour traffic flows, instead of relying solely on
                     rigid fare enforcement policies that ignore dynamic market
                     constraints.
                   </p>

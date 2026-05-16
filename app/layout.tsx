@@ -5,7 +5,7 @@ import './globals.css';
 import ClientLayout from "./client-layout";
 
 export const metadata: Metadata = {
-  title: "Obidur Rahman | R&D Engineer",
+  title: "Obidur Rahman",
   description: "Portfolio of Obidur Rahman",
 };
 

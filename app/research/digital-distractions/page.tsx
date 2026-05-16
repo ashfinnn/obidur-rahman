@@ -173,7 +173,7 @@ export default function DigitalDistractionsPage() {
                 <div className="relative z-10 max-w-2xl">
                    <h3 className="text-3xl md:text-4xl font-serif mb-8 italic">"Behavioural self-regulation was identified as the single most significant predictor of CGPA."</h3>
                    <p className="text-white/60 leading-relaxed mb-12">
-                     Our models showed that self-regulation acts as a critical buffer, allowing students to maintain high academic performance 
+                     Our models show that self-regulation acts as a critical buffer, allowing students to maintain high academic performance 
                      despite high levels of digital media consumption.
                    </p>
                    <div className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
@@ -271,3 +271,4 @@ export default function DigitalDistractionsPage() {
     </div>
   );
 }
+

@@ -9,7 +9,7 @@ const WORK = {
   role: 'R&D Engineer',
   company: 'NorthAxis',
   location: 'Remote',
-  period: 'Dec 2025 — Present',
+  period: 'Dec 2025 - Present',
   desc: 'Lead research and development for product launches and client projects. Core responsibilities include AI feature research, technical feasibility analysis, and end-to-end solution design.',
   responsibilities: [
     'Evaluate and integrate AI capabilities into products, researching emerging models and deployment strategies',
@@ -23,7 +23,7 @@ const EDUCATION = {
   degree: 'B.S. in Mathematics',
   institution: 'University of Chittagong',
   location: 'Chittagong, BD',
-  period: '2022 — 2027',
+  period: '2022 - 2027',
   desc: 'Specializing in pure mathematics with applications to machine learning and neural network theory.',
   courses: [
     'Real Analysis',
@@ -72,7 +72,7 @@ export default function ExperienceSection() {
       {/* ── Two-column editorial body ────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2">
 
-        {/* Col 1 — Work Experience */}
+        {/* Col 1: Work Experience */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +126,7 @@ export default function ExperienceSection() {
           </ul>
         </motion.div>
 
-        {/* Col 2 — Education */}
+        {/* Col 2: Education */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -183,7 +183,7 @@ export default function ExperienceSection() {
                   Recognition
                 </span>
                 <p className="text-xs sm:text-sm text-[#555] leading-[1.6]">
-                  Best Presenter Award — 24th International Mathematics Conference
+                  Best Presenter Award, 24th International Mathematics Conference
                 </p>
               </div>
             </div>

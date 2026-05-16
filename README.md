@@ -1,77 +1,38 @@
 # Obidur Rahman
 
-This repository contains the source code for my personal portfolio, a futuristic and interactive web experience designed with a Heads-Up Display (HUD) aesthetic. Built from the ground up with a focus on performance, responsiveness, and clean, maintainable code.
+Source code for my portfolio. 
 
-### [**Visit the Live Site →**](https://obidur.vercel.app)
+[Visit the Live Site](https://obidur.vercel.app)
 
----
+## Design philosophy
+The website design prioritizes technical utility and structural clarity, mirroring the mathematical precision of the owner's research. It employs a high-contrast, monochromatic palette with selective use of an accent color (#FF4D00) to guide visual hierarchy.
 
-## ✨ Core Features
+### Motion architecture
+The site uses a layered scrolling system implemented with Lenis and Framer Motion:
+- Sticky stacking: Sections utilize sticky positioning to create a "card-reveal" effect where new content layers slide over previous ones.
+- Smooth scrolling: Lenis provides consistent, high-inertia motion across all browsers and devices.
+- Parallax depth: The hero section combines background video layers with CSS radial glows and blurred overlays to establish a sense of 3D space.
 
--   🎨 **Futuristic HUD Design:** A sharp, monochromatic aesthetic inspired by modern system interfaces, built for clarity and impact.
--   📱 **Fully Responsive:** Meticulously crafted for a seamless experience on all devices, from mobile phones to high-resolution desktops.
--   🔮 **Fluid Animations & Micro-interactions:** Powered by Framer Motion, featuring a 3D parallax hero grid, scroll-triggered animations, and satisfying hover states.
--   🚀 **Animated Loading Sequence:** A thematic system boot-up sequence that sets the tone for the site and ensures a smooth initial render.
--   🧩 **Modular & Maintainable Code:** Built with a component-based architecture in React for clean separation of concerns and easy updates.
--   🔍 **Dynamic Project Filtering:** The project archive features instant, client-side filtering to showcase different categories of work.
--   📈 **SEO & Performance Optimized:** Built with Next.js for server-side rendering, with metadata configured for search engines and social sharing.
+### Interactive elements
+- Custom cursor: A hardware-accelerated cursor system using Framer Motion springs and mix-blend-difference for visibility across varying backgrounds.
+- Staggered entry: UI components use transition staggers to maintain a rhythmic flow as the interface populates.
+- Micro-interactions: Hover states are governed by cubic-bezier easing to ensure responsiveness and tactile feedback.
 
----
+### Visual systems
+- HUD aesthetic: The design borrows from technical heads-up displays, featuring thin-stroke icons, monospaced data markers, and clean grid alignments.
+- Typography: Uses a balanced pairing of Geist for technical data and serif faces for narrative passages, emphasizing the transition between engineering and research.
+- Responsive scaling: Implements dynamic font clamping and relative sizing to maintain structural integrity across mobile and high-resolution displays.
 
-## 🛠️ Tech Stack & Philosophy
+## Tech stack
 
-This project is built with a modern, performant, and type-safe technology stack, chosen to deliver the best possible user and developer experience.
+### Engineering
+- Framework: Next.js 15 (App Router)
+- Language: TypeScript
+- Styles: Tailwind CSS
+- Motion: Framer Motion, Lenis
 
-| Technology     | Category          | Purpose                                                                                |
-| :------------- | :---------------- | :------------------------------------------------------------------------------------- |
-| **Next.js**    | Framework         | For its hybrid rendering capabilities (SSR/SSG), performance optimizations, and DX.    |
-| **TypeScript** | Language          | For static type-checking, preventing errors, and improving code maintainability.       |
-| **Tailwind CSS**| Styling           | For rapid, utility-first UI development and maintaining a consistent design system.   |
-| **Framer Motion**| Animation         | For creating complex, performant, and declarative animations in React.               |
-| **Geist**      | Font              | A clean, modern, and technical typeface from Vercel that complements the HUD theme.     |
-| **Vercel**     | Deployment        | For seamless, zero-config deployment, CI/CD, and global CDN performance.             |
-
----
-
-## 🚀 Local Development
-
-Follow these instructions to get a local copy of the project up and running.
-
-### Prerequisites
-
--   [Node.js](https://nodejs.org/) (v18.x or later)
--   [pnpm](https://pnpm.io/) (recommended), [npm](https://www.npmjs.com/), or [yarn](https://yarnpkg.com/)
-
-### Installation & Setup
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Ashfinn/portfolio-v3.git
-    cd portfolio-v3
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    pnpm install
-    ```
-
-3.  **(Optional) Environment Variables:**
-    If you re-implement the contact form, you'll need to set up environment variables. Create a `.env.local` file in the root of the project by copying the example:
-    ```bash
-    cp .env.example .env.local
-    ```
-    Then, fill in the required values in `.env.local`.
-
-4.  **Run the development server:**
-    This will start the application on `http://localhost:3000`.
-    ```bash
-    pnpm dev
-    ```
-
-5.  **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000).
-
----
-
-## 📂 Project Structure
-
-The project uses the Next.js `app` directory structure, organized for clarity and scalability.
+## Project organization
+- app/: Core application logic and routing.
+- app/components/sections/: Modular UI blocks implementing the card-stack effect.
+- app/components/ui/: Global interface elements like the custom cursor and navigation.
+- public/: Media assets and professional documentation.

@@ -106,7 +106,7 @@ export default function AboutSection() {
       {/* ── Three-column editorial body ──────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-        {/* Col 1 — centered pull-quote / intro */}
+        {/* Col 1: centered pull-quote / intro */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,13 +126,13 @@ export default function AboutSection() {
             "
             style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
-            Hello, I'm Obidur — Machine Learning Engineer focused on building
+            Hello, I'm Obidur, Machine Learning Engineer focused on building
             efficient vision models that run{" "}
             <em style={{ fontStyle: "italic" }}>anywhere</em>.
           </p>
         </motion.div>
 
-        {/* Col 2 — body copy */}
+        {/* Col 2: body copy */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,16 +146,15 @@ export default function AboutSection() {
         >
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             With a background in pure mathematics, I approach machine learning
-            differently — model compression is fundamentally a mathematical
+            differently: model compression is fundamentally a mathematical
             problem, and I treat it like one. Quantization, pruning, and
-            knowledge distillation aren't just engineering techniques; they're
-            expressions of how we understand the geometry of learned
-            representations.
+            knowledge distillation are fundamental expressions of the geometry
+            of learned representations, moving beyond simple engineering heuristics.
           </p>
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
             My work spans custom CV architectures for detection and
             segmentation, efficient inference pipelines optimised for
-            CPU-class hardware, and the full research-to-production arc —
+            CPU-class hardware, and the full research-to-production arc,
             from reading the paper to shipping the API.
           </p>
           <a
@@ -178,7 +177,7 @@ export default function AboutSection() {
           </a>
         </motion.div>
 
-        {/* Col 3 — body copy continued */}
+        {/* Col 3: body copy continued */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -204,7 +203,7 @@ export default function AboutSection() {
       {/* ── Divider ──────────────────────────────────────────────────────────── */}
       <div className="w-full h-[1px] bg-[#E8E8E8]" />
 
-      {/* ── Tech stack — desktop grid ────────────────────────────────────────── */}
+      {/* ── Tech stack: desktop grid ────────────────────────────────────────── */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -236,7 +235,7 @@ export default function AboutSection() {
         })}
       </motion.div>
 
-      {/* ── Tech stack — mobile marquee ──────────────────────────────────────── */}
+      {/* ── Tech stack: mobile marquee ──────────────────────────────────────── */}
       <div className="sm:hidden overflow-hidden relative w-full h-[70px] border-t border-[#E8E8E8]">
         <motion.div
           className="flex absolute left-0"

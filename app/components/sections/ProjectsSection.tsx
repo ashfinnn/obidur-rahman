@@ -84,7 +84,7 @@ export default function ProjectsSection() {
             className="text-xl md:text-2xl tracking-[0.4em] uppercase text-[#111]"
             style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
-            Selected Projects<span className="text-[#FF4D00]">.</span>
+            Selected projects<span className="text-[#FF4D00]"></span>
           </h2>
         </motion.div>
       </div>
