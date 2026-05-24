@@ -9,7 +9,7 @@ const WORK = {
   role: 'R&D Engineer',
   company: 'NorthAxis',
   location: 'Remote',
-  period: 'Dec 2025 - Present',
+  period: 'Dec 2024 - Present',
   desc: 'Lead research and development for product launches and client projects. Core responsibilities include AI feature research, technical feasibility analysis, and end-to-end solution design.',
   responsibilities: [
     'Evaluate and integrate AI capabilities into products, researching emerging models and deployment strategies',
@@ -203,7 +203,7 @@ export default function ExperienceSection() {
         className="px-8 md:px-10 lg:px-14 py-10 flex justify-end"
       >
         <a
-          href="/obidur_cv_public.pdf"
+          href="/obidur_cv.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="

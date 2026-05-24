@@ -7,39 +7,39 @@ import { FiArrowUpRight, FiCornerDownRight } from "react-icons/fi";
 const PROJECTS = [
   {
     id: "01",
-    title: "CPU-CONSTRAINED VISION",
-    category: "Computer Vision & Research",
-    year: "2025",
+    title: "STACKOVERFLOW TAG RECOMMENDATION",
+    category: "Natural Language Processing",
+    year: "2024",
     image:
       "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
-    link: "/research/cpu-constrained-vision",
+    link: "https://github.com/Ashfinnn/stackoverflow-tag-recommendation",
   },
   {
     id: "02",
-    title: "SATELLITE ANALYSIS",
-    category: "Remote Sensing / ML",
-    year: "2023",
+    title: "TOMATO DISEASE CLASSIFICATION",
+    category: "Computer Vision / Edge AI",
+    year: "2025",
     image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
+      "https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=1600&auto=format&fit=crop",
+    link: "/research/cpu-constrained-vision",
   },
   {
     id: "03",
-    title: "BIO-MEDICAL IMAGING",
-    category: "Healthcare Technology",
-    year: "2023",
+    title: "JUSTICELENS",
+    category: "Social Impact / Web",
+    year: "2024",
     image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1600&auto=format&fit=crop",
+    link: "https://github.com/Ashfinnn/JusticeLens",
   },
   {
     id: "04",
-    title: "NORTHAXIS AI R&D",
+    title: "NORTHAXIS LABS",
     category: "Systems Engineering",
     year: "2025",
     image:
       "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=1600&auto=format&fit=crop",
-    link: "#",
+    link: "https://northaxis.xyz",
   },
 ];
 

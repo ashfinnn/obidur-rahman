@@ -69,7 +69,7 @@ export default function Hero() {
             >
               <span className="italic text-white">Machine Learning Engineer</span>,
               with a focus on{' '}
-              <span className="text-white/70">Deep Learning</span>,{' '}
+              <span className="text-white/70">Generative AI</span>,{' '}
               <span className="text-white/70">Computer Vision</span> and{' '}
               <span className="text-white/70">Model Compression</span>.
             </motion.h1>

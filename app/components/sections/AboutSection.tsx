@@ -13,26 +13,26 @@ import {
 /* ─── Data ─────────────────────────────────────────────────────────────────── */
 
 const DISCIPLINES = [
-  { icon: FiCpu,  label: "Deep Learning"    },
+  { icon: FiCpu,  label: "Generative AI"    },
   { icon: FiEye,  label: "Computer Vision"  },
   { icon: FiZap,  label: "Model Efficiency" },
   { icon: FiBook, label: "R&D"              },
-  { icon: FiCode, label: "Engineering"      },
+  { icon: FiCode, label: "Data Automation"  },
 ];
 
 const TECH = [
   { name: "Python",     icon: SiPython     },
   { name: "PyTorch",    icon: SiPytorch    },
   { name: "C++",        icon: SiCplusplus  },
-  { name: "TensorFlow", icon: SiTensorflow },
-  { name: "NumPy",      icon: SiNumpy      },
+  { name: "LangChain",  icon: SiPython     }, // Using Python icon for LangChain as a placeholder if SiLangchain is not available
+  { name: "Next.js",    icon: SiNextdotjs  },
   { name: "OpenCV",     icon: SiOpencv     },
   { name: "Flask",      icon: SiFlask      },
   { name: "FastAPI",    icon: SiFastapi    },
-  { name: "Next.js",    icon: SiNextdotjs  },
-  { name: "LaTeX",      icon: SiLatex      },
-  { name: "Git",        icon: SiGit        },
+  { name: "NumPy",      icon: SiNumpy      },
+  { name: "Pandas",     icon: SiPandas     },
   { name: "Sklearn",    icon: SiScikitlearn},
+  { name: "Git",        icon: SiGit        },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -126,9 +126,9 @@ export default function AboutSection() {
             "
             style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
-            Hello, I'm Obidur, Machine Learning Engineer focused on building
-            efficient vision models that run{" "}
-            <em style={{ fontStyle: "italic" }}>anywhere</em>.
+            Hello, I'm Obidur, Machine Learning Engineer building
+            intelligent systems with 3.5+ years of experience in{' '}
+            <em style={{ fontStyle: "italic" }}>data automation</em>.
           </p>
         </motion.div>
 
@@ -145,20 +145,20 @@ export default function AboutSection() {
           "
         >
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
-            With a background in pure mathematics, I approach machine learning
-            differently: model compression is fundamentally a mathematical
-            problem, and I treat it like one. Quantization, pruning, and
-            knowledge distillation are fundamental expressions of the geometry
-            of learned representations, moving beyond simple engineering heuristics.
+            My journey in AI is rooted in a passion for automation and mathematical
+            rigour. I've developed 300+ automated web scrapers and designed
+            end-to-end data pipelines that power modern ML workflows. This foundation
+            in data engineering allows me to bridge the gap between raw data and
+            production-ready models.
           </p>
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555]">
-            My work spans custom CV architectures for detection and
-            segmentation, efficient inference pipelines optimised for
-            CPU-class hardware, and the full research-to-production arc,
-            from reading the paper to shipping the API.
+            Currently, I focus on Generative AI, RAG (Retrieval-Augmented Generation),
+            and LLM fine-tuning. I treat model compression—quantization, pruning, and
+            distillation—as mathematical problems, ensuring efficiency without
+            sacrificing performance in hardware-constrained environments.
           </p>
           <a
-            href="/obidur_cv_public.pdf"
+            href="/obidur_cv.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -188,14 +188,13 @@ export default function AboutSection() {
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
             Currently working as an R&D Engineer at NorthAxis, where I lead AI
             feature research and technical feasibility analysis. My academic
-            base in Mathematics at the University of Chittagong provides the
-            theoretical rigour necessary for high-stakes ML development.
+            background in Mathematics at the University of Chittagong provides
+            the theoretical depth for high-stakes ML development.
           </p>
           <p className="text-xs sm:text-sm leading-[1.8] sm:leading-[1.9] text-[#555] max-w-3xl">
-            I'm particularly interested in imbalanced learning, high-dimensional
-            geometry, and low-resource NLP. My goal is to bridge the gap between
-            theoretical machine learning and practical, hardware-constrained
-            deployment.
+            I'm particularly interested in high-dimensional geometry and low-resource
+            NLP. My goal is to create scalable, efficient AI solutions that solve
+            real-world problems with mathematical precision.
           </p>
         </motion.div>
       </div>
