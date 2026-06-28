@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "PP Lettra Mono Ultralight Italic";
+  src: url("/PPLettraMono-UltralightItalic.otf") format("opentype");
+  font-weight: 200;
+  font-style: italic;
+}

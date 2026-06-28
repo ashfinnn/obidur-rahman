@@ -1,38 +1,36 @@
-# Obidur Rahman
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Source code for my portfolio. 
+## Getting Started
 
-[Visit the Live Site](https://obidur.vercel.app)
+First, run the development server:
 
-## Design philosophy
-The website design prioritizes technical utility and structural clarity, mirroring the mathematical precision of the owner's research. It employs a high-contrast, monochromatic palette with selective use of an accent color (#FF4D00) to guide visual hierarchy.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-### Motion architecture
-The site uses a layered scrolling system implemented with Lenis and Framer Motion:
-- Sticky stacking: Sections utilize sticky positioning to create a "card-reveal" effect where new content layers slide over previous ones.
-- Smooth scrolling: Lenis provides consistent, high-inertia motion across all browsers and devices.
-- Parallax depth: The hero section combines background video layers with CSS radial glows and blurred overlays to establish a sense of 3D space.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Interactive elements
-- Custom cursor: A hardware-accelerated cursor system using Framer Motion springs and mix-blend-difference for visibility across varying backgrounds.
-- Staggered entry: UI components use transition staggers to maintain a rhythmic flow as the interface populates.
-- Micro-interactions: Hover states are governed by cubic-bezier easing to ensure responsiveness and tactile feedback.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Visual systems
-- HUD aesthetic: The design borrows from technical heads-up displays, featuring thin-stroke icons, monospaced data markers, and clean grid alignments.
-- Typography: Uses a balanced pairing of Geist for technical data and serif faces for narrative passages, emphasizing the transition between engineering and research.
-- Responsive scaling: Implements dynamic font clamping and relative sizing to maintain structural integrity across mobile and high-resolution displays.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Tech stack
+## Learn More
 
-### Engineering
-- Framework: Next.js 15 (App Router)
-- Language: TypeScript
-- Styles: Tailwind CSS
-- Motion: Framer Motion, Lenis
+To learn more about Next.js, take a look at the following resources:
 
-## Project organization
-- app/: Core application logic and routing.
-- app/components/sections/: Modular UI blocks implementing the card-stack effect.
-- app/components/ui/: Global interface elements like the custom cursor and navigation.
-- public/: Media assets and professional documentation.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
