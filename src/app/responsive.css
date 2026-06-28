@@ -1,0 +1,300 @@
+/* ============================================
+   Responsive overrides for Framer-exported site
+   Tablet: 810px - 1199.98px
+   Mobile: ≤809.98px
+   ============================================ */
+
+/* Hide Framer-embedded nav — Navbar component replaces it */
+[data-framer-root] > .framer-1sf8mo9-container,
+[data-framer-root] > .framer-lhf5ht-container {
+  display: none;
+}
+
+/* Standalone nav container (outside Framer root) */
+body > .framer-1sf8mo9-container {
+  z-index: 1;
+  flex: none;
+  width: 100%;
+  height: auto;
+  position: sticky;
+  top: 0;
+}
+
+body > .framer-1sf8mo9-container .framer-nvpae.framer-1di71vz {
+  width: 100%;
+}
+
+body > .framer-1sf8mo9-container .framer-text {
+  color: var(--token-51f8ed10-8e16-423b-a6de-92a557cbfe19, rgba(31, 29, 28, 0.5));
+}
+
+
+
+/* ── Shared ── */
+
+/* Nav bar - shared between pages */
+@media (max-width: 1199.98px) {
+  .framer-nvpae.framer-1di71vz {
+    padding: 16px 32px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-nvpae.framer-1di71vz {
+    padding: 12px 16px;
+    width: 100%;
+  }
+}
+
+/* ── Home Page ── */
+
+/* Hero section */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-ub3bc0 {
+    flex-flow: column;
+    padding: 48px 32px 64px;
+    gap: 24px;
+  }
+  .framer-JgfwO .framer-e8mnbe {
+    width: 100%;
+    flex: none;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-JgfwO .framer-ub3bc0 {
+    padding: 32px 16px 48px;
+    gap: 16px;
+  }
+}
+
+/* Work section */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-1jg14c4 {
+    gap: 80px;
+    padding: 0 0 64px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-JgfwO .framer-1jg14c4 {
+    gap: 48px;
+    padding: 0 0 48px;
+  }
+}
+
+/* Projects container */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-1pa57m7 {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-JgfwO .framer-1pa57m7 {
+    padding: 0 16px;
+    gap: 48px;
+  }
+}
+
+/* Project rows - stack vertically on smaller screens */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-1ec5a0q,
+  .framer-JgfwO .framer-183dqup {
+    flex-flow: column;
+    gap: 24px;
+  }
+  .framer-JgfwO .framer-a5sny8,
+  .framer-JgfwO .framer-yp1y0p,
+  .framer-JgfwO .framer-1s060wd,
+  .framer-JgfwO .framer-1dykm0r,
+  .framer-JgfwO .framer-1kso4st,
+  .framer-JgfwO .framer-11dqrxd {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* Research / skills section */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-1rf502t {
+    gap: 32px;
+  }
+  .framer-JgfwO .framer-73kq6d {
+    flex-flow: column;
+    gap: 16px;
+  }
+}
+
+/* Footer section */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-y4pvoc {
+    padding: 0 32px 64px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-JgfwO .framer-y4pvoc {
+    padding: 0 16px 48px;
+  }
+}
+
+/* Footer rows */
+@media (max-width: 1199.98px) {
+  .framer-JgfwO .framer-hhrqvd,
+  .framer-JgfwO .framer-1iflwce,
+  .framer-JgfwO .framer-73kq6d {
+    flex-flow: column;
+    gap: 16px;
+  }
+}
+
+/* ── About Page ── */
+
+/* About hero section */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-1kaiik3 {
+    padding: 0 32px 64px;
+    gap: 24px;
+  }
+  .framer-FblhY .framer-qfxsjb {
+    padding: 32px 0 0;
+  }
+  .framer-FblhY .framer-1g78f7i {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-FblhY .framer-1kaiik3 {
+    padding: 0 16px 48px;
+    gap: 16px;
+  }
+  .framer-FblhY .framer-qfxsjb {
+    padding: 24px 0 0;
+  }
+}
+
+/* Content wrapper gap */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-dh1exz {
+    gap: 64px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-FblhY .framer-dh1exz {
+    gap: 48px;
+  }
+}
+
+/* Content row - stack vertically */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-1cn8q1w {
+    flex-flow: column;
+    width: 100%;
+    gap: 24px;
+  }
+  .framer-FblhY .framer-42w7da {
+    width: 100%;
+  }
+}
+
+/* Education/experience/awards columns */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-15cjtdn,
+  .framer-FblhY .framer-yobpga,
+  .framer-FblhY .framer-1ppkcev {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* Bottom section */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-15psx76 {
+    padding: 0 32px 64px;
+    gap: 64px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-FblhY .framer-15psx76 {
+    padding: 0 16px 48px;
+    gap: 32px;
+  }
+}
+
+/* Content sections gap */
+@media (max-width: 1199.98px) {
+  .framer-FblhY .framer-14uw1xy,
+  .framer-FblhY .framer-17mm7vd,
+  .framer-FblhY .framer-hbvyhd {
+    gap: 16px;
+  }
+}
+
+/* Image containers in project cards */
+@media (max-width: 809.98px) {
+  .framer-rm6ld .framer-1upsuxk {
+    min-height: 140px;
+  }
+  .framer-rm6ld .framer-5x0jtx,
+  .framer-rm6ld .framer-fq4sj5 {
+    padding: 16px;
+  }
+  .framer-rm6ld .framer-xark49 {
+    width: 100%;
+  }
+}
+
+/* Project card text content */
+@media (max-width: 809.98px) {
+  .framer-rm6ld .framer-1609omh {
+    gap: 4px;
+  }
+}
+
+/* Images max-width */
+@media (max-width: 1199.98px) {
+  img,
+  video,
+  iframe,
+  .framer-image {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Footer section - shared */
+@media (max-width: 1199.98px) {
+  .framer-NRrhH.framer-gr6i0t {
+    width: 100%;
+    padding: 16px 32px 128px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .framer-NRrhH.framer-gr6i0t {
+    padding: 16px 16px 64px;
+  }
+  .framer-NRrhH .framer-gxnkeq {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
+
+/* Root frame shouldn't be wider than viewport on any screen */
+@media (max-width: 1724.98px) {
+  [data-framer-root] {
+    width: 100% !important;
+  }
+}
+
+/* Text container overflow on mobile */
+@media (max-width: 809.98px) {
+  [data-framer-component-type="RichTextContainer"] {
+    word-break: break-word;
+  }
+}
