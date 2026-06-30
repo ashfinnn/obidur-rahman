@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import { FramerPage } from "@/components/FramerPage";
-import { PAGE_STYLE } from "./page-style";
-import { PAGE_HTML } from "./page-html";
-
-const APPEAR_ANIMATIONS = "window.__framer__appearAnimationsContent={text:'{\"p9ffvd\":{\"default\":null,\"8kyut9\":null,\"1cf1x0t\":null,\"iup2ps\":null},\"hbo24m\":{\"default\":null,\"8kyut9\":null,\"1cf1x0t\":null,\"iup2ps\":null}}'}";
-const BREAKPOINTS = "window.__framer__breakpoints={text:'[{\"hash\":\"72rtr7\",\"mediaQuery\":\"(min-width: 1725px)\"},{\"hash\":\"8kyut9\",\"mediaQuery\":\"(min-width: 1200px) and (max-width: 1724.98px)\"},{\"hash\":\"1cf1x0t\",\"mediaQuery\":\"(min-width: 810px) and (max-width: 1199.98px)\"},{\"hash\":\"iup2ps\",\"mediaQuery\":\"(max-width: 809.98px)\"}]'}";
+import { HomeClient } from "@/components/HomeClient";
 
 export const metadata: Metadata = {
   title: "Obidur Rahman",
@@ -25,12 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return (
-    <FramerPage
-      pageStyle={PAGE_STYLE}
-      html={PAGE_HTML}
-      appearAnimations={APPEAR_ANIMATIONS}
-      breakpoints={BREAKPOINTS}
-    />
-  );
+  return <HomeClient />;
 }
