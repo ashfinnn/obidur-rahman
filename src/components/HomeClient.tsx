@@ -37,9 +37,9 @@ const projects = [
 ];
 
 const research = [
-  { title: "Tomato Disease Detection", desc: "CPU-Constrained Deep Learning for Tomato Disease Detection: Traditional, Modern, and Hybrid CNN Comparison. Under Review, Springer Book Proceedings." },
-  { title: "Digital Distractions & Study Habits", desc: "Pathways from digital distractions and study habits to academic performance, exploring self-regulation as a mediator among Bangladeshi university students (SCRIS 2026)." },
-  { title: "Quantifying the Congestion Premium", desc: "Disentangling the determinants of non-metered fares in a developing port city (Chattogram), presented at Scholars' Convergence Research & Innovation Summit (SCRIS 2026)." },
+  { title: "CPU-Constrained Deep Learning for Tomato Disease Detection: Traditional, Modern, and Hybrid CNN Comparison", desc: "Under Review, Springer Book Proceedings." },
+  { title: "Pathways from digital distractions and study habits to academic performance, exploring self-regulation as a mediator among Bangladeshi university students", desc: "Presented at SCRIS 2026." },
+  { title: "Disentangling the determinants of non-metered fares in a developing port city (Chattogram)", desc: "Presented at SCRIS 2026." },
 ];
 
 export function HomeClient() {

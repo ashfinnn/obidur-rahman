@@ -2,27 +2,6 @@
 
 import { useState } from "react";
 
-const interests = [
-  { name: "Astrology", id: "x42kwmeLDtmC95NiCnxFXDQeqQ" },
-  { name: "Broccoli", id: "O57ZLr5snexpZnklqvpx27xQgc" },
-  { name: "Jewelry", id: "rP25VapUyIKjLyYVjTdjRU3x9xA" },
-  { name: "Volleyball", id: "pD9jNNMhmAueriKuX2ENs7fpk0" },
-  { name: "Green tea", id: "D7jwSAEmf2otwF6Zkhdh6TmyuiU" },
-  { name: "Yoneyama mai", id: "J1XyXrfeQvdr96tlKE5KCIWs" },
-  { name: "Thrift", id: "443Ftal2FoEJX0rd1FJzf3lG0" },
-  { name: "UBC", id: "9NXRHtxYXkLywEWn1nyCCASoek" },
-  { name: "Camera", id: "ZbKxTkd9kt23TQuSd4i8i29Z9A" },
-  { name: "INFJ", id: "fbsCMZ2VWVpoWB1MTlGfcBrkIo" },
-  { name: "Pratt", id: "TWq0c6EAHbkbWXeyPZG0GBVUCj8" },
-  { name: "Sketchbook", id: "O8wDwmhRDKlQC3RB2AZg2wg8Tk" },
-];
-
-const awards = [
-  { title: "CPU-Constrained Deep Learning for Tomato Disease Detection", venue: "Under Review — Springer Book Proceedings" },
-  { title: "Digital Distractions & Study Habits (2026)", venue: "Presented at SCRIS 2026 — Scholars' Convergence Research & Innovation Summit" },
-  { title: "Quantifying the Congestion Premium (2026)", venue: "Presented at SCRIS 2026 — Non-metered fares study, Chattogram port city" },
-];
-
 export function AboutClient() {
   const [copied, setCopied] = useState(false);
 
@@ -36,76 +15,65 @@ export function AboutClient() {
 
   return (
     <div className="ob-about">
-      <section className="ob-about-hero">
-        <div className="ob-about-hero-inner">
-          <div className="ob-about-hero-text">
-            <h1 className="ob-about-name-wrapper">
-              <span className="ob-about-name-italic">Obidur</span>
-              <span> Obidur Starter Pack</span>
-            </h1>
-          </div>
-          <div className="ob-about-interests">
-            {interests.map((item, i) => (
-              <img key={i} src={`https://framerusercontent.com/images/${item.id}.webp`} alt={item.name} loading="lazy" />
-            ))}
-          </div>
+      <div className="ob-about-inner" id="first-content">
+        <div className="ob-page-title">
+          <h1 className="ob-page-title-text">About Me</h1>
         </div>
-      </section>
 
-      <section className="ob-about-content">
-        <div className="ob-bio">
-          <p>
-            Hi there! I&apos;m Shawal (Obidur Rahman / ওবায়দুর রহমান in Bangla characters). I am currently a Research and Development Engineer at{" "}
-            <a href="https://northaxis.xyz" target="_blank" rel="noopener noreferrer">Northaxis</a>, researching and implementing AI features and creating multi-purpose AI agents. I&apos;m also finishing my Bachelor of Science in Mathematics at{" "}
-            <a href="https://cu.ac.bd" target="_blank" rel="noopener noreferrer">University of Chittagong</a>, where I was born and raised.
-          </p>
-          <p>
-            I&apos;m serious and technical by nature. You can also find my work on{" "}
-            <a href="https://github.com/ashfinnn" target="_blank" rel="noopener noreferrer">GitHub</a>. It shows a lot of what I&apos;m currently building. Outside work, I play games, watch video essays, and doom-scroll on Instagram.
-          </p>
-          <p>
-            Say hello at{" "}
-            <span className="ob-email" onClick={handleCopyEmail} style={{ cursor: "pointer", textDecoration: "underline", textDecorationStyle: "dashed", textUnderlineOffset: 4 }}>
-              obidur.shawal@gmail.com
-            </span>{" "}{copied && <span className="ob-copied">Copied!</span>}or find me on{" "}
-            <a href="https://linkedin.com/in/obidur-rahman-shawal" target="_blank" rel="noopener noreferrer">LinkedIn</a>. I love chatting about games and memes, and happy to talk about AI too.
-          </p>
-        </div>
-      </section>
+        <div className="ob-sections">
+          <p className="ob-section-label">Background</p>
+          <div className="ob-section-body">
+            <p>
+              Hi — people from the Internet. I&apos;m Shawal (Obidur Rahman / ওবায়দুর রহমান in Bangla characters). I am currently a Research and Development Engineer at{" "}
+              <a href="https://northaxis.xyz" target="_blank" rel="noopener noreferrer">Northaxis</a>, based in Chittagong, Bangladesh, where I research and implement AI features and build multi-purpose AI agents for real-world product domains. I am also completing my Bachelor of Science in Mathematics at{" "}
+              <a href="https://cu.ac.bd" target="_blank" rel="noopener noreferrer">University of Chittagong</a>, where I was born and raised.
+            </p>
+            <p>
+              My work spans deep learning for agriculture, natural language processing systems, and agentic AI infrastructure — always with a focus on practical, deployable solutions that work under real constraints. I believe intelligence is most valuable when it ships, and I build things that actually run, not just papers that read well.
+            </p>
+            <p>
+              You can find my work on{" "}
+              <a href="https://github.com/ashfinnn" target="_blank" rel="noopener noreferrer">GitHub</a> — it shows a lot of what I am currently building. Say hello at{" "}
+              <span className="ob-email" onClick={handleCopyEmail}>
+                obidur.shawal@gmail.com
+              </span>{" "}{copied && <span className="ob-copied">Copied!</span>} or find me on{" "}
+              <a href="https://linkedin.com/in/obidur-rahman-shawal" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+            </p>
+          </div>
 
-      <section className="ob-about-details">
-        <div className="ob-details-row">
-          <div className="ob-details-col">
-            <p className="ob-section-label">education</p>
-            <div className="ob-details-items">
-              <div className="ob-details-item">
-                <p><strong>B.Sc. in Mathematics (2022 – 2026)</strong></p>
-                <p><a href="https://www.cu.ac.bd/" target="_blank" rel="noopener noreferrer">University of Chittagong</a></p>
-              </div>
-            </div>
+          <p className="ob-section-label">Research</p>
+          <div className="ob-section-body">
+            <p>
+              I am a systems engineer who believes intelligence is most valuable when it ships. My work focuses on building AI that works under real-world constraints — limited compute, noisy data, imperfect infrastructure — through three interconnected themes.
+            </p>
+            <ul>
+              <li>
+                <b>Natural Language &amp; Knowledge Systems</b> — I build systems that understand and organise language at scale. My work on StackOverflow tag recommendation uses TF-IDF, word embeddings, and multi-label classification to predict relevant topics from real user questions.{" "}
+                <a href="https://github.com/Ashfinnn/stackoverflow-tag-recommendation" className="ob-tag" target="_blank" rel="noopener noreferrer" style={{ background: "#1a365d", color: "#fff" }}>tag recommender</a>
+              </li>
+              <li>
+                <b>Computer Vision &amp; Edge Intelligence</b> — I design vision systems that work where GPUs are scarce. My work on tomato disease classification compares traditional CNNs, modern architectures, and hybrid models under CPU-constrained conditions — bringing deep learning to agricultural settings with limited resources.{" "}
+                <a href="public/obidur_cv.pdf" className="ob-tag" target="_blank" rel="noopener noreferrer" style={{ background: "#9b2c2c", color: "#fff" }}>under review</a>
+              </li>
+              <li>
+                <b>AI Agents &amp; Infrastructure</b> — I design and build general-purpose AI agents that integrate reasoning, tool use, and multi-modal capabilities into production systems. At Northaxis, I architect agentic workflows that solve real problems across multiple product domains, from intelligent automation to context-aware decision systems.{" "}
+                <a href="https://northaxis.xyz" className="ob-tag" target="_blank" rel="noopener noreferrer" style={{ background: "#2b6cb0", color: "#fff" }}>northaxis</a>
+              </li>
+              <li>
+                <b>Applied Interdisciplinary Research</b> — I also conduct empirical research at the intersection of technology and society, studying digital behaviour, self-regulation, and urban economics. My work has been presented at the Scholars&apos; Convergence Research &amp; Innovation Summit (SCRIS 2026).{" "}
+                <a href="https://github.com/ashfinnn" className="ob-tag" target="_blank" rel="noopener noreferrer" style={{ background: "#5a3e1b", color: "#fff" }}>SCRIS 2026</a>
+              </li>
+            </ul>
           </div>
-          <div className="ob-details-col">
-            <p className="ob-section-label">experience</p>
-            <div className="ob-details-items">
-              <div className="ob-details-item">
-                <p><strong>Research and Development Engineer (2025 – Present)</strong></p>
-                <p><a href="https://northaxis.xyz" target="_blank" rel="noopener noreferrer">Northaxis</a></p>
-              </div>
-            </div>
-          </div>
-          <div className="ob-details-col">
-            <p className="ob-section-label">awards &amp; publications</p>
-            <div className="ob-details-items">
-              {awards.map((a, i) => (
-                <div key={i} className="ob-details-item">
-                  <p><strong>{a.title}</strong></p>
-                  <p>{a.venue}</p>
-                </div>
-              ))}
-            </div>
+
+          <p className="ob-section-label">Hobbies</p>
+          <div className="ob-section-body">
+            <p>
+              Outside of research, I find joy in the quiet focus of video games, the deep rabbit holes of long-form video essays, and the chaotic scroll of Instagram. I have a soft spot for good design — clean UI, thoughtful typography, and well-made indie games. I love talking about games and memes, and I am always happy to chat about AI too.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
 
       <footer className="ob-about-footer">
         <div className="ob-footer-top">

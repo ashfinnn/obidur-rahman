@@ -430,36 +430,16 @@ body {
   background: rgb(248, 248, 250);
 }
 
-/* About Hero */
-.ob-about-hero {
-  display: flex;
-  flex-flow: column;
-  align-items: flex-end;
+.ob-about-inner {
   width: 100%;
-  padding: 72px 128px 0;
+  padding: 72px 128px;
 }
 
-.ob-about-hero-inner {
-  display: flex;
-  flex-flow: column;
-  place-content: flex-start center;
-  align-items: flex-end;
-  gap: 16px;
-  width: 100%;
-  padding: 0;
+.ob-page-title {
+  padding-bottom: 2em;
 }
 
-.ob-about-hero-text {
-  display: flex;
-  flex-flow: column;
-  place-content: flex-start center;
-  align-items: flex-start;
-  gap: 8px;
-  width: 100%;
-  padding: 0;
-}
-
-.ob-hero-name {
+.ob-page-title-text {
   font-family: "PP Lettra Mono Ultralight Italic", monospace;
   font-size: 72px;
   font-weight: 200;
@@ -468,89 +448,73 @@ body {
   line-height: 1.1;
   color: rgb(31, 29, 28);
   margin: 0;
-  white-space: pre;
 }
 
-.ob-about-name-wrapper {
-  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
-  font-size: 72px;
-  font-weight: 200;
-  letter-spacing: -0.06em;
-  line-height: 1.1;
-  color: rgb(31, 29, 28);
-  margin: 0;
-}
-
-.ob-about-name-italic {
-  font-family: "PP Lettra Mono Ultralight Italic", monospace;
-  font-size: 72px;
-  font-weight: 200;
-  font-style: italic;
-  letter-spacing: -0.1em;
-  line-height: 1.1;
-  color: rgb(31, 29, 28);
-}
-
-/* About Interests Grid */
-.ob-about-interests {
-  width: 100%;
-  padding: 32px 0 0;
+.ob-sections {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  grid-template-columns: 1fr;
 }
 
-.ob-about-interests img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.ob-section-label {
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: rgba(31, 29, 28, 0.4);
+  margin: 0;
+  padding: 1em 0;
 }
 
-/* About Bio */
-.ob-about-content {
-  display: flex;
-  flex-flow: column;
-  place-content: flex-end center;
-  align-items: flex-end;
-  gap: 32px;
-  width: 100%;
-  padding: 0;
+.ob-section-body {
+  padding-bottom: 2.5vh;
 }
 
-.ob-bio {
-  width: 80%;
-}
-
-.ob-bio p {
+.ob-section-body p {
   font-family: var(--font-dm-sans), "DM Sans", sans-serif;
   font-size: 18px;
-  font-weight: 400;
-  line-height: 1.4;
+  font-weight: 300;
+  line-height: 1.6;
   letter-spacing: -0.02em;
-  color: rgba(31, 29, 28, 0.5);
-  margin: 0 0 1.4em;
+  color: rgba(31, 29, 28, 0.65);
+  margin: 0 0 1em;
 }
 
-.ob-bio a {
+.ob-section-body a,
+.ob-email {
   color: rgba(31, 29, 28, 0.65);
   text-decoration: underline;
   text-decoration-style: dashed;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
   transition: color 0.4s cubic-bezier(0.44, 0, 0.56, 1);
+  cursor: pointer;
 }
 
-.ob-bio a:hover {
+.ob-section-body a:hover {
   color: rgb(31, 29, 28);
 }
 
-.ob-email {
+.ob-section-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ob-section-body li {
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
   color: rgba(31, 29, 28, 0.65);
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
+  padding-bottom: 0.5em;
+}
+
+.ob-section-body li b {
+  font-weight: 700;
+  color: rgba(31, 29, 28, 0.8);
 }
 
 .ob-copied {
@@ -559,93 +523,80 @@ body {
   animation: fadeOut 2s forwards;
 }
 
+.ob-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 8px;
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  vertical-align: middle;
+  margin: 2px;
+  transition: opacity 0.2s;
+}
+
+.ob-tag:hover {
+  opacity: 0.85;
+}
+
 @keyframes fadeOut {
   0%, 60% { opacity: 1; }
   100% { opacity: 0; }
 }
 
-/* About Details (Education, Experience, Awards) */
-.ob-about-details {
-  display: flex;
-  flex-flow: column;
-  place-content: flex-end center;
-  align-items: flex-end;
-  gap: 128px;
-  width: 100%;
-  padding: 0 128px 128px;
-}
-
-.ob-details-row {
-  display: flex;
-  flex-flow: row;
-  place-content: flex-start center;
-  align-items: flex-start;
-  gap: 40px;
-  width: 80%;
-  padding: 0;
-}
-
-.ob-details-col {
-  display: flex;
-  flex-flow: column;
-  flex: 1 0 0;
-  place-content: flex-start center;
-  align-items: flex-start;
-  gap: 16px;
-  width: 1px;
-  padding: 0;
-}
-
-.ob-details-items {
-  display: flex;
-  flex-flow: column;
-  gap: 24px;
-  width: 100%;
-}
-
-.ob-details-item {
-  display: flex;
-  flex-flow: column;
-  gap: 0;
-  width: 100%;
-}
-
-.ob-details-item p {
-  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-  color: rgba(31, 29, 28, 0.5);
-  margin: 0;
-}
-
-.ob-details-item strong {
-  color: rgba(31, 29, 28, 0.65);
-  font-weight: 700;
-}
-
-.ob-details-item a {
-  color: rgba(31, 29, 28, 0.65);
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  transition: color 0.4s cubic-bezier(0.44, 0, 0.56, 1);
-}
-
-.ob-details-item a:hover {
-  color: rgb(31, 29, 28);
-}
-
-/* About Footer */
 .ob-about-footer {
   width: 100%;
   padding: 0 128px 128px;
 }
 
+@media (min-width: 769px) {
+  .ob-sections {
+    grid-template-columns: 120px 1fr;
+    column-gap: 5vw;
+  }
+  .ob-section-label {
+    padding: 0 0 2.5vh;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .ob-about-inner {
+    padding: 32px 32px;
+  }
+  .ob-page-title-text {
+    font-size: 48px;
+  }
+  .ob-section-body p,
+  .ob-section-body li {
+    font-size: 16px;
+  }
+  .ob-about-footer {
+    padding: 0 32px 64px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .ob-about-inner {
+    padding: 32px 16px;
+  }
+  .ob-page-title-text {
+    font-size: 36px;
+  }
+  .ob-section-body p,
+  .ob-section-body li {
+    font-size: 14px;
+  }
+  .ob-about-footer {
+    padding: 0 16px 48px;
+  }
+}
+
 /* ============================================
-   Responsive — Tablet
+   Home — Tablet
    ============================================ */
 
 @media (max-width: 1199.98px) {
@@ -658,16 +609,8 @@ body {
   .ob-hero-name {
     font-size: 48px;
   }
-  .ob-hero-name-italic,
-  .ob-hero-name-normal {
-    font-size: 48px;
-  }
   .ob-hero-subtitle {
     font-size: 20px;
-  }
-  .ob-about-name-wrapper,
-  .ob-about-name-italic {
-    font-size: 48px;
   }
   .ob-work-section {
     gap: 64px;
@@ -684,10 +627,6 @@ body {
   .ob-project-title {
     font-size: 26px;
   }
-  .ob-project-tags {
-    font-size: 12px;
-    letter-spacing: -0.04em;
-  }
   .ob-project-desc {
     font-size: 14px;
   }
@@ -701,30 +640,10 @@ body {
   .ob-research-skills {
     font-size: 14px;
   }
-  .ob-about-hero {
-    padding: 32px 32px 0;
-  }
-  .ob-about-content {
-    padding: 0;
-  }
-  .ob-bio p {
-    font-size: 16px;
-  }
-  .ob-about-details {
-    gap: 64px;
-    padding: 0 32px 64px;
-  }
-  .ob-about-footer {
-    padding: 0 32px 64px;
-  }
-  .ob-details-row {
-    flex-flow: column;
-    width: 100%;
-  }
 }
 
 /* ============================================
-   Responsive — Mobile
+   Home — Mobile
    ============================================ */
 
 @media (max-width: 809.98px) {
@@ -748,6 +667,11 @@ body {
   }
   .ob-hero-text {
     gap: 8px;
+    width: 100%;
+  }
+  .ob-hero-name {
+    font-size: 36px;
+    white-space: pre-wrap;
   }
   .ob-hero-subtitle {
     font-size: 18px;
@@ -762,26 +686,30 @@ body {
   .ob-project-title {
     font-size: 24px;
   }
-  .ob-project-tags {
-    font-size: 12px;
-    letter-spacing: -0.04em;
-  }
   .ob-project-desc {
-    font-size: 10px;
+    font-size: 13px;
     letter-spacing: -0.04em;
   }
   .ob-research-section {
     padding: 0 16px 64px;
   }
+  .ob-research-content {
+    gap: 24px;
+  }
   .ob-research-item {
     flex-flow: column;
     gap: 8px;
+    padding: 0 0 24px;
+  }
+  .ob-research-left,
+  .ob-research-right {
+    width: 100%;
   }
   .ob-research-title {
     font-size: 18px;
   }
   .ob-research-skills {
-    font-size: 10px;
+    font-size: 13px;
     letter-spacing: -0.04em;
   }
   .ob-footer-top {
@@ -793,33 +721,8 @@ body {
     flex-wrap: wrap;
     gap: 16px;
   }
-  .ob-about-interests {
-    padding: 24px 0 0;
-  }
-  .ob-hero-name {
-    font-size: 36px;
-  }
-  .ob-about-name-wrapper,
-  .ob-about-name-italic {
-    font-size: 36px;
-  }
-  .ob-about-hero {
-    padding: 32px 16px 0;
-  }
-  .ob-about-content {
-    padding: 0;
-  }
-  .ob-about-content .ob-bio {
-    width: 100%;
-  }
-  .ob-bio p {
-    font-size: 12px;
-    letter-spacing: -0.04em;
-  }
-  .ob-about-details {
-    padding: 0 16px 48px;
-  }
-  .ob-about-footer {
-    padding: 0 16px 48px;
+  .ob-footer {
+    height: auto;
+    max-height: none;
   }
 }

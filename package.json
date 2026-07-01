@@ -6,8 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "validate": "npx tsx src/shared/validate-breakpoints.ts"
+    "lint": "eslint"
   },
   "dependencies": {
     "next": "16.2.9",
